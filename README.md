@@ -10,6 +10,10 @@ $ ./configure
 $ make
 $ make install
 ```
+- Add /usr/local/lib to LD_LIBRARY_PATH
+```
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
+```
 
 ##Reference
 - [Software Defined 

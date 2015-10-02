@@ -1,5 +1,9 @@
 # Study gRPC with Go lang
 
+##Why I study Go
+- Go has some advantages over Java and Python
+- Simpler and faster
+
 ##Preparations
 - Go lang installation: https://golang.org/dl/
 - Protobuf build and installation: https://github.com/google/protobuf/blob/master/INSTALL.txt

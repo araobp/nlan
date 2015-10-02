@@ -14,6 +14,9 @@ $ make install
 ```
 $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 ```
+##Go plugin for vim
+
+Install [vim-go](https://github.com/fatih/vim-go) to your vim.
 
 ##Reference
 - [Software Defined 

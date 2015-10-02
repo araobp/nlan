@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_package = "io.grpc.examples";
+option objc_class_prefix = "HLW";
+
+package helloworld;
+
+service HelloWorldService {
+  rpc HelloWorld (HelloRequest) returns (HelloReply) {}
+}
+
+message HelloRequest {
+  string name = 1;
+  string greeting = 2;
+}
+
+message HelloReply {
+  string name = 1;
+  string greeting = 2;
+}

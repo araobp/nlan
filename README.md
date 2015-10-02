@@ -3,6 +3,7 @@
 ##Why I study Go
 - Go has some advantages over Java and Python
 - Simpler and faster
+- I want to rewrite part of my programs in Go
 
 ##Preparations
 - Go lang installation: https://golang.org/dl/

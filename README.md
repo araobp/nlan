@@ -1,10 +1,13 @@
 # Networking with Go lang
 
-##Why Go?
+##Why Go for me?
 - Go has some advantages over Java and Python
+- Fills the gap between Python and C
 - Simpler, faster and lighter
 - Advanced networking and database libraries available, such as etcd
 - I want to rewrite part of my exisiting programs ([neutron-lan](https://github.com/araobp/neutron-lan), [tega](https://github.com/araobp/tega)) in Go lang with its libraries
+- [neutron-lan](https://github.com/araobp/neutron-lan) has some similarities to [Software Defined 
+Networking at Scale](http://files.meetup.com/8218762/Bikash_Koley%20SDN_meetup%20May%202015.pdf)
 
 ```
 [Networking agent written in Go]

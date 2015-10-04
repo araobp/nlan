@@ -17,6 +17,10 @@
 [CPU:ARM]   [CPU:x86]
 ```
 
+##Go for Python programmers like me
+
+I would use Go rather than rewrite part of my programmes with Cython
+
 ##Preparations
 - Go lang installation: https://golang.org/dl/
 - Protobuf build and installation: https://github.com/google/protobuf/blob/master/INSTALL.txt

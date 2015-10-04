@@ -43,8 +43,9 @@ Install [vim-go](https://github.com/fatih/vim-go) to your vim.
 - [gRPC](https://github.com/grpc/grpc-go/)
 - [etcd](https://github.com/coreos/etcd)
 - [OVSDB client](https://github.com/socketplane/libovsdb)
-- [gocql](https://github.com/gocql/gocql)
 - [YAML](https://github.com/go-yaml/yaml)
+- [YANG](https://github.com/openconfig/goyang)
+- [gocql](https://github.com/gocql/gocql)
 
 ##Reference
 - [Software Defined 

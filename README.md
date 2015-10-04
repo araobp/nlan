@@ -1,9 +1,10 @@
 # Networking with Go lang
 
-##Why I study Go
+##Why Go?
 - Go has some advantages over Java and Python
-- Simpler and faster
-- I want to rewrite part of my exisiting programs in Go
+- Simpler, faster and lighter
+- Advanced networking and database libraries available, such as etcd
+- I want to rewrite part of my exisiting programs ([neutron-lan](https://github.com/araobp/neutron-lan), [tega](https://github.com/araobp/tega)) in Go lang with its libraries
 
 ```
 [Networking agent written in Go]
@@ -34,9 +35,11 @@ $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 
 Install [vim-go](https://github.com/fatih/vim-go) to your vim.
 
-##Networking libraries
-- [OVSDB client](https://github.com/socketplane/libovsdb)
+##Interesting libraries written in Go lang
 - [gRPC](https://github.com/grpc/grpc-go/)
+- [etcd](https://github.com/coreos/etcd)
+- [OVSDB client](https://github.com/socketplane/libovsdb)
+- [YAML](https://github.com/go-yaml/yaml)
 
 ##Reference
 - [Software Defined 

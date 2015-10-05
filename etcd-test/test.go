@@ -13,7 +13,7 @@ func main() {
 	config := client.Config{
 		Endpoints:               []string{"http://localhost:2379"},
 		Transport:               client.DefaultTransport,
-		HeaderTimeoutPerRequest: Time.Second,
+		HeaderTimeoutPerRequest: time.Second,
 	}
 
 	c, err := client.New(config)
@@ -23,7 +23,10 @@ func main() {
 	}
 
 	kapi := client.NewKeysAPI(c)
-	resp, err := kapi.Set(context.Background(), "foo", "bar", nil)
+
+	key := "sdn"
+	value := "good idea?"
+	resp, err := kapi.Set(context.Background(), key, value, nil)
 
 	if err != nil {
 		log.Fatal(err)

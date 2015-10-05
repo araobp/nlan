@@ -35,6 +35,10 @@ $ ./configure
 $ make
 $ make install
 ```
+- etcd installation: https://github.com/coreos/etcd
+```
+$ ./build
+``` 
 - Add /usr/local/lib to LD_LIBRARY_PATH
 ```
 $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH

@@ -1,4 +1,4 @@
-# Networking with Go lang
+# Rewrite neutron-lan with Go lang and etcd
 
 ##Why Go for me?
 - Go has some advantages over Java and Python
@@ -8,6 +8,7 @@
 - I want to rewrite part of my exisiting programs ([neutron-lan](https://github.com/araobp/neutron-lan), [tega](https://github.com/araobp/tega)) in Go lang with its libraries
 - [neutron-lan](https://github.com/araobp/neutron-lan) has some similarities to [Software Defined 
 Networking at Scale](http://files.meetup.com/8218762/Bikash_Koley%20SDN_meetup%20May%202015.pdf)
+- etcd simplifies messaging between NLAN master and NLAN agents
 
 ```
 [Networking agent written in Go]

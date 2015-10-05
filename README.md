@@ -68,7 +68,6 @@ Install [vim-go](https://github.com/fatih/vim-go) to your vim.
 ##Interesting libraries written in Go lang
 - [gRPC](https://github.com/grpc/grpc-go/)
 - [etcd](https://github.com/coreos/etcd)
-- [go-etcd](https://github.com/coreos/go-etcd)
 - [OVSDB client](https://github.com/socketplane/libovsdb)
 - [YAML](https://github.com/go-yaml/yaml)
 - [YANG](https://github.com/openconfig/goyang)

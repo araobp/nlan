@@ -1,4 +1,4 @@
-# Rewrite [neutron-lan](https://github.com/araobp/neutron-lan)with Go lang and etcd
+# Rewrite [neutron-lan](https://github.com/araobp/neutron-lan) with Go lang and etcd
 
 ##Why Go for me?
 - Go has some advantages over Java and Python

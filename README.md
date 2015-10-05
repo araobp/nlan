@@ -1,4 +1,4 @@
-# Rewrite neutron-lan with Go lang and etcd
+# Rewrite [neutron-lan](https://github.com/araobp/neutron-lan) with Go lang and etcd
 
 ##Why Go for me?
 - Go has some advantages over Java and Python
@@ -68,6 +68,7 @@ Install [vim-go](https://github.com/fatih/vim-go) to your vim.
 ##Interesting libraries written in Go lang
 - [gRPC](https://github.com/grpc/grpc-go/)
 - [etcd](https://github.com/coreos/etcd)
+- [godoc etcd client](https://godoc.org/github.com/coreos/etcd/client)
 - [OVSDB client](https://github.com/socketplane/libovsdb)
 - [YAML](https://github.com/go-yaml/yaml)
 - [YANG](https://github.com/openconfig/goyang)

@@ -59,6 +59,7 @@ $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 ##Rewrite works overview
 - Use etcd instead of "Python OrderedDict over SSH"
 - Rewirte NLAN modules (config/rpc) in Go lang
+- Remove OVSDB-dependency, use etcd instead
 
 ##Go plugin for vim
 

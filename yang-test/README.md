@@ -27,6 +27,9 @@ YANG models => proto files => pb.go files
 Original data == (marshal) ==> wire format == (unmarshal) ==> Original data
 ```
 
+##What I have noticed
+1. 'goyang --format=proto' does not add 'syntax = "proto2";' at the beginning of proto file.
+
 ##What I have not tested yet
 1. Test if goyang supports YANG "rpc" statement.
 2. goyang with gRPC

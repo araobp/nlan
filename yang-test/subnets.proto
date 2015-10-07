@@ -1,10 +1,11 @@
+syntax = "proto2";
 
 // NLAN subnets module
 message Subnets {
-  repeated Subnets Subnets = 1; // subnets.yang:11:3
+  repeated Subnets_ Subnets_ = 1; // subnets.yang:11:3
 }
 
-message Subnets {
+message Subnets_ {
   repeated IpDvr IpDvr = 1; // subnets.yang:20:5
   repeated string Peers = 2; // subnets.yang:37:5
   repeated string Ports = 3; // subnets.yang:34:5

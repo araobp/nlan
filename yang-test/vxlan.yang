@@ -8,7 +8,7 @@ module vxlan {
   description "NLAN vxlan module";
   revision 2015-10-07;
 
-  list vxlan {
+  list vxlan_ {
     key local_ip;
     leaf local_ip {
       type string;

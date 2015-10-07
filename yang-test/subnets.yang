@@ -8,7 +8,7 @@ module subnets {
   description "NLAN subnets module";
   revision 2015-10-07;
 
-  list subnets {
+  list subnets_ {
     key vid;
     leaf vid {
       type uint16;

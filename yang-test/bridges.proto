@@ -1,3 +1,4 @@
+syntax = "proto2";
 
 // NLAN bridges module
 message Bridges {

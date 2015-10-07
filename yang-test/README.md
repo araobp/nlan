@@ -27,6 +27,26 @@ YANG models => proto files => pb.go files
 Original data == (marshal) ==> wire format == (unmarshal) ==> Original data
 ```
 
+##Console output
+```
+$ go build yang-test.go
+$ ./yang-test
+--- NLAN bridges module ---
+Before encoding: OvsBridges:true
+Wire format(encoded): [8 1]
+After decoding: OvsBridges:true
+
+--- NLAN vxlan module ---
+Before encoding: LocalIp:"10.0.0.1" RemoteIps:"192.168.56.101" RemoteIps:"192.168.56.102"
+Wire format(encoded): [10 8 49 48 46 48 46 48 46 49 18 14 49 57 50 46 49 54 56 46 53 54 46 49 48 49 18 14 49 57 50 46 49 54 56 46 53 54 46 49 48 50]
+After decoding: LocalIp:"10.0.0.1" RemoteIps:"192.168.56.101" RemoteIps:"192.168.56.102"
+
+--- NLAN subnets module ---
+Before encoding: IpDvr:<Addr:"172.16.42.1" Mode:"dvr" > Vid:10 Vni:100
+Wire format(encoded): [10 18 10 11 49 55 50 46 49 54 46 52 50 46 49 26 3 100 118 114 32 10 40 100]
+After decoding: IpDvr:<Addr:"172.16.42.1" Mode:"dvr" > Vid:10 Vni:100
+```
+
 ##What I have noticed
 1. 'goyang --format=proto' does not add 'syntax = "proto2";' at the beginning of proto file.
 

@@ -1,8 +1,5 @@
-##How to test this etcd client
-```
-$ go install test.go
-$ test
-$ etcdctl get /sdn
-good idea?
-```
+##Testing pubsub pattern with etcd
 
+```
+[provider] --> etcd --> [watcher]
+```

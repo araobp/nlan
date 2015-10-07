@@ -1,0 +1,17 @@
+module bridges {
+
+  yang-version 1;
+  namespace "urn:araobp:nlan:bridges";
+  prefix "bridges";
+  contact "https://github.com/arapbp";
+
+  description "NLAN bridges module";
+  revision 2015-10-07;
+
+  leaf ovs_bridges {
+    type boolean;
+    default true;
+    mandatory true;
+  }
+}
+

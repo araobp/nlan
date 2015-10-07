@@ -1,0 +1,10 @@
+
+// NLAN vxlan module
+message Vxlan {
+  repeated Vxlan Vxlan = 1; // vxlan.yang:11:3
+}
+
+message Vxlan {
+  optional string LocalIp = 1; // vxlan.yang:13:5
+  repeated string RemoteIps = 2; // vxlan.yang:16:5
+}

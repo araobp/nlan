@@ -1,0 +1,5 @@
+
+// NLAN bridges module
+message Bridges {
+  optional bool OvsBridges = 1; // bridges.yang:11:3
+}

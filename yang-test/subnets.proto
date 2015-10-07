@@ -1,0 +1,19 @@
+
+// NLAN subnets module
+message Subnets {
+  repeated Subnets Subnets = 1; // subnets.yang:11:3
+}
+
+message Subnets {
+  repeated IpDvr IpDvr = 1; // subnets.yang:20:5
+  repeated string Peers = 2; // subnets.yang:37:5
+  repeated string Ports = 3; // subnets.yang:34:5
+  optional uint32 Vid = 4; // subnets.yang:13:5
+  optional uint32 Vni = 5; // subnets.yang:16:5
+}
+
+message IpDvr {
+  optional string Addr = 1; // subnets.yang:22:7
+  optional string Dhcp = 2; // subnets.yang:29:7
+  optional string Mode = 3; // subnets.yang:25:7
+}

@@ -1,20 +1,24 @@
 #!/bin/bash
 
+MODELDIR="model"
+
+cd $MODELDIR
+
 echo "--- PYANG ---"
-pyang --format=tree *.yang
+pyang --format=tree */*.yang
 
 echo ""
 echo "--- GOYANG ---"
-goyang --format=tree *.yang
+goyang --format=tree */*.yang
 
 echo ""
 echo "--- GOYANG (proto) --"
-goyang --format=proto *.yang
+goyang --format=proto */*.yang
 
-echo 'syntax = "proto2";' > bridges.proto
-echo 'syntax = "proto2";' > vxlan.proto
-echo 'syntax = "proto2";' > subnets.proto
-goyang --format=proto bridges.yang >> bridges.proto
-goyang --format=proto vxlan.yang >> vxlan.proto
-goyang --format=proto subnets.yang >> subnets.proto
+echo 'syntax = "proto2";' > bridges/bridges.proto
+echo 'syntax = "proto2";' > vxlan/vxlan.proto
+echo 'syntax = "proto2";' > subnets/subnets.proto
+goyang --format=proto bridges/bridges.yang >> bridges/bridges.proto
+goyang --format=proto vxlan/vxlan.yang >> vxlan/vxlan.proto
+goyang --format=proto subnets/subnets.yang >> subnets/subnets.proto
 

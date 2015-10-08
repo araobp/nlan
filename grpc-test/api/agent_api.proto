@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package agent_api;
+package api;
 
 service NlanAgent {
   rpc Add (Request) returns (Reply) {}

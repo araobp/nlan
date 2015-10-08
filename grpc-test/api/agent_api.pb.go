@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package agent_api is a generated protocol buffer package.
+Package api is a generated protocol buffer package.
 
 It is generated from these files:
 	agent_api.proto
@@ -15,7 +15,7 @@ It has these top-level messages:
 	Vxlan
 	Subnets
 */
-package agent_api
+package api
 
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
@@ -213,7 +213,7 @@ func (m *Subnets) String() string { return proto.CompactTextString(m) }
 func (*Subnets) ProtoMessage()    {}
 
 func init() {
-	proto.RegisterEnum("agent_api.Request_Module", Request_Module_name, Request_Module_value)
+	proto.RegisterEnum("api.Request_Module", Request_Module_name, Request_Module_value)
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -238,7 +238,7 @@ func NewNlanAgentClient(cc *grpc.ClientConn) NlanAgentClient {
 
 func (c *nlanAgentClient) Add(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Reply, error) {
 	out := new(Reply)
-	err := grpc.Invoke(ctx, "/agent_api.NlanAgent/Add", in, out, c.cc, opts...)
+	err := grpc.Invoke(ctx, "/api.NlanAgent/Add", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +247,7 @@ func (c *nlanAgentClient) Add(ctx context.Context, in *Request, opts ...grpc.Cal
 
 func (c *nlanAgentClient) Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Reply, error) {
 	out := new(Reply)
-	err := grpc.Invoke(ctx, "/agent_api.NlanAgent/Update", in, out, c.cc, opts...)
+	err := grpc.Invoke(ctx, "/api.NlanAgent/Update", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +256,7 @@ func (c *nlanAgentClient) Update(ctx context.Context, in *Request, opts ...grpc.
 
 func (c *nlanAgentClient) Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Reply, error) {
 	out := new(Reply)
-	err := grpc.Invoke(ctx, "/agent_api.NlanAgent/Delete", in, out, c.cc, opts...)
+	err := grpc.Invoke(ctx, "/api.NlanAgent/Delete", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -312,7 +312,7 @@ func _NlanAgent_Delete_Handler(srv interface{}, ctx context.Context, codec grpc.
 }
 
 var _NlanAgent_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "agent_api.NlanAgent",
+	ServiceName: "api.NlanAgent",
 	HandlerType: (*NlanAgentServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

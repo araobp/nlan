@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+message Hello {
+  optional GreetingRegistry GreetingRegistry = 1; // hello/hello.yang:35:5
+}
+
+message GreetingRegistry {
+  repeated GreetingRegistryEntry GreetingRegistryEntry = 1; // hello/hello.yang:36:9
+}
+
+message GreetingRegistryEntry {
+  optional string Greeting = 1; // hello/hello.yang:41:13
+  optional string Name = 2; // hello/hello.yang:38:13
+}

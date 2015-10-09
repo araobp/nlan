@@ -45,12 +45,13 @@ $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 ```
 ##Architecture
 ```
-      [NLAN master] --- [DB]
+     [    Master   ] ... Global DB (etcd cluster)
         |       |
       gRPC    gRPC
         |       |
         V       V
-[NLAN agent] [NLAN agent] --- [DB]
+    [Agent]   [Agent]
+   Local DB   Local DB(etcd?)
 ```
 ##Rewrite works overview
 - Use etcd instead of "Python OrderedDict over SSH"

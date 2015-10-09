@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 
 message Hello {
   optional GreetingRegistry GreetingRegistry = 1; // hello/hello.yang:35:5

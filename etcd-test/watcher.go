@@ -19,7 +19,7 @@ func main() {
 	}
 
 	// Creates an etcd client
-	cont := context.Backgroud()
+	cont := context.Background()
 	c, _ := client.New(config)
 	kapi := client.NewKeysAPI(c)
 

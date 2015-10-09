@@ -19,7 +19,7 @@ func main() {
 	}
 
 	// Creates an etcd client
-	cont := context.Backgroud()
+	cont := context.Background()
 	c, _ := client.New(config)
 	kapi := client.NewKeysAPI(c)
 
@@ -30,7 +30,7 @@ func main() {
 	// Appends a value to a list on etcd
 	_, _ = kapi.CreateInOrder(cont, key, value, nil)
 
-	response, _ := kapi.Get(cont, key, &client.GetOptions{Recursive: trune})
+	response, _ := kapi.Get(cont, key, &client.GetOptions{Recursive: true})
 	nodes := response.Node.Nodes
 	// Dumps values in a list on etcd
 	for _, v := range nodes {

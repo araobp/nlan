@@ -1,5 +1,5 @@
 #neutron-lan rewrite
-This is a directory for rewriting neutron-lan.
+This is a directory for rewriting nlan agent.
 
 ##NLAN config modules
 1. NLAN agent receives a data change notification from etcd

@@ -42,7 +42,13 @@ $ ./build
 - Add /usr/local/lib to LD_LIBRARY_PATH
 ```
 $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
+
 ```
+##NLAN model in YANG and protobuf
+- [YANG model](./nlan/model/nlan/nlan.yang)
+- [protobuf model](./nlan/model/nlan/nlan.proto)
+- [Go stub](./nlan/model/nlan/nlan.pb.go)
+
 ##Architecture
 ```
      [    Master   ] ... Global DB (etcd cluster)

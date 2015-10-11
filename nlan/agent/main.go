@@ -18,6 +18,11 @@ type agent struct{}
 // Add method
 func (a *agent) Add(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	log.Print("Server: Add() is called")
+	model := in.GetModel()
+	dvr := model.GetDvr()
+	ptn := model.GetPtn()
+	log.Print(dvr)
+	log.Print(ptn)
 	response := nlan.Response{Result: 0, LogMessage: "Server: Add() is called"}
 	return &response, nil
 }

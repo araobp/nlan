@@ -37,4 +37,13 @@ func main() {
 		log.Print(err)
 	}
 	log.Print(response)
+
+	ptn := nlan.Ptn{}
+	model = nlan.Model{Ptn: &ptn}
+	request = nlan.Request{Model: &model}
+	response, err = agent.Add(context.Background(), &request)
+	if err != nil {
+		log.Print(err)
+	}
+	log.Print(response)
 }

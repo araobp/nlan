@@ -309,9 +309,9 @@ func RegisterNlanAgentServer(s *grpc.Server, srv NlanAgentServer) {
 	s.RegisterService(&_NlanAgent_serviceDesc, srv)
 }
 
-func _NlanAgent_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _NlanAgent_Add_Handler(srv interface{}, ctx context.Context, codec grpc.Codec, buf []byte) (interface{}, error) {
 	in := new(Request)
-	if err := dec(in); err != nil {
+	if err := codec.Unmarshal(buf, in); err != nil {
 		return nil, err
 	}
 	out, err := srv.(NlanAgentServer).Add(ctx, in)
@@ -321,9 +321,9 @@ func _NlanAgent_Add_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return out, nil
 }
 
-func _NlanAgent_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _NlanAgent_Update_Handler(srv interface{}, ctx context.Context, codec grpc.Codec, buf []byte) (interface{}, error) {
 	in := new(Request)
-	if err := dec(in); err != nil {
+	if err := codec.Unmarshal(buf, in); err != nil {
 		return nil, err
 	}
 	out, err := srv.(NlanAgentServer).Update(ctx, in)
@@ -333,9 +333,9 @@ func _NlanAgent_Update_Handler(srv interface{}, ctx context.Context, dec func(in
 	return out, nil
 }
 
-func _NlanAgent_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _NlanAgent_Delete_Handler(srv interface{}, ctx context.Context, codec grpc.Codec, buf []byte) (interface{}, error) {
 	in := new(Request)
-	if err := dec(in); err != nil {
+	if err := codec.Unmarshal(buf, in); err != nil {
 		return nil, err
 	}
 	out, err := srv.(NlanAgentServer).Delete(ctx, in)

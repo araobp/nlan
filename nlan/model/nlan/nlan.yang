@@ -8,6 +8,7 @@ module nlan {
   description "NLAN module";
   revision 2015-10-11;
 
+  // distributed-virtual-router model
   grouping dvr-model {
 
     leaf ovs_bridges {
@@ -57,9 +58,12 @@ module nlan {
     }
   }
 
+  // simulated packet-transport-network model
   grouping ptn-model {
 
+    // simulated packet-transport-nodes
     list ptn_nodes {
+      key id;
       leaf id {
         type string;
       }
@@ -73,7 +77,9 @@ module nlan {
       }
     }
 
+    // simulated links among packet-transport-nodes
     list ptn_links {
+      key id;
       leaf id {
         type string;
       }
@@ -85,7 +91,9 @@ module nlan {
       }
     }
 
+    // simulated layer-2 VPNs
     list ptn_l2vpn {
+      key id;
       leaf id {
         type string;
       }
@@ -104,6 +112,7 @@ module nlan {
     }
   }
 
+  // NLAN Request message
   container request {
     choice model {
       case dvr {
@@ -115,12 +124,13 @@ module nlan {
     }
   }
 
+  // NLAN Response message
   container response {
     leaf result {
-      type uint16;
+      type uint16;  // shell command exit code
     }
     leaf log_message {
-      type string;
+      type string;  // log messages
     }
   }
 }

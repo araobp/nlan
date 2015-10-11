@@ -1,15 +1,15 @@
 #!/bin/bash
 
-echo "--- PYANG ---"
-pyang --format=tree */*.yang
+#echo "--- PYANG ---"
+pyang --format=tree nlan/nlan.yang > nlan/nlan.yang.tree
 
-echo ""
-echo "--- GOYANG ---"
-goyang --format=tree */*.yang
+#echo ""
+#echo "--- GOYANG ---"
+#goyang --format=tree */*.yang
 
-echo ""
-echo "--- GOYANG (proto) --"
-goyang --format=proto */*.yang
+#echo ""
+#echo "--- GOYANG (proto) --"
+#goyang --format=proto */*.yang
 
 # Add "syntex", since goyang does not add it
 # Add "rpc", since goyang does not seem to support YANG rpc

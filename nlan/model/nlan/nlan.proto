@@ -10,75 +10,75 @@ service NlanAgent {
 
 // NLAN module
 message Nlan {
-  Request Request = 1; // nlan/nlan.yang:107:3
-  Response Response = 2; // nlan/nlan.yang:118:3
+  Request Request = 1; // nlan/nlan.yang:116:3
+  Response Response = 2; // nlan/nlan.yang:128:3
 }
 
 message Request {
-  Model Model = 1; // nlan/nlan.yang:108:5
+  Model Model = 1; // nlan/nlan.yang:117:5
 }
 
 message Model {
-  Dvr Dvr = 1; // nlan/nlan.yang:109:7
-  Ptn Ptn = 2; // nlan/nlan.yang:112:7
+  Dvr Dvr = 1; // nlan/nlan.yang:118:7
+  Ptn Ptn = 2; // nlan/nlan.yang:121:7
 }
 
 message Dvr {
-  bool OvsBridges = 1; // nlan/nlan.yang:13:5
-  repeated Subnets Subnets = 2; // nlan/nlan.yang:28:5
-  repeated Vxlan Vxlan = 3; // nlan/nlan.yang:18:5
+  bool OvsBridges = 1; // nlan/nlan.yang:14:5
+  repeated Subnets Subnets = 2; // nlan/nlan.yang:29:5
+  repeated Vxlan Vxlan = 3; // nlan/nlan.yang:19:5
 }
 
 message Subnets {
-  repeated IpDvr IpDvr = 1; // nlan/nlan.yang:37:6
-  repeated string Peers = 2; // nlan/nlan.yang:54:7
-  repeated string Ports = 3; // nlan/nlan.yang:51:6
-  uint32 Vid = 4; // nlan/nlan.yang:30:7
-  uint32 Vni = 5; // nlan/nlan.yang:33:6
+  repeated IpDvr IpDvr = 1; // nlan/nlan.yang:38:6
+  repeated string Peers = 2; // nlan/nlan.yang:55:7
+  repeated string Ports = 3; // nlan/nlan.yang:52:6
+  uint32 Vid = 4; // nlan/nlan.yang:31:7
+  uint32 Vni = 5; // nlan/nlan.yang:34:6
 }
 
 message IpDvr {
-  string Addr = 1; // nlan/nlan.yang:39:8
-  string Dhcp = 2; // nlan/nlan.yang:46:8
-  string Mode = 3; // nlan/nlan.yang:42:8
+  string Addr = 1; // nlan/nlan.yang:40:8
+  string Dhcp = 2; // nlan/nlan.yang:47:8
+  string Mode = 3; // nlan/nlan.yang:43:8
 }
 
 message Vxlan {
-  string LocalIp = 1; // nlan/nlan.yang:20:7
-  repeated string RemoteIps = 2; // nlan/nlan.yang:23:7
+  string LocalIp = 1; // nlan/nlan.yang:21:7
+  repeated string RemoteIps = 2; // nlan/nlan.yang:24:7
 }
 
 message Ptn {
-  repeated PtnL2Vpn PtnL2Vpn = 1; // nlan/nlan.yang:88:5
-  repeated PtnLinks PtnLinks = 2; // nlan/nlan.yang:76:5
-  repeated PtnNodes PtnNodes = 3; // nlan/nlan.yang:62:5
+  repeated PtnL2Vpn PtnL2Vpn = 1; // nlan/nlan.yang:95:5
+  repeated PtnLinks PtnLinks = 2; // nlan/nlan.yang:81:5
+  repeated PtnNodes PtnNodes = 3; // nlan/nlan.yang:65:5
 }
 
 message PtnL2Vpn {
-  string Id = 1; // nlan/nlan.yang:89:7
-  string Ip = 2; // nlan/nlan.yang:101:7
-  repeated string Peers = 3; // nlan/nlan.yang:98:7
-  uint32 Vid = 4; // nlan/nlan.yang:92:7
-  uint32 Vni = 5; // nlan/nlan.yang:95:7
+  string Id = 1; // nlan/nlan.yang:97:7
+  string Ip = 2; // nlan/nlan.yang:109:7
+  repeated string Peers = 3; // nlan/nlan.yang:106:7
+  uint32 Vid = 4; // nlan/nlan.yang:100:7
+  uint32 Vni = 5; // nlan/nlan.yang:103:7
 }
 
 message PtnLinks {
-  string Id = 1; // nlan/nlan.yang:77:7
-  string LocalIp = 2; // nlan/nlan.yang:80:7
-  repeated string RemoteIps = 3; // nlan/nlan.yang:83:7
+  string Id = 1; // nlan/nlan.yang:83:7
+  string LocalIp = 2; // nlan/nlan.yang:86:7
+  repeated string RemoteIps = 3; // nlan/nlan.yang:89:7
 }
 
 message PtnNodes {
-  string Id = 1; // nlan/nlan.yang:63:7
-  Nodes Nodes = 2; // nlan/nlan.yang:66:7
+  string Id = 1; // nlan/nlan.yang:67:7
+  Nodes Nodes = 2; // nlan/nlan.yang:70:7
 }
 
 message Nodes {
-  string L2Sw = 1; // nlan/nlan.yang:70:9
-  string Ptn = 2; // nlan/nlan.yang:67:9
+  string L2Sw = 1; // nlan/nlan.yang:74:9
+  string Ptn = 2; // nlan/nlan.yang:71:9
 }
 
 message Response {
-  string LogMessage = 1; // nlan/nlan.yang:122:5
-  uint32 Result = 2; // nlan/nlan.yang:119:5
+  string LogMessage = 1; // nlan/nlan.yang:132:5
+  uint32 Result = 2; // nlan/nlan.yang:129:5
 }

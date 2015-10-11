@@ -1,0 +1,126 @@
+module nlan {
+
+  yang-version 1;
+  namespace "urn:araobp:nlan:bridges";
+  prefix "nlan";
+  contact "https://github.com/arapbp";
+
+  description "NLAN module";
+  revision 2015-10-11;
+
+  grouping dvr-model {
+
+    leaf ovs_bridges {
+      type boolean;
+      default true;
+    }
+
+    list vxlan {
+      key local_ip;
+      leaf local_ip {
+        type string;
+      }
+      leaf-list remote_ips {
+        type string;
+      }
+    }
+  
+    list subnets {
+      key vid;
+      leaf vid {
+        type uint16;
+     }
+     leaf vni {
+        type uint32;
+        mandatory true;
+     }
+     list ip_dvr {
+       key addr;
+       leaf addr {
+         type string;
+       }
+       leaf mode {
+         type string;
+         mandatory true;
+       }
+       leaf dhcp {
+         type string;
+         default "diabled";
+       }
+     }
+     leaf-list ports {
+        type string;
+      }
+      leaf-list peers {
+        type string;
+      }
+    }
+  }
+
+  grouping ptn-model {
+
+    list ptn_nodes {
+      leaf id {
+        type string;
+      }
+      container nodes {
+        leaf ptn {
+          type string;
+        }
+        leaf l2sw {
+          type string;
+        }
+      }
+    }
+
+    list ptn_links {
+      leaf id {
+        type string;
+      }
+      leaf local_ip {
+        type string;
+      }
+      leaf-list remote_ips {
+        type string;
+      }
+    }
+
+    list ptn_l2vpn {
+      leaf id {
+        type string;
+      }
+      leaf vid {
+        type uint16;
+      }
+      leaf vni {
+        type uint32;
+      }
+      leaf-list peers {
+        type string;
+      }
+      leaf ip {
+        type string;
+      }
+    }
+  }
+
+  container request {
+    choice model {
+      case dvr {
+        uses dvr-model;
+      }
+      case ptn {
+        uses ptn-model;
+      }
+    }
+  }
+
+  container response {
+    leaf result {
+      type uint16;
+    }
+    leaf log_message {
+      type string;
+    }
+  }
+}

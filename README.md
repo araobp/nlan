@@ -45,9 +45,20 @@ $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 
 ```
 ##NLAN model in YANG and protobuf
+Go stub generation
+```
+                             rpc.proto
+                                 |
+                               merge
+                                 |
+                                 V
+ ___________                _______________                _____________
+/YANG model/ == goyang ==> /Protobuf model/ == protoc ==> /Go gRPC stub/
+~~~~~~~~~~~                ~~~~~~~~~~~~~~~                ~~~~~~~~~~~~~
+```
 - [YANG model](./nlan/model/nlan/nlan.yang)
 - [protobuf model](./nlan/model/nlan/nlan.proto)
-- [Go stub](./nlan/model/nlan/nlan.pb.go)
+- [Go gRPC stub](./nlan/model/nlan/nlan.pb.go)
 
 ##Architecture
 ```

@@ -29,6 +29,11 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
+import (
+	context "golang.org/x/net/context"
+	grpc "google.golang.org/grpc"
+)
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -36,9 +41,8 @@ var _ = math.Inf
 
 // NLAN module
 type Nlan struct {
-	Request          *Request  `protobuf:"bytes,1,opt,name=Request" json:"Request,omitempty"`
-	Response         *Response `protobuf:"bytes,2,opt,name=Response" json:"Response,omitempty"`
-	XXX_unrecognized []byte    `json:"-"`
+	Request  *Request  `protobuf:"bytes,1,opt,name=Request" json:"Request,omitempty"`
+	Response *Response `protobuf:"bytes,2,opt,name=Response" json:"Response,omitempty"`
 }
 
 func (m *Nlan) Reset()         { *m = Nlan{} }
@@ -60,8 +64,7 @@ func (m *Nlan) GetResponse() *Response {
 }
 
 type Request struct {
-	Model            *Model `protobuf:"bytes,1,opt,name=Model" json:"Model,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	Model *Model `protobuf:"bytes,1,opt,name=Model" json:"Model,omitempty"`
 }
 
 func (m *Request) Reset()         { *m = Request{} }
@@ -76,9 +79,8 @@ func (m *Request) GetModel() *Model {
 }
 
 type Model struct {
-	Dvr              *Dvr   `protobuf:"bytes,1,opt,name=Dvr" json:"Dvr,omitempty"`
-	Ptn              *Ptn   `protobuf:"bytes,2,opt,name=Ptn" json:"Ptn,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	Dvr *Dvr `protobuf:"bytes,1,opt,name=Dvr" json:"Dvr,omitempty"`
+	Ptn *Ptn `protobuf:"bytes,2,opt,name=Ptn" json:"Ptn,omitempty"`
 }
 
 func (m *Model) Reset()         { *m = Model{} }
@@ -100,22 +102,14 @@ func (m *Model) GetPtn() *Ptn {
 }
 
 type Dvr struct {
-	OvsBridges       *bool      `protobuf:"varint,1,opt,name=OvsBridges" json:"OvsBridges,omitempty"`
-	Subnets          []*Subnets `protobuf:"bytes,2,rep,name=Subnets" json:"Subnets,omitempty"`
-	Vxlan            []*Vxlan   `protobuf:"bytes,3,rep,name=Vxlan" json:"Vxlan,omitempty"`
-	XXX_unrecognized []byte     `json:"-"`
+	OvsBridges bool       `protobuf:"varint,1,opt,name=OvsBridges" json:"OvsBridges,omitempty"`
+	Subnets    []*Subnets `protobuf:"bytes,2,rep,name=Subnets" json:"Subnets,omitempty"`
+	Vxlan      []*Vxlan   `protobuf:"bytes,3,rep,name=Vxlan" json:"Vxlan,omitempty"`
 }
 
 func (m *Dvr) Reset()         { *m = Dvr{} }
 func (m *Dvr) String() string { return proto.CompactTextString(m) }
 func (*Dvr) ProtoMessage()    {}
-
-func (m *Dvr) GetOvsBridges() bool {
-	if m != nil && m.OvsBridges != nil {
-		return *m.OvsBridges
-	}
-	return false
-}
 
 func (m *Dvr) GetSubnets() []*Subnets {
 	if m != nil {
@@ -132,12 +126,11 @@ func (m *Dvr) GetVxlan() []*Vxlan {
 }
 
 type Subnets struct {
-	IpDvr            []*IpDvr `protobuf:"bytes,1,rep,name=IpDvr" json:"IpDvr,omitempty"`
-	Peers            []string `protobuf:"bytes,2,rep,name=Peers" json:"Peers,omitempty"`
-	Ports            []string `protobuf:"bytes,3,rep,name=Ports" json:"Ports,omitempty"`
-	Vid              *uint32  `protobuf:"varint,4,opt,name=Vid" json:"Vid,omitempty"`
-	Vni              *uint32  `protobuf:"varint,5,opt,name=Vni" json:"Vni,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	IpDvr []*IpDvr `protobuf:"bytes,1,rep,name=IpDvr" json:"IpDvr,omitempty"`
+	Peers []string `protobuf:"bytes,2,rep,name=Peers" json:"Peers,omitempty"`
+	Ports []string `protobuf:"bytes,3,rep,name=Ports" json:"Ports,omitempty"`
+	Vid   uint32   `protobuf:"varint,4,opt,name=Vid" json:"Vid,omitempty"`
+	Vni   uint32   `protobuf:"varint,5,opt,name=Vni" json:"Vni,omitempty"`
 }
 
 func (m *Subnets) Reset()         { *m = Subnets{} }
@@ -151,95 +144,29 @@ func (m *Subnets) GetIpDvr() []*IpDvr {
 	return nil
 }
 
-func (m *Subnets) GetPeers() []string {
-	if m != nil {
-		return m.Peers
-	}
-	return nil
-}
-
-func (m *Subnets) GetPorts() []string {
-	if m != nil {
-		return m.Ports
-	}
-	return nil
-}
-
-func (m *Subnets) GetVid() uint32 {
-	if m != nil && m.Vid != nil {
-		return *m.Vid
-	}
-	return 0
-}
-
-func (m *Subnets) GetVni() uint32 {
-	if m != nil && m.Vni != nil {
-		return *m.Vni
-	}
-	return 0
-}
-
 type IpDvr struct {
-	Addr             *string `protobuf:"bytes,1,opt,name=Addr" json:"Addr,omitempty"`
-	Dhcp             *string `protobuf:"bytes,2,opt,name=Dhcp" json:"Dhcp,omitempty"`
-	Mode             *string `protobuf:"bytes,3,opt,name=Mode" json:"Mode,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Addr string `protobuf:"bytes,1,opt,name=Addr" json:"Addr,omitempty"`
+	Dhcp string `protobuf:"bytes,2,opt,name=Dhcp" json:"Dhcp,omitempty"`
+	Mode string `protobuf:"bytes,3,opt,name=Mode" json:"Mode,omitempty"`
 }
 
 func (m *IpDvr) Reset()         { *m = IpDvr{} }
 func (m *IpDvr) String() string { return proto.CompactTextString(m) }
 func (*IpDvr) ProtoMessage()    {}
 
-func (m *IpDvr) GetAddr() string {
-	if m != nil && m.Addr != nil {
-		return *m.Addr
-	}
-	return ""
-}
-
-func (m *IpDvr) GetDhcp() string {
-	if m != nil && m.Dhcp != nil {
-		return *m.Dhcp
-	}
-	return ""
-}
-
-func (m *IpDvr) GetMode() string {
-	if m != nil && m.Mode != nil {
-		return *m.Mode
-	}
-	return ""
-}
-
 type Vxlan struct {
-	LocalIp          *string  `protobuf:"bytes,1,opt,name=LocalIp" json:"LocalIp,omitempty"`
-	RemoteIps        []string `protobuf:"bytes,2,rep,name=RemoteIps" json:"RemoteIps,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	LocalIp   string   `protobuf:"bytes,1,opt,name=LocalIp" json:"LocalIp,omitempty"`
+	RemoteIps []string `protobuf:"bytes,2,rep,name=RemoteIps" json:"RemoteIps,omitempty"`
 }
 
 func (m *Vxlan) Reset()         { *m = Vxlan{} }
 func (m *Vxlan) String() string { return proto.CompactTextString(m) }
 func (*Vxlan) ProtoMessage()    {}
 
-func (m *Vxlan) GetLocalIp() string {
-	if m != nil && m.LocalIp != nil {
-		return *m.LocalIp
-	}
-	return ""
-}
-
-func (m *Vxlan) GetRemoteIps() []string {
-	if m != nil {
-		return m.RemoteIps
-	}
-	return nil
-}
-
 type Ptn struct {
-	PtnL2Vpn         []*PtnL2Vpn `protobuf:"bytes,1,rep,name=PtnL2Vpn" json:"PtnL2Vpn,omitempty"`
-	PtnLinks         []*PtnLinks `protobuf:"bytes,2,rep,name=PtnLinks" json:"PtnLinks,omitempty"`
-	PtnNodes         []*PtnNodes `protobuf:"bytes,3,rep,name=PtnNodes" json:"PtnNodes,omitempty"`
-	XXX_unrecognized []byte      `json:"-"`
+	PtnL2Vpn []*PtnL2Vpn `protobuf:"bytes,1,rep,name=PtnL2Vpn" json:"PtnL2Vpn,omitempty"`
+	PtnLinks []*PtnLinks `protobuf:"bytes,2,rep,name=PtnLinks" json:"PtnLinks,omitempty"`
+	PtnNodes []*PtnNodes `protobuf:"bytes,3,rep,name=PtnNodes" json:"PtnNodes,omitempty"`
 }
 
 func (m *Ptn) Reset()         { *m = Ptn{} }
@@ -268,101 +195,35 @@ func (m *Ptn) GetPtnNodes() []*PtnNodes {
 }
 
 type PtnL2Vpn struct {
-	Id               *string  `protobuf:"bytes,1,opt,name=Id" json:"Id,omitempty"`
-	Ip               *string  `protobuf:"bytes,2,opt,name=Ip" json:"Ip,omitempty"`
-	Peers            []string `protobuf:"bytes,3,rep,name=Peers" json:"Peers,omitempty"`
-	Vid              *uint32  `protobuf:"varint,4,opt,name=Vid" json:"Vid,omitempty"`
-	Vni              *uint32  `protobuf:"varint,5,opt,name=Vni" json:"Vni,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	Id    string   `protobuf:"bytes,1,opt,name=Id" json:"Id,omitempty"`
+	Ip    string   `protobuf:"bytes,2,opt,name=Ip" json:"Ip,omitempty"`
+	Peers []string `protobuf:"bytes,3,rep,name=Peers" json:"Peers,omitempty"`
+	Vid   uint32   `protobuf:"varint,4,opt,name=Vid" json:"Vid,omitempty"`
+	Vni   uint32   `protobuf:"varint,5,opt,name=Vni" json:"Vni,omitempty"`
 }
 
 func (m *PtnL2Vpn) Reset()         { *m = PtnL2Vpn{} }
 func (m *PtnL2Vpn) String() string { return proto.CompactTextString(m) }
 func (*PtnL2Vpn) ProtoMessage()    {}
 
-func (m *PtnL2Vpn) GetId() string {
-	if m != nil && m.Id != nil {
-		return *m.Id
-	}
-	return ""
-}
-
-func (m *PtnL2Vpn) GetIp() string {
-	if m != nil && m.Ip != nil {
-		return *m.Ip
-	}
-	return ""
-}
-
-func (m *PtnL2Vpn) GetPeers() []string {
-	if m != nil {
-		return m.Peers
-	}
-	return nil
-}
-
-func (m *PtnL2Vpn) GetVid() uint32 {
-	if m != nil && m.Vid != nil {
-		return *m.Vid
-	}
-	return 0
-}
-
-func (m *PtnL2Vpn) GetVni() uint32 {
-	if m != nil && m.Vni != nil {
-		return *m.Vni
-	}
-	return 0
-}
-
 type PtnLinks struct {
-	Id               *string  `protobuf:"bytes,1,opt,name=Id" json:"Id,omitempty"`
-	LocalIp          *string  `protobuf:"bytes,2,opt,name=LocalIp" json:"LocalIp,omitempty"`
-	RemoteIps        []string `protobuf:"bytes,3,rep,name=RemoteIps" json:"RemoteIps,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	Id        string   `protobuf:"bytes,1,opt,name=Id" json:"Id,omitempty"`
+	LocalIp   string   `protobuf:"bytes,2,opt,name=LocalIp" json:"LocalIp,omitempty"`
+	RemoteIps []string `protobuf:"bytes,3,rep,name=RemoteIps" json:"RemoteIps,omitempty"`
 }
 
 func (m *PtnLinks) Reset()         { *m = PtnLinks{} }
 func (m *PtnLinks) String() string { return proto.CompactTextString(m) }
 func (*PtnLinks) ProtoMessage()    {}
 
-func (m *PtnLinks) GetId() string {
-	if m != nil && m.Id != nil {
-		return *m.Id
-	}
-	return ""
-}
-
-func (m *PtnLinks) GetLocalIp() string {
-	if m != nil && m.LocalIp != nil {
-		return *m.LocalIp
-	}
-	return ""
-}
-
-func (m *PtnLinks) GetRemoteIps() []string {
-	if m != nil {
-		return m.RemoteIps
-	}
-	return nil
-}
-
 type PtnNodes struct {
-	Id               *string `protobuf:"bytes,1,opt,name=Id" json:"Id,omitempty"`
-	Nodes            *Nodes  `protobuf:"bytes,2,opt,name=Nodes" json:"Nodes,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Id    string `protobuf:"bytes,1,opt,name=Id" json:"Id,omitempty"`
+	Nodes *Nodes `protobuf:"bytes,2,opt,name=Nodes" json:"Nodes,omitempty"`
 }
 
 func (m *PtnNodes) Reset()         { *m = PtnNodes{} }
 func (m *PtnNodes) String() string { return proto.CompactTextString(m) }
 func (*PtnNodes) ProtoMessage()    {}
-
-func (m *PtnNodes) GetId() string {
-	if m != nil && m.Id != nil {
-		return *m.Id
-	}
-	return ""
-}
 
 func (m *PtnNodes) GetNodes() *Nodes {
 	if m != nil {
@@ -372,49 +233,134 @@ func (m *PtnNodes) GetNodes() *Nodes {
 }
 
 type Nodes struct {
-	L2Sw             *string `protobuf:"bytes,1,opt,name=L2Sw" json:"L2Sw,omitempty"`
-	Ptn              *string `protobuf:"bytes,2,opt,name=Ptn" json:"Ptn,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	L2Sw string `protobuf:"bytes,1,opt,name=L2Sw" json:"L2Sw,omitempty"`
+	Ptn  string `protobuf:"bytes,2,opt,name=Ptn" json:"Ptn,omitempty"`
 }
 
 func (m *Nodes) Reset()         { *m = Nodes{} }
 func (m *Nodes) String() string { return proto.CompactTextString(m) }
 func (*Nodes) ProtoMessage()    {}
 
-func (m *Nodes) GetL2Sw() string {
-	if m != nil && m.L2Sw != nil {
-		return *m.L2Sw
-	}
-	return ""
-}
-
-func (m *Nodes) GetPtn() string {
-	if m != nil && m.Ptn != nil {
-		return *m.Ptn
-	}
-	return ""
-}
-
 type Response struct {
-	LogMessage       *string `protobuf:"bytes,1,opt,name=LogMessage" json:"LogMessage,omitempty"`
-	Result           *uint32 `protobuf:"varint,2,opt,name=Result" json:"Result,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	LogMessage string `protobuf:"bytes,1,opt,name=LogMessage" json:"LogMessage,omitempty"`
+	Result     uint32 `protobuf:"varint,2,opt,name=Result" json:"Result,omitempty"`
 }
 
 func (m *Response) Reset()         { *m = Response{} }
 func (m *Response) String() string { return proto.CompactTextString(m) }
 func (*Response) ProtoMessage()    {}
 
-func (m *Response) GetLogMessage() string {
-	if m != nil && m.LogMessage != nil {
-		return *m.LogMessage
-	}
-	return ""
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// Client API for NlanAgent service
+
+type NlanAgentClient interface {
+	Add(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
-func (m *Response) GetResult() uint32 {
-	if m != nil && m.Result != nil {
-		return *m.Result
+type nlanAgentClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewNlanAgentClient(cc *grpc.ClientConn) NlanAgentClient {
+	return &nlanAgentClient{cc}
+}
+
+func (c *nlanAgentClient) Add(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := grpc.Invoke(ctx, "/nlan.NlanAgent/Add", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
 	}
-	return 0
+	return out, nil
+}
+
+func (c *nlanAgentClient) Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := grpc.Invoke(ctx, "/nlan.NlanAgent/Update", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nlanAgentClient) Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := grpc.Invoke(ctx, "/nlan.NlanAgent/Delete", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// Server API for NlanAgent service
+
+type NlanAgentServer interface {
+	Add(context.Context, *Request) (*Response, error)
+	Update(context.Context, *Request) (*Response, error)
+	Delete(context.Context, *Request) (*Response, error)
+}
+
+func RegisterNlanAgentServer(s *grpc.Server, srv NlanAgentServer) {
+	s.RegisterService(&_NlanAgent_serviceDesc, srv)
+}
+
+func _NlanAgent_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+	in := new(Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	out, err := srv.(NlanAgentServer).Add(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func _NlanAgent_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+	in := new(Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	out, err := srv.(NlanAgentServer).Update(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func _NlanAgent_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+	in := new(Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	out, err := srv.(NlanAgentServer).Delete(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+var _NlanAgent_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "nlan.NlanAgent",
+	HandlerType: (*NlanAgentServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Add",
+			Handler:    _NlanAgent_Add_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _NlanAgent_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _NlanAgent_Delete_Handler,
+		},
+	},
+	Streams: []grpc.StreamDesc{},
 }

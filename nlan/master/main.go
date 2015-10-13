@@ -44,13 +44,18 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var model nlan.Model
-	switch *service {
-	case "ptn":
-		model = nlan.Model{Ptn: &nlan.Ptn{}}
-	case "dvr":
-		model = nlan.Model{Dvr: &nlan.Dvr{}}
-	}
+	//var model nlan.Model
+	model := nlan.Model{}
+	/*
+		switch *service {
+		case "ptn":
+			ptn := nlan.Ptn{}
+			model = nlan.Model{Ptn: &ptn}
+		case "dvr":
+			dvr := nlan.Dvr{}
+			model = nlan.Model{Dvr: &dvr}
+		}
+	*/
 	log.Printf("%v\n", model)
 	if err := json.Unmarshal(json_data, &model); err != nil {
 		log.Fatal(err)

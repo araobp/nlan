@@ -19,7 +19,9 @@
 ##NLAN model in YANG and protobuf
 Go stub generation
 ```
-                             rpc.proto
+                             ___________  
+                            /rpc model / proto3
+                            ~~~~~~~~~~~
                                  |
                                merge
                                  |
@@ -27,9 +29,11 @@ Go stub generation
  ___________                _______________                _____________
 /YANG model/ == goyang ==> /Protobuf model/ == protoc ==> /Go gRPC stub/
 ~~~~~~~~~~~                ~~~~~~~~~~~~~~~                ~~~~~~~~~~~~~
+                               proto3
 ```
 - [YANG model](./nlan/model/nlan/nlan.yang)
 - [protobuf model](./nlan/model/nlan/nlan.proto)
+- [rpc model](./nlan/model/nlan/rpc.proto)
 - [Go gRPC stub](./nlan/model/nlan/nlan.pb.go)
 
 ##Preparations

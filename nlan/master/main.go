@@ -1,3 +1,4 @@
+// Master
 package main
 
 import (
@@ -9,13 +10,10 @@ import (
 	"log"
 	_ "os"
 
+	env "github.com/araobp/golan/nlan/env"
 	nlan "github.com/araobp/golan/nlan/model/nlan"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-)
-
-const (
-	port = ":8282"
 )
 
 func main() {
@@ -30,7 +28,7 @@ func main() {
 	// Connects to the target host
 	var buffer bytes.Buffer
 	buffer.WriteString(*target)
-	buffer.WriteString(port)
+	buffer.WriteString(env.PORT)
 	address := buffer.String()
 	log.Printf("target: %s\n", address)
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
@@ -44,30 +42,19 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Print(string(json_data))
 	//var model nlan.Model
 	model := nlan.Model{}
-	/*
-		switch *service {
-		case "ptn":
-			ptn := nlan.Ptn{}
-			model = nlan.Model{Ptn: &ptn}
-		case "dvr":
-			dvr := nlan.Dvr{}
-			model = nlan.Model{Dvr: &dvr}
-		}
-	*/
-	log.Printf("%v\n", model)
 	if err := json.Unmarshal(json_data, &model); err != nil {
 		log.Fatal(err)
 	}
+	log.Printf("%v\n", model)
 
 	// NLAN Request
-	log.Printf("%v\n", model)
 	request := nlan.Request{Model: &model}
 	response, err := agent.Add(context.Background(), &request)
 	if err != nil {
 		log.Print(err)
 	}
 	log.Print(response)
-
 }

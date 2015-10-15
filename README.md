@@ -1,29 +1,35 @@
 # Rewrite [neutron-lan](https://github.com/araobp/neutron-lan) with Go lang and etcd
 
-##Why Go for me?
-- Go has some advantages over Java and Python
-- Fills the gap between Python and C
-- Simpler, faster and lighter
-- Advanced networking and database libraries available, such as etcd
-- I want to rewrite part of my exisiting programs ([neutron-lan](https://github.com/araobp/neutron-lan), [tega](https://github.com/araobp/tega)) in Go lang with its libraries
-- [neutron-lan](https://github.com/araobp/neutron-lan) has some similarities to [Software Defined 
-Networking at Scale](http://files.meetup.com/8218762/Bikash_Koley%20SDN_meetup%20May%202015.pdf)
-- etcd simplifies messaging between NLAN master and NLAN agents
-
+##Architecture
 ```
-[Networking agent written in Go]
-          |
-    Cross compile
-          |
-    +-----+-----+
-    |           |
-    V           V
-[CPU:ARM]   [CPU:x86]
+     [    Master   ] --- Global DB (etcd)
+        |       |
+      gRPC    gRPC ...
+        |       |
+        V       V
+    [Agent]   [Agent] ...
 ```
+##Rewrite works overview
+- Write NLAN network service models in YANG
+- Use gRPC instead of "Python OrderedDict over SSH"
+- Rewirte NLAN Master and Agent (config/rpc) in Go lang
+- Remove OVSDB-dependency, use etcd instead
 
-##Go for Python programmers like me
-
-I would use Go rather than rewrite part of my programmes with Cython
+##NLAN model in YANG and protobuf
+Go stub generation
+```
+                             rpc.proto
+                                 |
+                               merge
+                                 |
+                                 V
+ ___________                _______________                _____________
+/YANG model/ == goyang ==> /Protobuf model/ == protoc ==> /Go gRPC stub/
+~~~~~~~~~~~                ~~~~~~~~~~~~~~~                ~~~~~~~~~~~~~
+```
+- [YANG model](./nlan/model/nlan/nlan.yang)
+- [protobuf model](./nlan/model/nlan/nlan.proto)
+- [Go gRPC stub](./nlan/model/nlan/nlan.pb.go)
 
 ##Preparations
 - Go lang installation: https://golang.org/dl/
@@ -44,36 +50,6 @@ $ ./build
 $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 
 ```
-##NLAN model in YANG and protobuf
-Go stub generation
-```
-                             rpc.proto
-                                 |
-                               merge
-                                 |
-                                 V
- ___________                _______________                _____________
-/YANG model/ == goyang ==> /Protobuf model/ == protoc ==> /Go gRPC stub/
-~~~~~~~~~~~                ~~~~~~~~~~~~~~~                ~~~~~~~~~~~~~
-```
-- [YANG model](./nlan/model/nlan/nlan.yang)
-- [protobuf model](./nlan/model/nlan/nlan.proto)
-- [Go gRPC stub](./nlan/model/nlan/nlan.pb.go)
-
-##Architecture
-```
-     [    Master   ] ... Global DB (etcd cluster)
-        |       |
-      gRPC    gRPC
-        |       |
-        V       V
-    [Agent]   [Agent]
-   Local DB   Local DB(etcd?)
-```
-##Rewrite works overview
-- Use etcd instead of "Python OrderedDict over SSH"
-- Rewirte NLAN modules (config/rpc) in Go lang
-- Remove OVSDB-dependency, use etcd instead
 
 ##Go plugin for vim
 

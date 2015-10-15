@@ -7,13 +7,14 @@
       gRPC    gRPC ...
         |       |
         V       V
-    [Agent]   [Agent] ...
+    [Agent]   [Agent] --- Local DB (etcd and ovsdb(read-only))
 ```
 ##Rewrite works overview
 - Write NLAN network service models in YANG
 - Use gRPC instead of "Python OrderedDict over SSH"
 - Rewirte NLAN Master and Agent (config/rpc) in Go lang
 - Remove OVSDB-dependency, use etcd instead
+- Bi-directional RPCs (any libraries available on github?)
 
 ##NLAN model in YANG and protobuf
 Go stub generation

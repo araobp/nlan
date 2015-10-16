@@ -1,6 +1,6 @@
 // 2015/10/15
 // Minimal RFC7047(OVSDB mgmt protocol) implementation for one-shot operation.
-package ovsdb
+package util
 
 import (
 	"encoding/json"

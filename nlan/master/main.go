@@ -16,7 +16,25 @@ import (
 	"google.golang.org/grpc"
 )
 
-func deploy(address string, ope int, state *string, c chan<- int) {
+type result struct {
+	address  string
+	ope      int
+	state    *string
+	response *nlan.Response
+}
+
+func (r *result) Println() {
+	fmt.Println("---")
+	address := r.address
+	ope := r.ope
+	state := *r.state
+	response := *r.response
+	exit := response.Exit
+	log := response.LogMessage
+	fmt.Printf("address: %s\nope: %d\nstate: %s\nexit: %d\nlog: %s\n", address, ope, state, exit, log)
+}
+
+func deploy(address string, ope int, state *string, c chan<- result) {
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
 		log.Print(err)
@@ -52,7 +70,8 @@ func deploy(address string, ope int, state *string, c chan<- int) {
 		log.Print(err)
 	}
 	log.Print(response)
-	c <- 0
+	r := result{address: address, ope: ope, state: state, response: response}
+	c <- r
 }
 
 func main() {
@@ -72,8 +91,8 @@ func main() {
 	log.Printf("target: %s\n", address)
 
 	// Deployment
-	c := make(chan int)
+	c := make(chan result)
 	go deploy(address, env.ADD, state, c)
-	value, _ := <-c
-	fmt.Printf("chan: %d\n", value)
+	r, _ := <-c
+	r.Println()
 }

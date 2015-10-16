@@ -79,6 +79,6 @@ message Nodes {
 }
 
 message Response {
-  string LogMessage = 1; // nlan/nlan.yang:132:5
-  uint32 Result = 2; // nlan/nlan.yang:129:5
+  uint32 Exit = 1; // nlan/nlan.yang:129:5
+  string LogMessage = 2; // nlan/nlan.yang:132:5
 }

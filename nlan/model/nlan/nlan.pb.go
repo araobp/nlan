@@ -242,8 +242,8 @@ func (m *Nodes) String() string { return proto.CompactTextString(m) }
 func (*Nodes) ProtoMessage()    {}
 
 type Response struct {
-	LogMessage string `protobuf:"bytes,1,opt,name=LogMessage" json:"LogMessage,omitempty"`
-	Result     uint32 `protobuf:"varint,2,opt,name=Result" json:"Result,omitempty"`
+	Exit       uint32 `protobuf:"varint,1,opt,name=Exit" json:"Exit,omitempty"`
+	LogMessage string `protobuf:"bytes,2,opt,name=LogMessage" json:"LogMessage,omitempty"`
 }
 
 func (m *Response) Reset()         { *m = Response{} }

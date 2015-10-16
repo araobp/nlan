@@ -8,6 +8,7 @@ import (
 	config_ptn "github.com/araobp/golan/nlan/agent/config/ptn"
 	env "github.com/araobp/golan/nlan/env"
 	nlan "github.com/araobp/golan/nlan/model/nlan"
+	"github.com/araobp/golan/nlan/util"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
@@ -43,25 +44,26 @@ func route(ope int, in *nlan.Request) {
 // Add method
 func (a *agent) Add(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	route(env.ADD, in)
-	response := nlan.Response{Result: 0, LogMessage: "Server: Add() is called"}
+	response := nlan.Response{Exit: 0, LogMessage: "Server: Add() is called"}
 	return &response, nil
 }
 
 // Update method
 func (a *agent) Update(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	route(env.UPDATE, in)
-	response := nlan.Response{Result: 0, LogMessage: "Server: Update() is called"}
+	response := nlan.Response{Exit: 0, LogMessage: "Server: Update() is called"}
 	return &response, nil
 }
 
 // Delete method
 func (a *agent) Delete(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	route(env.DELETE, in)
-	response := nlan.Response{Result: 0, LogMessage: "Server: Delete() is called"}
+	response := nlan.Response{Exit: 0, LogMessage: "Server: Delete() is called"}
 	return &response, nil
 }
 
 func main() {
+	util.RegisterHost()
 	listen, err := net.Listen("tcp", env.PORT)
 	if err != nil {
 		log.Print(err)

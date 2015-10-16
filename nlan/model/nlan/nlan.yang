@@ -126,7 +126,7 @@ module nlan {
 
   // NLAN Response message
   container response {
-    leaf result {
+    leaf exit {
       type uint16;  // shell command exit code
     }
     leaf log_message {

@@ -1,4 +1,4 @@
-# Rewrite [neutron-lan](https://github.com/araobp/neutron-lan) with Go lang and etcd
+# Rewrite [neutron-lan](https://github.com/araobp/neutron-lan) with Go lang and Docker
 
 ##Goal of this project
 The goal of this project is to study how DevOps tool for networking can be developed with Golang and Docker containers.

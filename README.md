@@ -40,7 +40,10 @@ Go stub generation
 - [Go gRPC stub](./nlan/model/nlan/nlan.pb.go)
 
 ##JSON database with YANG as a schema language for JSON
-[Some thoughts](./DATABASE.md)
+
+I used ovsdb as a JSON database with OVSDB-schema in my [neutron-lan](http://github.com/araobp/neutron-lan) project.
+
+[Some thoughts](./DATABASE.md) for this project.
 
 ##Preparations
 - Go lang installation: https://golang.org/dl/

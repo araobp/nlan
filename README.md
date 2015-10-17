@@ -9,18 +9,18 @@ The goal of this project is to study how DevOps tool for networking can be devel
 
 ##Architecture
 ```
-     [    Master   ] --- Global DB (etcd)
+     [    Master   ] --- Global DB
         |       |
       gRPC    gRPC ...
         |       |
         V       V
-    [Agent]   [Agent] --- Local DB (etcd and ovsdb(read-only))
+    [Agent]   [Agent] --- Local DB
 ```
 ##Rewrite works overview
 - Write NLAN network service models in YANG
 - Use gRPC instead of "Python OrderedDict over SSH"
 - Rewirte NLAN Master and Agent (config/rpc) in Go lang
-- Remove OVSDB-dependency, use etcd instead
+- Remove OVSDB-dependency as much as possible
 - Bi-directional RPCs (any libraries available on github?)
 
 ##NLAN model in YANG and protobuf
@@ -74,15 +74,23 @@ $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 Install [vim-go](https://github.com/fatih/vim-go) to your vim.
 
 ##Interesting libraries written in Go lang
-- [gRPC](https://github.com/grpc/grpc-go/)
+
+###Docker-related
+- [Docker](https://github.com/docker/docker)
+- [Kubernetes](https://github.com/kubernetes/kubernetes)
+
+###Database-related
 - [etcd](https://github.com/coreos/etcd)
 - [godoc etcd client](https://godoc.org/github.com/coreos/etcd/client)
+- [mergo](https://github.com/imdario/mergo)
 - [OVSDB client](https://github.com/socketplane/libovsdb)
 - [YAML](https://github.com/go-yaml/yaml)
 - [YANG](https://github.com/openconfig/goyang)
 - [gocql](https://github.com/gocql/gocql)
-- [Docker](https://github.com/docker/docker)
-- [Kubernetes](https://github.com/kubernetes/kubernetes)
+
+###RPC and protocols
+- [gRPC](https://github.com/grpc/grpc-go/)
+- [gobgp](https://github.com/osrg/gobgp)
 
 ##Reference
 - [Software Defined 

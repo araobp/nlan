@@ -1,5 +1,8 @@
 # Rewrite [neutron-lan](https://github.com/araobp/neutron-lan) with Go lang and etcd
 
+##Goal
+The purpose of project is to study how DevOps tool for networking can be developed with Golang and Docker containers.
+
 ##Architecture
 ```
      [    Master   ] --- Global DB (etcd)
@@ -35,6 +38,9 @@ Go stub generation
 - [protobuf model](./nlan/model/nlan/nlan.proto)
 - [rpc model](./nlan/model/nlan/rpc.proto)
 - [Go gRPC stub](./nlan/model/nlan/nlan.pb.go)
+
+##JSON database with YANG as a schema language for JSON
+[Some thoughts](./DATABASE.md)
 
 ##Preparations
 - Go lang installation: https://golang.org/dl/

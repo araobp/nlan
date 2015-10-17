@@ -84,11 +84,10 @@ Install [vim-go](https://github.com/fatih/vim-go) to your vim.
 
 ###Database-related
 - [etcd](https://github.com/coreos/etcd)
-- [godoc etcd client](https://godoc.org/github.com/coreos/etcd/client)
 - [mergo](https://github.com/imdario/mergo)
-- [OVSDB client](https://github.com/socketplane/libovsdb)
-- [YAML](https://github.com/go-yaml/yaml)
-- [YANG](https://github.com/openconfig/goyang)
+- [ovsdb client](https://github.com/socketplane/libovsdb)
+- [yaml](https://github.com/go-yaml/yaml)
+- [goyang](https://github.com/openconfig/goyang)
 - [gocql](https://github.com/gocql/gocql)
 
 ###RPC and protocols

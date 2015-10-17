@@ -7,6 +7,9 @@ The goal of this project is to study how DevOps tool for networking can be devel
 - Write codes!
 - Powerpoint documents, no thanks.
 
+##Use case
+Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something".
+
 ##Architecture
 ```
      [    Master   ] --- Global DB

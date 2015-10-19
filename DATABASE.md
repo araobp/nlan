@@ -15,7 +15,7 @@
 - may use OpenDaylight as a master (in future)
 
 ##New database to be developed
-- Merge(add/delete) operations with mergo
+- Merge(add/delete) operations: do I need to use map instead of struct???
 - Commits Log and periodic snapshots onto a storage
 
 ###Schema generation

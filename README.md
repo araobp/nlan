@@ -57,6 +57,7 @@ I used ovsdb as a JSON database with OVSDB-schema in my [neutron-lan](http://git
 [Some thoughts](./DATABASE.md) for this project.
 
 ##Preparations
+I use a very old PC with a 32bit CPU, so I need to build 32bit binary from source codes:
 - Go lang installation: https://golang.org/dl/
 - Protobuf build and installation: https://github.com/google/protobuf/blob/master/INSTALL.txt
 ```

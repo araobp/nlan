@@ -1,3 +1,4 @@
+#!test
 roster:
   - {{.router1}}
   - {{.router2}}

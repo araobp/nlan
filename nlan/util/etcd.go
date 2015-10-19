@@ -12,7 +12,7 @@ import (
 
 func RegisterHost() {
 
-	etcdAddress := os.Getenv("ETCD_ADDRESSS")
+	etcdAddress := os.Getenv("ETCD_ADDRESS")
 	hostname := os.Getenv("HOSTNAME")
 	config := client.Config{
 		Endpoints:               []string{etcdAddress},
@@ -26,7 +26,7 @@ func RegisterHost() {
 	}
 	kapi := client.NewKeysAPI(c)
 
-	key := "/hosts" + hostname
+	key := "/hosts/" + hostname
 	interfaces, _ := net.Interfaces()
 	var addrs []net.Addr
 	for _, inter := range interfaces {
@@ -43,7 +43,7 @@ func RegisterHost() {
 
 func ListHosts() map[string]string {
 
-	etcdAddress := os.Getenv("ETCD_ADDRESSS")
+	etcdAddress := os.Getenv("ETCD_ADDRESS")
 	config := client.Config{
 		Endpoints:               []string{etcdAddress},
 		Transport:               client.DefaultTransport,
@@ -62,7 +62,7 @@ func ListHosts() map[string]string {
 		log.Fatal(err)
 	}
 	nodes := list.Node.Nodes
-	var hosts map[string]string
+	hosts := make(map[string]string)
 	for _, node := range nodes {
 		hosts[node.Key] = node.Value
 	}

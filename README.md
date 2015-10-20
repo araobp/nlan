@@ -12,8 +12,10 @@ Network simulation, especially simulated WAN to test routing daemons (such as qu
 
 ##Comparison
 - [Software Defined Networking at Scale](http://files.meetup.com/8218762/Bikash_Koley%20SDN_meetup%20May%202015.pdf)
-- [My "odl-app" project](https://github.com/araobp/odl-app) -- Java/YANG/MD-SAL
-- [My "neutron-lan" project](https://github.com/araobp/neutron-lan) -- Python/OrderdDict/SSH/OVSDB-schema/MIME/ovsdb
+- [odenos project](https://github.com/o3project/odenos) -- Java/MessagePack/ODENOS-network-component/Redis/ZooKeeper
+- [My "odl-app" project](https://github.com/araobp/odl-app) -- Java/YANG/OpenDaylight-MD-SAL
+- [My "onos-app" project](https://github.com/araobp/onos-app) -- Java/kryo/ONOS-ECMAP/ONOS-RAFT
+- [My "neutron-lan" project](https://github.com/araobp/neutron-lan) -- Python/OrderdDict-over-SSH/OVSDB-schema/MIME/ovsdb
 - This "golan" project -- Golang/gRPC/OpenConfig/protobuf/etcd
 
 ##Architecture

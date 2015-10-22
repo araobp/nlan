@@ -10,16 +10,9 @@
 ##Conclusion
 
 - ovsdb just to fetch a port number of VXLAN tunnel (read-only).
-- etcd just to store host IP addresses of Docker containers.
-- develop a new database to store JSON data (YANG as its schema lang)
-- may use OpenDaylight as a master (in future)
-
-##New database to be developed
-- Merge(add/delete) operations
-- Commits Log and periodic snapshots onto a storage
-
-##Data structure
-If I use map instead of struct, it will cosume more memory. Any way to stick to struct? I need to study Go reflection APIs first...
+- use etcd instead of ovsdb.
+- run etcd on both master and agents
+- use gRPC for CRUD and RPC
 
 ###Schema generation
 ```
@@ -28,12 +21,23 @@ If I use map instead of struct, it will cosume more memory. Any way to stick to 
 
 ###Data flow
 ```
+1. PUT/DELETE
+
           Master                                Agent                    
 --------------------------              ----------------------------------------
-[JSON/YAML]--->[Go struct]--->[gRPC]--->[Go struct]--->[JSON/YAML]--->[Database] (operational tree)
-    | encoding/json                     encoding/JSON
-    |                                     mergo
-    |
-    |
-[Database] (config/operational trees)
+[JSON/YAML]--->[Go struct]--->[gRPC]--->[Go struct]--->[JSON/YAML]--->[etcd]
+    |                                        |
+    |                                        V
+  [etcd]                                  CLI/API
+
+
+2. AGENT RESTART
+
+          Master                                Agent                    
+--------------------------              ----------------------------------------
+                                        [Go struct]<---[JSON/YAML]<---[etcd]
+                                             |
+                                             V
+                                          CLI/API
+
 ```

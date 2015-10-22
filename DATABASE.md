@@ -10,6 +10,7 @@
 ##Conclusion
 
 - ovsdb just to fetch a port number of VXLAN tunnel (read-only).
+<<<<<<< HEAD
 - use etcd instead of ovsdb.
 - run etcd on both master and agents
 - use gRPC for CRUD and RPC
@@ -25,6 +26,7 @@
 
           Master                                Agent                    
 --------------------------              ----------------------------------------
+<<<<<<< HEAD
 [JSON/YAML]--->[Go struct]--->[gRPC]--->[Go struct]--->[JSON/YAML]--->[etcd]
     |                                        |
     |                                        V
@@ -39,5 +41,4 @@
                                              |
                                              V
                                           CLI/API
-
 ```

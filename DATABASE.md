@@ -12,10 +12,9 @@
 - ovsdb just to fetch a port number of VXLAN tunnel (read-only).
 - etcd just to store host IP addresses of Docker containers.
 - develop a new database to store JSON data (YANG as its schema lang)
-- may use OpenDaylight as a master (in future)
 
 ##New database to be developed
-- Merge(add/delete) operations
+- put and delete operations
 - Commits Log and periodic snapshots onto a storage
 
 ##Data structure
@@ -32,7 +31,7 @@ If I use map instead of struct, it will cosume more memory. Any way to stick to 
 --------------------------              ----------------------------------------
 [JSON/YAML]--->[Go struct]--->[gRPC]--->[Go struct]--->[JSON/YAML]--->[Database] (operational tree)
     | encoding/json                     encoding/JSON
-    |                                     mergo
+    |                                   
     |
     |
 [Database] (config/operational trees)

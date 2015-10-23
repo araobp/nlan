@@ -7,9 +7,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	_ "os"
 
-	env "github.com/araobp/golan/nlan/env"
+	"github.com/araobp/golan/nlan/env"
 	nlan "github.com/araobp/golan/nlan/model/nlan"
 	"github.com/araobp/golan/nlan/util"
 	"golang.org/x/net/context"
@@ -34,7 +33,6 @@ func (r *result) Println() {
 	fmt.Printf("address: %s\nope: %d\nstate: %s\nexit: %d\nlog: %s\n", address, ope, state, exit, log)
 }
 
-//func deploy(address string, ope int, state *[]byte, c chan<- result) {
 func deploy(address string, ope int, model *nlan.Model, c chan<- result) {
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
@@ -43,17 +41,7 @@ func deploy(address string, ope int, model *nlan.Model, c chan<- result) {
 	defer conn.Close()
 	agent := nlan.NewNlanAgentClient(conn)
 
-	//var model nlan.Model
-	/*
-		model := nlan.Model{}
-		if err := json.Unmarshal(*state, &model); err != nil {
-			log.Fatal(err)
-		}
-		log.Printf("%v\n", model)
-	*/
-
 	// NLAN Request
-	//request := nlan.Request{Model: &model}
 	request := nlan.Request{Model: model}
 	var response *nlan.Response
 	switch ope {
@@ -94,6 +82,8 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Print(string(state))
+
+	// Converts YAML to Go struct
 	var hosts map[string]interface{} = util.ListHosts()
 	fmt.Println(hosts)
 	model := nlan.Model{}

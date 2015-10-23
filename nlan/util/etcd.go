@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/coreos/etcd/client"
@@ -64,7 +65,9 @@ func ListHosts() map[string]string {
 	nodes := list.Node.Nodes
 	hosts := make(map[string]string)
 	for _, node := range nodes {
-		hosts[node.Key] = node.Value
+		ip := strings.Split(node.Value, "/")
+		host := ip[0]
+		hosts[node.Key] = host
 	}
 	return hosts
 }

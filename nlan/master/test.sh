@@ -1,3 +1,4 @@
 #!/bin/bash
 
-./main -state ../etc/ptn.json
+export ETCD_ADDRESS="http://localhost:2379"
+./main -state ../etc/ptn.yaml

@@ -10,10 +10,10 @@ Ptn:
           L2sw: l2sw101a
    PtnLinks:
       - Id: wan
-        LocalIp: 192.168.56.101 
+        LocalIp: {{.router1}} 
         RemoteIps: [192.168.56.102, 192.168.56.103, 192.168.56.104, 192.168.56.200]
       - Id: access
-        LocalIp: 192.168.56.101
+        LocalIp: {{.router1}} 
         RemoteIps: [192.168.56.105]
    PtnL2vpn:
       - Id: wan

@@ -42,7 +42,7 @@ func RegisterHost() {
 	}
 }
 
-func ListHosts() map[string]string {
+func ListHosts() map[string]interface{} {
 
 	etcdAddress := os.Getenv("ETCD_ADDRESS")
 	config := client.Config{
@@ -63,11 +63,13 @@ func ListHosts() map[string]string {
 		log.Fatal(err)
 	}
 	nodes := list.Node.Nodes
-	hosts := make(map[string]string)
+	hosts := make(map[string]interface{})
 	for _, node := range nodes {
-		ip := strings.Split(node.Value, "/")
-		host := ip[0]
-		hosts[node.Key] = host
+		path := strings.Split(node.Key, "/")
+		ipmask := strings.Split(node.Value, "/")
+		hostname := path[2]
+		ip := ipmask[0]
+		hosts[hostname] = ip
 	}
 	return hosts
 }

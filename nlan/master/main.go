@@ -3,7 +3,6 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -12,6 +11,7 @@ import (
 
 	env "github.com/araobp/golan/nlan/env"
 	nlan "github.com/araobp/golan/nlan/model/nlan"
+	"github.com/araobp/golan/nlan/util"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
@@ -19,7 +19,7 @@ import (
 type result struct {
 	address  string
 	ope      int
-	state    *string
+	state    *nlan.Model
 	response *nlan.Response
 }
 
@@ -34,7 +34,8 @@ func (r *result) Println() {
 	fmt.Printf("address: %s\nope: %d\nstate: %s\nexit: %d\nlog: %s\n", address, ope, state, exit, log)
 }
 
-func deploy(address string, ope int, state *string, c chan<- result) {
+//func deploy(address string, ope int, state *[]byte, c chan<- result) {
+func deploy(address string, ope int, model *nlan.Model, c chan<- result) {
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
 		log.Print(err)
@@ -42,21 +43,18 @@ func deploy(address string, ope int, state *string, c chan<- result) {
 	defer conn.Close()
 	agent := nlan.NewNlanAgentClient(conn)
 
-	// Reads the state file and converts it into a Go struct
-	json_data, err := ioutil.ReadFile(*state)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Print(string(json_data))
 	//var model nlan.Model
-	model := nlan.Model{}
-	if err := json.Unmarshal(json_data, &model); err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("%v\n", model)
+	/*
+		model := nlan.Model{}
+		if err := json.Unmarshal(*state, &model); err != nil {
+			log.Fatal(err)
+		}
+		log.Printf("%v\n", model)
+	*/
 
 	// NLAN Request
-	request := nlan.Request{Model: &model}
+	//request := nlan.Request{Model: &model}
+	request := nlan.Request{Model: model}
 	var response *nlan.Response
 	switch ope {
 	case env.ADD:
@@ -70,17 +68,17 @@ func deploy(address string, ope int, state *string, c chan<- result) {
 		log.Print(err)
 	}
 	log.Print(response)
-	r := result{address: address, ope: ope, state: state, response: response}
+	r := result{address: address, ope: ope, state: model, response: response}
 	c <- r
 }
 
 func main() {
 	target := flag.String("target", "localhost", "target host")
-	state := flag.String("state", "state.json", "state file")
+	filename := flag.String("state", "state.json", "state file")
 	service := flag.String("service", "ptn", "model")
 	flag.Parse()
 	log.Println(*target)
-	log.Println(*state)
+	log.Println(*filename)
 	log.Println(*service)
 
 	// Connects to the target host
@@ -90,9 +88,21 @@ func main() {
 	address := buffer.String()
 	log.Printf("target: %s\n", address)
 
+	// Reads the state file
+	state, err := ioutil.ReadFile(*filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(state))
+	var hosts map[string]interface{} = util.ListHosts()
+	fmt.Println(hosts)
+	model := nlan.Model{}
+	statestring := string(state)
+	util.Yaml2Struct(&statestring, &model, hosts)
+
 	// Deployment
 	c := make(chan result)
-	go deploy(address, env.ADD, state, c)
+	go deploy(address, env.ADD, &model, c)
 	r, _ := <-c
 	r.Println()
 }

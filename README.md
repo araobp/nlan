@@ -25,6 +25,7 @@ It is very interesting to try out various SDN controllers/orchestrators and DevO
 - [My "onos-app" project](https://github.com/araobp/onos-app) -- Java/kryo/ONOS-ECMAP/ONOS-RAFT
 - [Ansible](https://github.com/ansible/ansible) -- Python/SSH
 - [Salt](https://github.com/saltstack/salt) -- Python/RAET
+- [OpenCPE](http://wiki.openwrt.org/inbox/howto/opencpe) -- C/YANG/NETCONF
 - [My "neutron-lan" project](https://github.com/araobp/neutron-lan) -- Python/OrderdDict-over-SSH/OVSDB-schema/MIME/ovsdb
 - This "golan" project -- Golang/gRPC/OpenConfig/protobuf/etcd
 

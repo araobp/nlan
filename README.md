@@ -6,6 +6,7 @@ The goal of this project is to study how DevOps tool for networking can be devel
 ##Policy
 - Write codes!
 - Powerpoint documents, no thanks.
+- Respect CLI! Think "CLI for SDN"! (YANG/NETCONF is sort of "CLI for SDN", but we may re-invent another form of "CLI for SDN" supporting transaction/rollback)
 
 ##Use case
 - Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"

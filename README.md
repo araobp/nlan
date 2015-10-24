@@ -9,7 +9,7 @@ The goal of this project is to study how DevOps tool for networking can be devel
 
 ##Use case
 - Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"
-- Network simulation for open source SDN controllers (ODENOS, OpenDaylight and ONOS)
+- Network simulation for open source SDN controllers such as OpenDaylight.
 
 ##Network simulation with Linux containers
 I use Linux containers as virtual routers, and this tool will set up virtual links (L0/L1) and virtual switches (L2) over the containers. Then I will run Quagga/Zebra(L3) daemons over the virtual routers to study how legacy routing protocols work.

@@ -15,7 +15,7 @@ The goal of this project is to study how DevOps tool for networking can be devel
 I use Linux containers as virtual routers, and this tool will set up virtual links (L0/L1) and virtual switches (L2) over the containers. Then I will run Quagga/Zebra(L3) daemons over the virtual routers to study how legacy routing protocols work.
 - [An example of such a network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230)
 
-I also want to test southbound OVSDB plugin (RFC7047) provided by OpenDaylight, to manage those L2 switches (OVS).
+I also want to test OpenDaylight's OVSDB plugin (RFC7047) to manage those L2 switches (OVS).
 
 ##Comparison
 - [Software Defined Networking at Scale](http://files.meetup.com/8218762/Bikash_Koley%20SDN_meetup%20May%202015.pdf)

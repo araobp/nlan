@@ -11,6 +11,10 @@ The goal of this project is to study how DevOps tool for networking can be devel
 - Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"
 - Network simulation for open source SDN controllers (ODENOS, OpenDaylight and ONOS)
 
+##Network simulation with Linux containers
+I use Linux containers as virtual routers, and this tool sets up virtual links (L0/L1) and virtual switches (L2) over the containers.
+- [An example of such a network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230)
+
 ##Comparison
 - [Software Defined Networking at Scale](http://files.meetup.com/8218762/Bikash_Koley%20SDN_meetup%20May%202015.pdf)
 - [odenos project](https://github.com/o3project/odenos) -- Java/MessagePack/ODENOS-network-component/Redis/ZooKeeper

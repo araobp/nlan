@@ -18,10 +18,13 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 I also want to test OpenDaylight's OVSDB plugin (RFC7047) to manage those L2 switches (OVS).
 
 ##Comparison
+It is very interesting to try out various SDN controllers/orchestrators and DevOps tools.
 - [Software Defined Networking at Scale](http://files.meetup.com/8218762/Bikash_Koley%20SDN_meetup%20May%202015.pdf)
 - [odenos project](https://github.com/o3project/odenos) -- Java/MessagePack/ODENOS-network-component/Redis/ZooKeeper
 - [My "odl-app" project](https://github.com/araobp/odl-app) -- Java/YANG/OpenDaylight-MD-SAL
 - [My "onos-app" project](https://github.com/araobp/onos-app) -- Java/kryo/ONOS-ECMAP/ONOS-RAFT
+- [Ansible](https://github.com/ansible/ansible) -- Python/SSH
+- [Salt](https://github.com/saltstack/salt) -- Python/RAET
 - [My "neutron-lan" project](https://github.com/araobp/neutron-lan) -- Python/OrderdDict-over-SSH/OVSDB-schema/MIME/ovsdb
 - This "golan" project -- Golang/gRPC/OpenConfig/protobuf/etcd
 

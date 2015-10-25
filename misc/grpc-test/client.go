@@ -4,7 +4,7 @@ import (
 	"log"
 	_ "os"
 
-	api "github.com/araobp/golan/grpc-test/api"
+	api "github.com/araobp/go-nlan/misc/grpc-test/api"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )

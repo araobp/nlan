@@ -133,4 +133,11 @@ module nlan {
       type string;  // log messages
     }
   }
+
+  // NLAN Master/Agent capabilities
+  container capabilities {
+    leaf-list capability {
+      type string;
+    }
+  }
 }

@@ -32,5 +32,7 @@ module: nlan
    |           +--rw peers*   string
    |           +--rw ip?      string
    +--rw response
-      +--rw exit?          uint16
-      +--rw log_message?   string
+   |  +--rw exit?          uint16
+   |  +--rw log_message?   string
+   +--rw capabilities
+      +--rw capability*   string

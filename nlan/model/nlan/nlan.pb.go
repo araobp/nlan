@@ -10,6 +10,7 @@ It is generated from these files:
 
 It has these top-level messages:
 	Nlan
+	Capabilities
 	Request
 	Model
 	Dvr
@@ -41,13 +42,21 @@ var _ = math.Inf
 
 // NLAN module
 type Nlan struct {
-	Request  *Request  `protobuf:"bytes,1,opt,name=Request" json:"Request,omitempty"`
-	Response *Response `protobuf:"bytes,2,opt,name=Response" json:"Response,omitempty"`
+	Capabilities *Capabilities `protobuf:"bytes,1,opt,name=Capabilities" json:"Capabilities,omitempty"`
+	Request      *Request      `protobuf:"bytes,2,opt,name=Request" json:"Request,omitempty"`
+	Response     *Response     `protobuf:"bytes,3,opt,name=Response" json:"Response,omitempty"`
 }
 
 func (m *Nlan) Reset()         { *m = Nlan{} }
 func (m *Nlan) String() string { return proto.CompactTextString(m) }
 func (*Nlan) ProtoMessage()    {}
+
+func (m *Nlan) GetCapabilities() *Capabilities {
+	if m != nil {
+		return m.Capabilities
+	}
+	return nil
+}
 
 func (m *Nlan) GetRequest() *Request {
 	if m != nil {
@@ -62,6 +71,14 @@ func (m *Nlan) GetResponse() *Response {
 	}
 	return nil
 }
+
+type Capabilities struct {
+	Capability []string `protobuf:"bytes,1,rep,name=Capability" json:"Capability,omitempty"`
+}
+
+func (m *Capabilities) Reset()         { *m = Capabilities{} }
+func (m *Capabilities) String() string { return proto.CompactTextString(m) }
+func (*Capabilities) ProtoMessage()    {}
 
 type Request struct {
 	Model *Model `protobuf:"bytes,1,opt,name=Model" json:"Model,omitempty"`
@@ -260,6 +277,7 @@ type NlanAgentClient interface {
 	Add(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	Hello(ctx context.Context, in *Capabilities, opts ...grpc.CallOption) (*Capabilities, error)
 }
 
 type nlanAgentClient struct {
@@ -297,12 +315,22 @@ func (c *nlanAgentClient) Delete(ctx context.Context, in *Request, opts ...grpc.
 	return out, nil
 }
 
+func (c *nlanAgentClient) Hello(ctx context.Context, in *Capabilities, opts ...grpc.CallOption) (*Capabilities, error) {
+	out := new(Capabilities)
+	err := grpc.Invoke(ctx, "/nlan.NlanAgent/Hello", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for NlanAgent service
 
 type NlanAgentServer interface {
 	Add(context.Context, *Request) (*Response, error)
 	Update(context.Context, *Request) (*Response, error)
 	Delete(context.Context, *Request) (*Response, error)
+	Hello(context.Context, *Capabilities) (*Capabilities, error)
 }
 
 func RegisterNlanAgentServer(s *grpc.Server, srv NlanAgentServer) {
@@ -345,6 +373,18 @@ func _NlanAgent_Delete_Handler(srv interface{}, ctx context.Context, codec grpc.
 	return out, nil
 }
 
+func _NlanAgent_Hello_Handler(srv interface{}, ctx context.Context, codec grpc.Codec, buf []byte) (interface{}, error) {
+	in := new(Capabilities)
+	if err := codec.Unmarshal(buf, in); err != nil {
+		return nil, err
+	}
+	out, err := srv.(NlanAgentServer).Hello(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 var _NlanAgent_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "nlan.NlanAgent",
 	HandlerType: (*NlanAgentServer)(nil),
@@ -360,6 +400,10 @@ var _NlanAgent_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _NlanAgent_Delete_Handler,
+		},
+		{
+			MethodName: "Hello",
+			Handler:    _NlanAgent_Hello_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{},

@@ -6,12 +6,18 @@ service NlanAgent {
   rpc Add (Request) returns (Response) {}
   rpc Update (Request) returns (Response) {}
   rpc Delete (Request) returns (Response) {}
+  rpc Hello (Capabilities) returns (Capabilities) {}
 }
 
 // NLAN module
 message Nlan {
-  Request Request = 1; // nlan/nlan.yang:116:3
-  Response Response = 2; // nlan/nlan.yang:128:3
+  Capabilities Capabilities = 1; // nlan/nlan.yang:138:3
+  Request Request = 2; // nlan/nlan.yang:116:3
+  Response Response = 3; // nlan/nlan.yang:128:3
+}
+
+message Capabilities {
+  repeated string Capability = 1; // nlan/nlan.yang:139:5
 }
 
 message Request {

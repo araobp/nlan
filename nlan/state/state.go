@@ -1,6 +1,6 @@
 package state
 
-import "github.com/araobp/golan/nlan/model/nlan"
+import "github.com/araobp/go-nlan/nlan/model/nlan"
 
 type State struct {
 	Router string

@@ -3,7 +3,7 @@ package ptn
 import (
 	"log"
 
-	nlan "github.com/araobp/golan/nlan/model/nlan"
+	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
 )
 
 func GetElements(in *nlan.Ptn) ([]*nlan.PtnNodes, []*nlan.PtnLinks, []*nlan.PtnL2Vpn) {

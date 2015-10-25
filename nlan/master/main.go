@@ -8,10 +8,10 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/araobp/golan/nlan/env"
-	nlan "github.com/araobp/golan/nlan/model/nlan"
-	st "github.com/araobp/golan/nlan/state"
-	"github.com/araobp/golan/nlan/util"
+	"github.com/araobp/go-nlan/nlan/env"
+	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
+	st "github.com/araobp/go-nlan/nlan/state"
+	"github.com/araobp/go-nlan/nlan/util"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )

@@ -5,10 +5,10 @@ import (
 	"log"
 	"net"
 
-	config_ptn "github.com/araobp/golan/nlan/agent/config/ptn"
-	env "github.com/araobp/golan/nlan/env"
-	nlan "github.com/araobp/golan/nlan/model/nlan"
-	"github.com/araobp/golan/nlan/util"
+	config_ptn "github.com/araobp/go-nlan/nlan/agent/config/ptn"
+	env "github.com/araobp/go-nlan/nlan/env"
+	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
+	"github.com/araobp/go-nlan/nlan/util"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
@@ -60,6 +60,12 @@ func (a *agent) Delete(ctx context.Context, in *nlan.Request) (*nlan.Response, e
 	route(env.DELETE, in)
 	response := nlan.Response{Exit: 0, LogMessage: "Server: Delete() is called"}
 	return &response, nil
+}
+
+// Hello method
+func (a *agent) Hello(ctx context.Context, cp *nlan.Capabilities) (*nlan.Capabilities, error) {
+	// TODO: impl
+	return nil, nil
 }
 
 func main() {

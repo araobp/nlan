@@ -27,7 +27,7 @@ It is very interesting to try out various SDN controllers/orchestrators and DevO
 - [Salt](https://github.com/saltstack/salt) -- Python/RAET
 - [OpenCPE](http://wiki.openwrt.org/inbox/howto/opencpe) -- C/YANG/NETCONF
 - [My "neutron-lan" project](https://github.com/araobp/neutron-lan) -- Python/OrderdDict-over-SSH/OVSDB-schema/MIME/ovsdb
-- This "golan" project -- Golang/gRPC/OpenConfig/protobuf/etcd
+- This "go-nlan" project -- Golang/gRPC/OpenConfig/protobuf/etcd
 
 ##Architecture
 ```

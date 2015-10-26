@@ -7,7 +7,7 @@
 - [mergo](https://github.com/imdario/mergo) is a very interesting Golang package, but it is just for default config.
 - OpenDaylight's MD-SAL datastore is perfect, but it is for Java only. Maybe, somebody will develop Go-version of OpenDaylight (without OSGi container) in future...
 
-##Conclusion
+##Conclusion for now
 
 - ovsdb just to fetch a port number of VXLAN tunnel (read-only).
 - run etcd on the master

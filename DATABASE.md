@@ -5,7 +5,7 @@
 - Or use ovsdb with some libraries I wrote for [neutron-lan](https://github.com/araobp/neutron-lan).
 - [tega](https://github.com/araobp/tega) is the most suitable database to satisfy my requirements, but it was written in Python (consumes a lot of memory, dependent on Tornado) and it has not been completed yet...
 - [mergo](https://github.com/imdario/mergo) is a very interesting Golang package, but it is just for default config.
-- OpenDaylight's MD-SAL datastore is perfect, but it is for Java only.
+- OpenDaylight's MD-SAL datastore is perfect, but it is for Java only. Maybe, somebody will develop Go-version of OpenDaylight (without OSGi container) in future...
 
 ##Conclusion
 

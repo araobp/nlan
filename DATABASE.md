@@ -13,6 +13,7 @@
 - run etcd on the master
 - develop a very simple db and save a snapshot (no commit-logs) onto a flat-file (protobuf or JSON format), run the db on the agents
 - use gRPC for CRUD and RPC
+- YANG as a schema language for everything, protobuf and JSON as data encoding formats
 
 ###Schema generation
 ```

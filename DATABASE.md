@@ -10,8 +10,8 @@
 ##Conclusion
 
 - ovsdb just to fetch a port number of VXLAN tunnel (read-only).
-- use etcd instead of ovsdb.
-- run etcd on both master and agents
+- run etcd on the master
+- develop a very simple db and save a snapshot (no commit-logs) onto a flat-file (protobuf or JSON format), run the db on the agents
 - use gRPC for CRUD and RPC
 
 ###Schema generation

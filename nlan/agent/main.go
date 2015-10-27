@@ -22,50 +22,57 @@ func log_ope(ope int, in *nlan.Request) {
 	log.Printf("%s\n", json_data)
 }
 
-func route(ope int, in *nlan.Request) {
+func route(ope int, in *nlan.Request) string {
 	model := in.Model
 	ptn := model.GetPtn()
 	dvr := model.GetDvr()
+	var logMessage string
 	if ptn != nil {
 		switch ope {
 		case env.ADD:
 			config_ptn.Add(ptn)
+			logMessage = "Add"
 		case env.UPDATE:
 			config_ptn.Update(ptn)
+			logMessage = "Update"
 		case env.DELETE:
 			config_ptn.Delete(ptn)
+			logMessage = "Delete"
 		}
 	}
 	if dvr != nil {
 		//
 	}
+	return logMessage
 }
 
 // Add method
 func (a *agent) Add(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	route(env.ADD, in)
-	response := nlan.Response{Exit: 0, LogMessage: "Server: Add() is called"}
+	logMessage := route(env.ADD, in)
+	response := nlan.Response{Exit: 0, LogMessage: logMessage}
 	return &response, nil
 }
 
 // Update method
 func (a *agent) Update(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	route(env.UPDATE, in)
-	response := nlan.Response{Exit: 0, LogMessage: "Server: Update() is called"}
+	logMessage := route(env.UPDATE, in)
+	response := nlan.Response{Exit: 0, LogMessage: logMessage}
 	return &response, nil
 }
 
 // Delete method
 func (a *agent) Delete(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	route(env.DELETE, in)
-	response := nlan.Response{Exit: 0, LogMessage: "Server: Delete() is called"}
+	logMessage := route(env.DELETE, in)
+	response := nlan.Response{Exit: 0, LogMessage: logMessage}
 	return &response, nil
 }
 
 // Hello method
 func (a *agent) Hello(ctx context.Context, cp *nlan.Capabilities) (*nlan.Capabilities, error) {
 	// TODO: impl
-	return nil, nil
+	c := []string{"hello"}
+	cs := nlan.Capabilities{Capability: c}
+	return &cs, nil
 }
 
 func main() {

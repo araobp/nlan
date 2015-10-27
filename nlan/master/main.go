@@ -41,17 +41,27 @@ func deploy(address string, ope int, model *nlan.Model, c chan<- result) {
 	}
 	defer conn.Close()
 	agent := nlan.NewNlanAgentClient(conn)
+	cont := context.Background()
+
+	// Hello
+	cs := []string{"hello"}
+	cs_master := nlan.Capabilities{Capability: cs}
+	cs_agent, err := agent.Hello(cont, &cs_master)
+	if err != nil {
+		log.Print(err)
+	}
+	log.Println(cs_agent)
 
 	// NLAN Request
 	request := nlan.Request{Model: model}
 	var response *nlan.Response
 	switch ope {
 	case env.ADD:
-		response, err = agent.Add(context.Background(), &request)
+		response, err = agent.Add(cont, &request)
 	case env.UPDATE:
-		response, err = agent.Update(context.Background(), &request)
+		response, err = agent.Update(cont, &request)
 	case env.DELETE:
-		response, err = agent.Delete(context.Background(), &request)
+		response, err = agent.Delete(cont, &request)
 	}
 	if err != nil {
 		log.Print(err)

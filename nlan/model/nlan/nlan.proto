@@ -11,22 +11,22 @@ service NlanAgent {
 
 // NLAN module
 message Nlan {
-  Capabilities Capabilities = 1; // nlan/nlan.yang:138:3
-  Request Request = 2; // nlan/nlan.yang:116:3
-  Response Response = 3; // nlan/nlan.yang:128:3
+  Capabilities Capabilities = 1; // nlan/nlan.yang:134:3
+  Request Request = 2; // nlan/nlan.yang:112:3
+  Response Response = 3; // nlan/nlan.yang:124:3
 }
 
 message Capabilities {
-  repeated string Capability = 1; // nlan/nlan.yang:139:5
+  repeated string Capability = 1; // nlan/nlan.yang:135:5
 }
 
 message Request {
-  Model Model = 1; // nlan/nlan.yang:117:5
+  Model Model = 1; // nlan/nlan.yang:113:5
 }
 
 message Model {
-  Dvr Dvr = 1; // nlan/nlan.yang:118:7
-  Ptn Ptn = 2; // nlan/nlan.yang:121:7
+  Dvr Dvr = 1; // nlan/nlan.yang:114:7
+  Ptn Ptn = 2; // nlan/nlan.yang:117:7
 }
 
 message Dvr {
@@ -55,28 +55,26 @@ message Vxlan {
 }
 
 message Ptn {
-  repeated PtnL2Vpn PtnL2Vpn = 1; // nlan/nlan.yang:95:5
-  repeated PtnLinks PtnLinks = 2; // nlan/nlan.yang:81:5
-  repeated PtnNodes PtnNodes = 3; // nlan/nlan.yang:65:5
+  repeated Networks Networks = 1; // nlan/nlan.yang:64:5
 }
 
-message PtnL2Vpn {
-  string Id = 1; // nlan/nlan.yang:97:7
-  string Ip = 2; // nlan/nlan.yang:109:7
-  repeated string Peers = 3; // nlan/nlan.yang:106:7
-  uint32 Vid = 4; // nlan/nlan.yang:100:7
-  uint32 Vni = 5; // nlan/nlan.yang:103:7
+message Networks {
+  string Id = 1; // nlan/nlan.yang:66:7
+  repeated L2Vpn L2Vpn = 2; // nlan/nlan.yang:91:7
+  Links Links = 3; // nlan/nlan.yang:80:7
+  Nodes Nodes = 4; // nlan/nlan.yang:70:7
 }
 
-message PtnLinks {
-  string Id = 1; // nlan/nlan.yang:83:7
-  string LocalIp = 2; // nlan/nlan.yang:86:7
-  repeated string RemoteIps = 3; // nlan/nlan.yang:89:7
+message L2Vpn {
+  string Ip = 1; // nlan/nlan.yang:103:9
+  repeated string Peers = 2; // nlan/nlan.yang:100:9
+  uint32 Vid = 3; // nlan/nlan.yang:93:9
+  uint32 Vni = 4; // nlan/nlan.yang:96:9
 }
 
-message PtnNodes {
-  string Id = 1; // nlan/nlan.yang:67:7
-  Nodes Nodes = 2; // nlan/nlan.yang:70:7
+message Links {
+  string LocalIp = 1; // nlan/nlan.yang:81:9
+  repeated string RemoteIps = 2; // nlan/nlan.yang:85:9
 }
 
 message Nodes {
@@ -85,6 +83,6 @@ message Nodes {
 }
 
 message Response {
-  uint32 Exit = 1; // nlan/nlan.yang:129:5
-  string LogMessage = 2; // nlan/nlan.yang:132:5
+  uint32 Exit = 1; // nlan/nlan.yang:125:5
+  string LogMessage = 2; // nlan/nlan.yang:128:5
 }

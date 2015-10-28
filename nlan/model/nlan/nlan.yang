@@ -61,12 +61,12 @@ module nlan {
   // simulated packet-transport-network model
   grouping ptn-model {
 
-    // simulated packet-transport-nodes
-    list ptn_nodes {
+    list networks {
       key id;
       leaf id {
         type string;
       }
+      // simulated packet-transport-nodes
       container nodes {
         leaf ptn {
           type string;
@@ -75,39 +75,35 @@ module nlan {
           type string;
         }
       }
-    }
 
-    // simulated links among packet-transport-nodes
-    list ptn_links {
-      key id;
-      leaf id {
-        type string;
+      // simulated links among packet-transport-nodes
+      container links {
+        leaf local_ip {
+          type string;
+          mandatory true;
+        }
+        leaf-list remote_ips {
+          type string;
+        }
       }
-      leaf local_ip {
-        type string;
-      }
-      leaf-list remote_ips {
-        type string;
-      }
-    }
 
-    // simulated layer-2 VPNs
-    list ptn_l2vpn {
-      key id;
-      leaf id {
-        type string;
-      }
-      leaf vid {
-        type uint16;
-      }
-      leaf vni {
-        type uint32;
-      }
-      leaf-list peers {
-        type string;
-      }
-      leaf ip {
-        type string;
+      // simulated layer-2 VPNs
+      list l2-vpn {
+        key vid;
+        leaf vid {
+          type uint16;
+        }
+        leaf vni {
+          type uint32;
+          mandatory true;
+        }
+        leaf-list peers {
+          type string;
+        }
+        leaf ip {
+          type string;
+          mandatory true;
+        }
       }
     }
   }

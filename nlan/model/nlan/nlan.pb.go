@@ -18,9 +18,9 @@ It has these top-level messages:
 	IpDvr
 	Vxlan
 	Ptn
-	PtnL2Vpn
-	PtnLinks
-	PtnNodes
+	Networks
+	L2Vpn
+	Links
 	Nodes
 	Response
 */
@@ -181,73 +181,71 @@ func (m *Vxlan) String() string { return proto.CompactTextString(m) }
 func (*Vxlan) ProtoMessage()    {}
 
 type Ptn struct {
-	PtnL2Vpn []*PtnL2Vpn `protobuf:"bytes,1,rep,name=PtnL2Vpn" json:"PtnL2Vpn,omitempty"`
-	PtnLinks []*PtnLinks `protobuf:"bytes,2,rep,name=PtnLinks" json:"PtnLinks,omitempty"`
-	PtnNodes []*PtnNodes `protobuf:"bytes,3,rep,name=PtnNodes" json:"PtnNodes,omitempty"`
+	Networks []*Networks `protobuf:"bytes,1,rep,name=Networks" json:"Networks,omitempty"`
 }
 
 func (m *Ptn) Reset()         { *m = Ptn{} }
 func (m *Ptn) String() string { return proto.CompactTextString(m) }
 func (*Ptn) ProtoMessage()    {}
 
-func (m *Ptn) GetPtnL2Vpn() []*PtnL2Vpn {
+func (m *Ptn) GetNetworks() []*Networks {
 	if m != nil {
-		return m.PtnL2Vpn
+		return m.Networks
 	}
 	return nil
 }
 
-func (m *Ptn) GetPtnLinks() []*PtnLinks {
-	if m != nil {
-		return m.PtnLinks
-	}
-	return nil
-}
-
-func (m *Ptn) GetPtnNodes() []*PtnNodes {
-	if m != nil {
-		return m.PtnNodes
-	}
-	return nil
-}
-
-type PtnL2Vpn struct {
+type Networks struct {
 	Id    string   `protobuf:"bytes,1,opt,name=Id" json:"Id,omitempty"`
-	Ip    string   `protobuf:"bytes,2,opt,name=Ip" json:"Ip,omitempty"`
-	Peers []string `protobuf:"bytes,3,rep,name=Peers" json:"Peers,omitempty"`
-	Vid   uint32   `protobuf:"varint,4,opt,name=Vid" json:"Vid,omitempty"`
-	Vni   uint32   `protobuf:"varint,5,opt,name=Vni" json:"Vni,omitempty"`
+	L2Vpn []*L2Vpn `protobuf:"bytes,2,rep,name=L2Vpn" json:"L2Vpn,omitempty"`
+	Links *Links   `protobuf:"bytes,3,opt,name=Links" json:"Links,omitempty"`
+	Nodes *Nodes   `protobuf:"bytes,4,opt,name=Nodes" json:"Nodes,omitempty"`
 }
 
-func (m *PtnL2Vpn) Reset()         { *m = PtnL2Vpn{} }
-func (m *PtnL2Vpn) String() string { return proto.CompactTextString(m) }
-func (*PtnL2Vpn) ProtoMessage()    {}
+func (m *Networks) Reset()         { *m = Networks{} }
+func (m *Networks) String() string { return proto.CompactTextString(m) }
+func (*Networks) ProtoMessage()    {}
 
-type PtnLinks struct {
-	Id        string   `protobuf:"bytes,1,opt,name=Id" json:"Id,omitempty"`
-	LocalIp   string   `protobuf:"bytes,2,opt,name=LocalIp" json:"LocalIp,omitempty"`
-	RemoteIps []string `protobuf:"bytes,3,rep,name=RemoteIps" json:"RemoteIps,omitempty"`
+func (m *Networks) GetL2Vpn() []*L2Vpn {
+	if m != nil {
+		return m.L2Vpn
+	}
+	return nil
 }
 
-func (m *PtnLinks) Reset()         { *m = PtnLinks{} }
-func (m *PtnLinks) String() string { return proto.CompactTextString(m) }
-func (*PtnLinks) ProtoMessage()    {}
-
-type PtnNodes struct {
-	Id    string `protobuf:"bytes,1,opt,name=Id" json:"Id,omitempty"`
-	Nodes *Nodes `protobuf:"bytes,2,opt,name=Nodes" json:"Nodes,omitempty"`
+func (m *Networks) GetLinks() *Links {
+	if m != nil {
+		return m.Links
+	}
+	return nil
 }
 
-func (m *PtnNodes) Reset()         { *m = PtnNodes{} }
-func (m *PtnNodes) String() string { return proto.CompactTextString(m) }
-func (*PtnNodes) ProtoMessage()    {}
-
-func (m *PtnNodes) GetNodes() *Nodes {
+func (m *Networks) GetNodes() *Nodes {
 	if m != nil {
 		return m.Nodes
 	}
 	return nil
 }
+
+type L2Vpn struct {
+	Ip    string   `protobuf:"bytes,1,opt,name=Ip" json:"Ip,omitempty"`
+	Peers []string `protobuf:"bytes,2,rep,name=Peers" json:"Peers,omitempty"`
+	Vid   uint32   `protobuf:"varint,3,opt,name=Vid" json:"Vid,omitempty"`
+	Vni   uint32   `protobuf:"varint,4,opt,name=Vni" json:"Vni,omitempty"`
+}
+
+func (m *L2Vpn) Reset()         { *m = L2Vpn{} }
+func (m *L2Vpn) String() string { return proto.CompactTextString(m) }
+func (*L2Vpn) ProtoMessage()    {}
+
+type Links struct {
+	LocalIp   string   `protobuf:"bytes,1,opt,name=LocalIp" json:"LocalIp,omitempty"`
+	RemoteIps []string `protobuf:"bytes,2,rep,name=RemoteIps" json:"RemoteIps,omitempty"`
+}
+
+func (m *Links) Reset()         { *m = Links{} }
+func (m *Links) String() string { return proto.CompactTextString(m) }
+func (*Links) ProtoMessage()    {}
 
 type Nodes struct {
 	L2Sw string `protobuf:"bytes,1,opt,name=L2Sw" json:"L2Sw,omitempty"`

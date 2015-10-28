@@ -16,21 +16,19 @@ module: nlan
    |     |     +--rw ports*    string
    |     |     +--rw peers*    string
    |     +--:(ptn)
-   |        +--rw ptn_nodes* [id]
-   |        |  +--rw id       string
-   |        |  +--rw nodes
-   |        |     +--rw ptn?    string
-   |        |     +--rw l2sw?   string
-   |        +--rw ptn_links* [id]
-   |        |  +--rw id            string
-   |        |  +--rw local_ip?     string
-   |        |  +--rw remote_ips*   string
-   |        +--rw ptn_l2vpn* [id]
-   |           +--rw id       string
-   |           +--rw vid?     uint16
-   |           +--rw vni?     uint32
-   |           +--rw peers*   string
-   |           +--rw ip?      string
+   |        +--rw networks* [id]
+   |           +--rw id        string
+   |           +--rw nodes
+   |           |  +--rw ptn?    string
+   |           |  +--rw l2sw?   string
+   |           +--rw links
+   |           |  +--rw local_ip      string
+   |           |  +--rw remote_ips*   string
+   |           +--rw l2-vpn* [vid]
+   |              +--rw vid      uint16
+   |              +--rw vni      uint32
+   |              +--rw peers*   string
+   |              +--rw ip       string
    +--rw response
    |  +--rw exit?          uint16
    |  +--rw log_message?   string

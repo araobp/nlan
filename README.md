@@ -1,7 +1,7 @@
-# Rewrite [neutron-lan](https://github.com/araobp/neutron-lan) with Go lang and Docker
+# Rewrite [neutron-lan](https://github.com/araobp/neutron-lan) with Go lang, YANG and Docker
 
 ##Goal of this project
-The goal of this project is to study how DevOps tool for networking can be developed with Golang and Docker containers.
+The goal of this project is to study how DevOps tool for networking can be developed with Golang, YANG and Docker.
 
 ##Policy
 - Write codes! Powerpoint documents, no thanks.
@@ -10,10 +10,12 @@ The goal of this project is to study how DevOps tool for networking can be devel
 ##Use case
 - Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"
 - Network simulation for open source SDN controllers such as OpenDaylight.
+- DevOps for networking with whitebox routers/switches.
 
 ##Network simulation with Linux containers
 I use Linux containers as virtual routers, and this tool will set up virtual links (L0/L1) and virtual switches (L2) over the containers. Then I will run Quagga/Zebra(L3) daemons over the virtual routers to study how legacy routing protocols work.
 - [An example of such a network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230)
+- [Working with Docker for network simulation](https://camo.githubusercontent.com/77cf473ea9499432e57b06a951f5f5248419f9e1/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f313631426e383077384a5a4b513742586d496f306272377851346b71456442635f585a3235347a754f5253552f7075623f773d36383026683d343030)
 
 I also want to test OpenDaylight's OVSDB plugin (RFC7047) to manage those L2 switches (OVS).
 

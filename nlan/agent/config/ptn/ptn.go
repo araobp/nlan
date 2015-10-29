@@ -6,17 +6,17 @@ import (
 	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
 )
 
-func Add(in *nlan.Ptn) {
+func Add(in *nlan.Ptn, logger *log.Logger) {
 	networks := in.GetNetworks()
 	for _, net := range networks {
-		log.Print(net)
+		logger.Print(net)
 	}
 }
 
-func Update(in *nlan.Ptn) {
-	log.Print(in)
+func Update(in *nlan.Ptn, logger *log.Logger) {
+	logger.Print(in)
 }
 
-func Delete(in *nlan.Ptn) {
-	log.Print(in)
+func Delete(in *nlan.Ptn, logger *log.Logger) {
+	logger.Print(in)
 }

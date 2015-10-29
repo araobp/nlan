@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	"bytes"
 	"log"
 	"net"
 
@@ -15,35 +15,29 @@ import (
 
 type agent struct{}
 
-func log_ope(ope int, in *nlan.Request) {
-	log.Printf("Server: %v is called\n", ope)
-	log.Print(in)
-	json_data, _ := json.Marshal(in)
-	log.Printf("%s\n", json_data)
-}
-
 func route(ope int, in *nlan.Request) string {
 	model := in.Model
 	ptn := model.GetPtn()
 	dvr := model.GetDvr()
-	var logMessage string
+	var logbuf bytes.Buffer
+	logger := log.New(&logbuf, "", log.LstdFlags)
 	if ptn != nil {
 		switch ope {
 		case env.ADD:
-			config_ptn.Add(ptn)
-			logMessage = "Add"
+			logger.Print("--ADD")
+			config_ptn.Add(ptn, logger)
 		case env.UPDATE:
-			config_ptn.Update(ptn)
-			logMessage = "Update"
+			logger.Print("--UPDATE")
+			config_ptn.Update(ptn, logger)
 		case env.DELETE:
-			config_ptn.Delete(ptn)
-			logMessage = "Delete"
+			logger.Print("--DELETE")
+			config_ptn.Delete(ptn, logger)
 		}
 	}
 	if dvr != nil {
 		//
 	}
-	return logMessage
+	return logbuf.String()
 }
 
 // Add method

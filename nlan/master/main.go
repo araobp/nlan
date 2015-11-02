@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"sync"
 
 	"github.com/araobp/go-nlan/nlan/env"
 	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
@@ -34,7 +35,12 @@ func (r *result) Println() {
 	fmt.Printf("address: %s\nope: %d\nstate: %s\nexit: %d\nlog: %s\n", address, ope, state, exit, log)
 }
 
-func deploy(address string, ope int, model *nlan.Model, c chan<- result) {
+var wg sync.WaitGroup
+
+var channel = make(chan result)
+
+func deploy(address string, ope int, model *nlan.Model) {
+	defer wg.Done()
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
 		log.Print(err)
@@ -68,7 +74,7 @@ func deploy(address string, ope int, model *nlan.Model, c chan<- result) {
 	}
 	log.Print(response)
 	r := result{address: address, ope: ope, state: model, response: response}
-	c <- r
+	channel <- r
 }
 
 func main() {
@@ -102,9 +108,14 @@ func main() {
 		buffer.WriteString(env.PORT)
 		address := buffer.String()
 		model := v.Model
-		c := make(chan result)
-		go deploy(address, env.ADD, &model, c)
-		r, _ := <-c
-		r.Println()
+		wg.Add(1)
+		go deploy(address, env.ADD, &model)
 	}
+	go func() {
+		fmt.Println("---------------------------")
+		for r := range channel {
+			r.Println()
+		}
+	}()
+	wg.Wait()
 }

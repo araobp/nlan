@@ -5,29 +5,41 @@ import (
 	"os/exec"
 )
 
+type Command struct {
+	Logger *log.Logger
+}
+
 // This function executes the command and waits for its output.
-func Cmd(name string, arg ...string) ([]byte, error) {
+func (c *Command) Cmd(name string, arg ...string) error {
 	out, err := exec.Command(name, arg...).Output()
-	log.Printf("cmd: %s, %v\n", name, arg)
-	log.Println(string(out))
-	return out, err
+	c.Logger.Printf("cmd: %s, %v\n", name, arg)
+	c.Logger.Println(string(out))
+	return err
 }
 
 // This function just skips executing the command.
-func CmdSkip(name string, arg ...string) ([]byte, error) {
-	log.Printf("cmd skipped: %s, %v\n", name, arg)
-	return nil, nil
+func (c *Command) CmdSkip(name string, arg ...string) error {
+	c.Logger.Printf("cmd skipped: %s, %v\n", name, arg)
+	return nil
 }
 
 // This function returns Cmd or CmdSkip function.
 // When restarting NLAN agent, restart must be true.
-func GetCmdP(restart bool) func(string, ...string) ([]byte, error) {
-	var f func(string, ...string) ([]byte, error)
+func GetCmd(logger *log.Logger, restart bool) (func(string, ...string) error, func(string, ...string) error) {
+	var c = Command{Logger: logger}
+	var f1 = func(name string, arg ...string) error {
+		return c.Cmd(name, arg...)
+	}
+	var f2 func(string, ...string) error
 	switch restart {
 	case true:
-		f = CmdSkip
+		f2 = func(name string, arg ...string) error {
+			return c.CmdSkip(name, arg...)
+		}
 	case false:
-		f = Cmd
+		f2 = func(name string, arg ...string) error {
+			return c.Cmd(name, arg...)
+		}
 	}
-	return f
+	return f1, f2
 }

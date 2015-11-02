@@ -6,6 +6,7 @@ import (
 	"net"
 
 	config_ptn "github.com/araobp/go-nlan/nlan/agent/config/ptn"
+	con "github.com/araobp/go-nlan/nlan/agent/context"
 	env "github.com/araobp/go-nlan/nlan/env"
 	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
 	"github.com/araobp/go-nlan/nlan/util"
@@ -21,17 +22,19 @@ func route(ope int, in *nlan.Request) string {
 	dvr := model.GetDvr()
 	var logbuf bytes.Buffer
 	logger := log.New(&logbuf, "", log.LstdFlags)
+	cmd, cmdp := util.GetCmd(logger, false)
+	con := &con.Context{Cmd: cmd, CmdP: cmdp, Logger: logger}
 	if ptn != nil {
 		switch ope {
 		case env.ADD:
 			logger.Print("--ADD")
-			config_ptn.Add(ptn, logger)
+			config_ptn.Add(ptn, con)
 		case env.UPDATE:
 			logger.Print("--UPDATE")
-			config_ptn.Update(ptn, logger)
+			config_ptn.Update(ptn, con)
 		case env.DELETE:
 			logger.Print("--DELETE")
-			config_ptn.Delete(ptn, logger)
+			config_ptn.Delete(ptn, con)
 		}
 	}
 	if dvr != nil {

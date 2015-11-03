@@ -5,6 +5,12 @@ import (
 	"os/exec"
 )
 
+const (
+	CONFIG = iota
+	RESTART
+	DEBUG
+)
+
 type Command struct {
 	Logger *log.Logger
 }
@@ -25,21 +31,32 @@ func (c *Command) CmdSkip(name string, arg ...string) error {
 
 // This function returns Cmd or CmdSkip function.
 // When restarting NLAN agent, restart must be true.
-func GetCmd(logger *log.Logger, restart bool) (func(string, ...string) error, func(string, ...string) error) {
+func GetCmd(logger *log.Logger, mode int) (func(string, ...string) error, func(string, ...string) error) {
 	var c = Command{Logger: logger}
-	var f1 = func(name string, arg ...string) error {
-		return c.Cmd(name, arg...)
+
+	var f1 func(string, ...string) error
+	switch mode {
+	case DEBUG:
+		f1 = func(name string, arg ...string) error {
+			return c.CmdSkip(name, arg...)
+		}
+	default:
+		f1 = func(name string, arg ...string) error {
+			return c.Cmd(name, arg...)
+		}
 	}
+
 	var f2 func(string, ...string) error
-	switch restart {
-	case true:
+	switch mode {
+	case RESTART, DEBUG:
 		f2 = func(name string, arg ...string) error {
 			return c.CmdSkip(name, arg...)
 		}
-	case false:
+	default:
 		f2 = func(name string, arg ...string) error {
 			return c.Cmd(name, arg...)
 		}
 	}
+
 	return f1, f2
 }

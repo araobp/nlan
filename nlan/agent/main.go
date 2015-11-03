@@ -2,11 +2,14 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"log"
 	"net"
+	"os"
 
 	config_ptn "github.com/araobp/go-nlan/nlan/agent/config/ptn"
 	con "github.com/araobp/go-nlan/nlan/agent/context"
+	"github.com/araobp/go-nlan/nlan/common"
 	env "github.com/araobp/go-nlan/nlan/env"
 	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
 	"github.com/araobp/go-nlan/nlan/util"
@@ -18,11 +21,12 @@ type agent struct{}
 
 func route(ope int, in *nlan.Request) string {
 	model := in.Model
+	log.Print(model)
 	ptn := model.GetPtn()
 	dvr := model.GetDvr()
 	var logbuf bytes.Buffer
 	logger := log.New(&logbuf, "", log.LstdFlags)
-	cmd, cmdp := util.GetCmd(logger, false)
+	cmd, cmdp := util.GetCmd(logger, util.DEBUG)
 	con := &con.Context{Cmd: cmd, CmdP: cmdp, Logger: logger}
 	if ptn != nil {
 		switch ope {
@@ -73,12 +77,42 @@ func (a *agent) Hello(ctx context.Context, cp *nlan.Capabilities) (*nlan.Capabil
 }
 
 func main() {
-	util.RegisterHost()
-	listen, err := net.Listen("tcp", env.PORT)
-	if err != nil {
-		log.Print(err)
+	target := os.Getenv("HOSTNAME")
+	ope := flag.String("ope", "ADD", "CRUD operation")
+	filename := flag.String("state", "", "state file")
+	flag.Parse()
+	switch {
+	case *filename != "":
+		log.Print("### Direct config mode ###")
+		states, _ := common.ReadState(filename)
+		for _, v := range *states {
+			router := v.Router
+			model := v.Model
+			log.Printf("target: %s -- router: %s\n", target, router)
+			if router == target {
+				request := nlan.Request{Model: &model}
+				var ope_ int
+				switch *ope {
+				case "add":
+					ope_ = env.ADD
+				case "update":
+					ope_ = env.UPDATE
+				case "delete":
+					ope_ = env.DELETE
+				}
+				logMessage := route(ope_, &request)
+				log.Print(logMessage)
+			}
+		}
+	default:
+		log.Print("### gRPC server mode ###")
+		util.RegisterHost()
+		listen, err := net.Listen("tcp", env.PORT)
+		if err != nil {
+			log.Print(err)
+		}
+		s := grpc.NewServer()
+		nlan.RegisterNlanAgentServer(s, &agent{})
+		s.Serve(listen)
 	}
-	s := grpc.NewServer()
-	nlan.RegisterNlanAgentServer(s, &agent{})
-	s.Serve(listen)
 }

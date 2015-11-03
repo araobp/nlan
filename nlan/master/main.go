@@ -5,14 +5,12 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"sync"
 
+	"github.com/araobp/go-nlan/nlan/common"
 	"github.com/araobp/go-nlan/nlan/env"
 	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
-	st "github.com/araobp/go-nlan/nlan/state"
-	"github.com/araobp/go-nlan/nlan/util"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
@@ -79,30 +77,16 @@ func deploy(address string, ope int, model *nlan.Model) {
 
 func main() {
 	filename := flag.String("state", "state.yaml", "state file")
-	service := flag.String("service", "ptn", "model")
 	flag.Parse()
 	log.Println(*filename)
-	log.Println(*service)
 
-	// Reads the state file
-	state, err := ioutil.ReadFile(*filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Print(string(state))
-
-	// Converts YAML to Go struct
-	var hosts map[string]interface{} = util.ListHosts()
-	fmt.Println(hosts)
-	state_ := st.NetworkState{}
-	statestring := string(state)
-	util.Yaml2Struct(&statestring, &state_, hosts)
-	fmt.Println(state_)
+	states, hosts := common.ReadState(filename)
 
 	// Deployment
-	for _, v := range state_.States {
+	for _, v := range *states {
 		router := v.Router
-		ip := string(hosts[router].(string))
+		hosts_ := *hosts
+		ip := string(hosts_[router].(string))
 		var buffer bytes.Buffer
 		buffer.WriteString(ip)
 		buffer.WriteString(env.PORT)

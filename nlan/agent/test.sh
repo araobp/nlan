@@ -2,4 +2,4 @@
 
 export ETCD_ADDRESS="http://localhost:2379"
 export HOSTNAME="router1"
-./main
+./main -ope add -state $GOPATH/src/github.com/araobp/go-nlan/nlan/etc/ptn.yaml

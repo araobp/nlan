@@ -15,6 +15,12 @@ func RegisterHost() {
 
 	etcdAddress := os.Getenv("ETCD_ADDRESS")
 	hostname := os.Getenv("HOSTNAME")
+	if etcdAddress == "" {
+		log.Fatalf("ETCD_ADDRESS unset")
+	} else if hostname == "" {
+		log.Fatalf("HOSTNAME unset")
+	}
+
 	config := client.Config{
 		Endpoints:               []string{etcdAddress},
 		Transport:               client.DefaultTransport,

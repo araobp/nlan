@@ -11,13 +11,17 @@ func ConfNodes(crud int, nodes *nlan.Nodes, con *context.Context) {
 	logger := con.Logger
 	brTun := nodes.Ptn
 	brInt := nodes.L2Sw
-	logger.Println(brTun)
-	logger.Println(brInt)
+	patchTun := "patch-tun_" + brTun
+	patchInt := "patch-int_" + brInt
 	switch crud {
 	case env.ADD:
-		logger.Print("nodes Add() called")
-		cmd("echo", "cmd")
-		cmdp("echo", "cmdp")
+		logger.Printf("Adding bridges: %s and %s\n", brTun, brInt)
+		cmdp("ovs-vsctl", "add-br", brInt)
+		cmdp("ovs-vsctl", "add-br", brTun)
+		cmd("ovs-ofctl", "del-flows", brTun)
+		cmdp("ovs-vsctl", "add-port", brInt, patchInt, "--", "set", "interface", patchInt, "type=patch", "options:peer="+patchTun)
+		cmdp("ovs-vsctl", "add-port", brTun, patchTun, "--", "set", "interface", patchTun, "type=patch", "options:peer="+patchInt)
+		cmdp("ovs-vsctl", "set-fail-mode", brTun, "secure")
 	case env.UPDATE:
 	case env.DELETE:
 	}

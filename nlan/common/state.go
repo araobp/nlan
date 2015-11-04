@@ -1,7 +1,7 @@
 package common
 
 import (
-	"fmt"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 
@@ -9,22 +9,33 @@ import (
 	"github.com/araobp/go-nlan/nlan/util"
 )
 
-func ReadState(filename *string) (*[]st.State, *map[string]interface{}) {
+// This function reads NLAN state file from a specified path.
+// Set roster to nil if roster is on etcd.
+func ReadState(filename *string, roster *string) (*[]st.State, *map[string]interface{}) {
 
 	// Reads the state file
 	state, err := ioutil.ReadFile(*filename)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(state))
+	log.Print(string(state))
 
 	// Converts YAML to Go struct
-	var hosts map[string]interface{} = util.ListHosts()
-	fmt.Println(hosts)
+	var hosts map[string]interface{}
+	if roster == nil {
+		hosts = util.ListHosts()
+	} else {
+		r, err := ioutil.ReadFile(*roster)
+		if err != nil {
+			log.Fatal(err)
+		}
+		yaml.Unmarshal(r, &hosts)
+	}
+	log.Print(hosts)
 	state_ := st.NetworkState{}
 	statestring := string(state)
 	util.Yaml2Struct(&statestring, &state_, hosts)
-	fmt.Println(state_)
+	log.Print(state_)
 
 	return &state_.States, &hosts
 }

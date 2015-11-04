@@ -12,6 +12,7 @@ import (
 	"github.com/araobp/go-nlan/nlan/common"
 	env "github.com/araobp/go-nlan/nlan/env"
 	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
+	st "github.com/araobp/go-nlan/nlan/state"
 	"github.com/araobp/go-nlan/nlan/util"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -80,11 +81,19 @@ func main() {
 	target := os.Getenv("HOSTNAME")
 	ope := flag.String("ope", "ADD", "CRUD operation")
 	filename := flag.String("state", "", "state file")
+	roster := flag.String("roster", "", "roster file")
 	flag.Parse()
+	var states *[]st.State
 	switch {
 	case *filename != "":
 		log.Print("### Direct config mode ###")
-		states, _ := common.ReadState(filename)
+
+		switch *roster {
+		case "":
+			states, _ = common.ReadState(filename, nil)
+		default:
+			states, _ = common.ReadState(filename, roster)
+		}
 		for _, v := range *states {
 			router := v.Router
 			model := v.Model

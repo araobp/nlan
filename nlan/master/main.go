@@ -80,7 +80,7 @@ func main() {
 	flag.Parse()
 	log.Println(*filename)
 
-	states, hosts := common.ReadState(filename)
+	states, hosts := common.ReadState(filename, nil)
 
 	// Deployment
 	for _, v := range *states {

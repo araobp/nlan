@@ -70,11 +70,11 @@ func RequestSync(method string, params []interface{}) []byte {
 func main() {
 	_ = RequestSync("list_dbs", []interface{}{})
 
-	cond := Condition("vni", "==", 1001)
+	cond := Condition("name", "==", "patch-tun_ptn101a")
 	ope := Operation{
 		Op:    "select",
 		Table: "Interface",
-		Where: cond,
+		Where: []interface{}{cond},
 	}
 	_ = RequestSync("transact", []interface{}{DATABASE, ope})
 }

@@ -20,14 +20,14 @@ import (
 
 type agent struct{}
 
-func route(ope int, in *nlan.Request) string {
+func route(ope int, in *nlan.Request, configMode int) string {
 	model := in.Model
 	log.Print(model)
 	ptn := model.GetPtn()
 	dvr := model.GetDvr()
 	var logbuf bytes.Buffer
 	logger := log.New(&logbuf, "", log.LstdFlags)
-	cmd, cmdp := util.GetCmd(logger, util.DEBUG)
+	cmd, cmdp := util.GetCmd(logger, configMode)
 	con := &con.Context{Cmd: cmd, CmdP: cmdp, Logger: logger}
 	if ptn != nil {
 		switch ope {
@@ -50,21 +50,21 @@ func route(ope int, in *nlan.Request) string {
 
 // Add method
 func (a *agent) Add(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	logMessage := route(env.ADD, in)
+	logMessage := route(env.ADD, in, util.CONFIG)
 	response := nlan.Response{Exit: 0, LogMessage: logMessage}
 	return &response, nil
 }
 
 // Update method
 func (a *agent) Update(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	logMessage := route(env.UPDATE, in)
+	logMessage := route(env.UPDATE, in, util.CONFIG)
 	response := nlan.Response{Exit: 0, LogMessage: logMessage}
 	return &response, nil
 }
 
 // Delete method
 func (a *agent) Delete(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	logMessage := route(env.DELETE, in)
+	logMessage := route(env.DELETE, in, util.CONFIG)
 	response := nlan.Response{Exit: 0, LogMessage: logMessage}
 	return &response, nil
 }
@@ -82,7 +82,19 @@ func main() {
 	ope := flag.String("ope", "ADD", "CRUD operation")
 	filename := flag.String("state", "", "state file")
 	roster := flag.String("roster", "", "roster file")
+	mode := flag.String("mode", "debug", "config mode")
 	flag.Parse()
+
+	var configMode int
+	switch *mode {
+	case "debug":
+		configMode = util.DEBUG
+	case "config":
+		configMode = util.CONFIG
+	case "restart":
+		configMode = util.RESTART
+	}
+
 	var states *[]st.State
 	switch {
 	case *filename != "":
@@ -109,7 +121,7 @@ func main() {
 				case "delete":
 					ope_ = env.DELETE
 				}
-				logMessage := route(ope_, &request)
+				logMessage := route(ope_, &request, configMode)
 				log.Print(logMessage)
 			}
 		}

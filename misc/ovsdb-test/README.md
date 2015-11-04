@@ -2,7 +2,7 @@ OVSDB is OK but I don't like OpenFlow in this context.
 
 OpenFlow uses "ofport" that is a number assigned by Open vSwitch, not a string that I assigned to the bridge with ovs-vsctl command. That's why I need to develop a OVSDB client just to fetch the number from OVSDB.
 
-ofport: -1 means something is going wrong and the port is not active. I need to check if the OVSDB kernel module has been installed.
+ofport: -1 means something is going wrong and the port is not active. Maybe, it is because the OVSDB version is too old (1.4.2). I have been using OVSDB ver 2.0, but I have not upgraded OVS on this Linux machine somehow...
 
 output:
 ```

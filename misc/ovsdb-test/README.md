@@ -1,3 +1,9 @@
+OVSDB is OK but I don't like OpenFlow in this context.
+
+OpenFlow uses "ofport" that is a number assigned by Open vSwitch, not a string that I assigned to the bridge with ovs-vsctl command. That's why I need to develop a OVSDB client to just fetch the number from OVSDB.
+
+ofport: -1 means something is going wrong and the port is not active. I need to check if the OVSDB kernel module has been installed.
+
 output:
 ```
 2015/11/04 23:10:36 Request: {"method":"list_dbs","params":[],"id":1}

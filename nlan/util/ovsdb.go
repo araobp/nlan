@@ -26,6 +26,16 @@ type Operation struct {
 	Where []interface{} `json:"where"`
 }
 
+type Response struct {
+	Error  interface{} `json:"error"`
+	Id     int         `json:"id"`
+	Result []Rows
+}
+
+type Rows struct {
+	Rows []map[string]interface{} `json:"rows"`
+}
+
 func Condition(column string, function string, value interface{}) []interface{} {
 	return []interface{}{column, function, value}
 }
@@ -65,4 +75,22 @@ func RequestSync(method string, params []interface{}) []byte {
 	response := read(conn)
 	log.Printf("Response: %s\n", string(response))
 	return response
+}
+
+// Fetches ofport from OVSDB.
+func GetOfport(port string) int {
+	cond := Condition("name", "==", port)
+	ope := Operation{
+		Op:    "select",
+		Table: "Interface",
+		Where: []interface{}{cond},
+	}
+	resp := RequestSync("transact", []interface{}{DATABASE, ope})
+
+	var r Response
+	json.Unmarshal(resp, &r)
+	row := r.Result[0].Rows[0]
+	ofport := int(row["ofport"].(float64))
+	log.Printf("ofport: %d\n", ofport)
+	return ofport
 }

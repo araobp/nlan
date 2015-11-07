@@ -1,0 +1,60 @@
+error: null
+id: 2
+result:
+- rows:
+  - _uuid: [uuid, 9a5b9407-27c7-41bb-944a-f071d8aad155]
+    _version: [uuid, 8606aa97-743b-4a6c-a7bc-b6a9a9f0ee43]
+    admin_state:
+    - set
+    - []
+    cfm_fault:
+    - set
+    - []
+    cfm_mpid:
+    - set
+    - []
+    cfm_remote_mpids:
+    - set
+    - []
+    duplex:
+    - set
+    - []
+    external_ids:
+    - map
+    - []
+    ingress_policing_burst: 0
+    ingress_policing_rate: 0
+    lacp_current:
+    - set
+    - []
+    link_resets:
+    - set
+    - []
+    link_speed:
+    - set
+    - []
+    link_state:
+    - set
+    - []
+    mac:
+    - set
+    - []
+    mtu:
+    - set
+    - []
+    name: patch-tun_ptn101a
+    ofport: -1
+    options:
+    - map
+    - - [peer, patch-int_l2sw101a]
+    other_config:
+    - map
+    - []
+    statistics:
+    - map
+    - []
+    status:
+    - map
+    - []
+    type: patch
+

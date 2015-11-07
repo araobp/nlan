@@ -2,7 +2,6 @@ package ptn
 
 import (
 	"github.com/araobp/go-nlan/nlan/agent/context"
-	"github.com/araobp/go-nlan/nlan/env"
 	"github.com/araobp/go-nlan/nlan/model/nlan"
 )
 
@@ -11,16 +10,24 @@ func Add(in *nlan.Ptn, con *context.Context) {
 	for _, net := range networks {
 		con.Logger.Println(net)
 		nodes := net.GetNodes()
-		ConfNodes(env.ADD, nodes, con)
+		AddNodes(nodes, con)
 	}
 }
 
 func Update(in *nlan.Ptn, con *context.Context) {
-	logger := con.Logger
-	logger.Print(in)
+	networks := in.GetNetworks()
+	for _, net := range networks {
+		con.Logger.Println(net)
+		nodes := net.GetNodes()
+		UpdateNodes(nodes, con)
+	}
 }
 
 func Delete(in *nlan.Ptn, con *context.Context) {
-	logger := con.Logger
-	logger.Print(in)
+	networks := in.GetNetworks()
+	for _, net := range networks {
+		con.Logger.Println(net)
+		nodes := net.GetNodes()
+		DeleteNodes(nodes, con)
+	}
 }

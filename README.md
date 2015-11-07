@@ -3,6 +3,10 @@
 ##Goal of this project
 The goal of this project is to study how DevOps tool for networking can be developed with Golang, YANG and Docker.
 
+##Background and motivation
+- The classical definition of SDN is becoming obsolete for most of cases (excluding cases where dynamic control is required).
+- The next definition of SDN is similar to those of Cloud Management System (such as OpenStack) and PaaS (such as Kubernetes/Docker).
+
 ##Policy
 - Write codes! Powerpoint documents, no thanks.
 - Respect CLI! Think "CLI for SDN"! (YANG/NETCONF is sort of "CLI for SDN", but we may re-invent another form of "CLI for SDN" supporting transaction/rollback)

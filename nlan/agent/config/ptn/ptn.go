@@ -7,10 +7,26 @@ import (
 
 func Add(in *nlan.Ptn, con *context.Context) {
 	networks := in.GetNetworks()
+	logger := con.Logger
 	for _, net := range networks {
-		con.Logger.Println(net)
+		logger.Println(net)
 		nodes := net.GetNodes()
-		AddNodes(nodes, con)
+		if nodes == nil {
+			logger.Fatal("nodes required")
+		}
+		links := net.GetLinks()
+		if links == nil {
+			logger.Fatal("links required")
+		}
+		l2vpn := net.GetL2Vpn()
+		if l2vpn == nil {
+			logger.Fatal("l2vpn required")
+		}
+		brTun, brInt := AddNodes(nodes, con)
+		AddLinks(links, con, brTun, brInt)
+		for _, vpn := range l2vpn {
+			AddL2Vpn(vpn, con)
+		}
 	}
 }
 

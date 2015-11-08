@@ -6,7 +6,7 @@ import (
 	"github.com/araobp/go-nlan/nlan/util"
 )
 
-func AddNodes(nodes *nlan.Nodes, con *context.Context) {
+func AddNodes(nodes *nlan.Nodes, con *context.Context) (string, string) {
 	cmd, cmdp := con.GetCmd()
 	logger := con.Logger
 	brTun := nodes.Ptn
@@ -35,6 +35,7 @@ func AddNodes(nodes *nlan.Nodes, con *context.Context) {
 	cmd("ovs-ofctl", "add-flow", brTun, "table=19,priority=0,actions=resubmit(,21)")
 	cmd("ovs-ofctl", "add-flow", brTun, "table=20,priority=0,actions=resubmit(,21)")
 	cmd("ovs-ofctl", "add-flow", brTun, "table=21,priority=0,actions=drop")
+	return brTun, brInt
 }
 
 func UpdateNodes(nodes *nlan.Nodes, con *context.Context) {

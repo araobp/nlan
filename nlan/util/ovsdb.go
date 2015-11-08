@@ -21,9 +21,10 @@ type jsonrpc struct {
 }
 
 type Operation struct {
-	Op    string        `json:"op"`
-	Table string        `json:"table"`
-	Where []interface{} `json:"where"`
+	Op      string        `json:"op"`
+	Table   string        `json:"table"`
+	Where   []interface{} `json:"where"`
+	Columns []string      `json:"columns"`
 }
 
 type Response struct {
@@ -93,4 +94,9 @@ func GetOfport(port string) int {
 	ofport := int(row["ofport"].(float64))
 	log.Printf("ofport: %d\n", ofport)
 	return ofport
+}
+
+func GetVxlanPorts(peers []string) []int {
+	//
+	return nil
 }

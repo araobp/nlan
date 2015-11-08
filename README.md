@@ -3,6 +3,10 @@
 ##Goal of this project
 The goal of this project is to study how DevOps tool for networking can be developed with Golang, YANG and Docker.
 
+##Background and motivation
+- The classical definition of SDN is becoming obsolete for most of cases (excluding cases where dynamic control is required).
+- The next definition of SDN is similar to those of Cloud Management System (such as OpenStack) and PaaS (such as Kubernetes/Docker).
+
 ##Policy
 - Write codes! Powerpoint documents, no thanks.
 - Respect CLI! Think "CLI for SDN"! (YANG/NETCONF is sort of "CLI for SDN", but we may re-invent another form of "CLI for SDN" supporting transaction/rollback)
@@ -18,18 +22,6 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 - [Working with Docker for network simulation](https://camo.githubusercontent.com/77cf473ea9499432e57b06a951f5f5248419f9e1/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f313631426e383077384a5a4b513742586d496f306272377851346b71456442635f585a3235347a754f5253552f7075623f773d36383026683d343030)
 
 I also want to test OpenDaylight's OVSDB plugin (RFC7047) to manage those L2 switches (OVS).
-
-##Comparison
-It is very interesting to try out various SDN controllers/orchestrators and DevOps tools.
-- [Software Defined Networking at Scale](http://files.meetup.com/8218762/Bikash_Koley%20SDN_meetup%20May%202015.pdf)
-- [odenos project](https://github.com/o3project/odenos) -- Java/MessagePack/ODENOS-network-component/Redis/ZooKeeper
-- [My "odl-app" project](https://github.com/araobp/odl-app) -- Java/YANG/OpenDaylight-MD-SAL
-- [My "onos-app" project](https://github.com/araobp/onos-app) -- Java/kryo/ONOS-ECMAP/ONOS-RAFT
-- [Ansible](https://github.com/ansible/ansible) -- Python/SSH
-- [Salt](https://github.com/saltstack/salt) -- Python/RAET
-- [OpenCPE](http://wiki.openwrt.org/inbox/howto/opencpe) -- C/YANG/NETCONF
-- [My "neutron-lan" project](https://github.com/araobp/neutron-lan) -- Python/OrderdDict-over-SSH/OVSDB-schema/MIME/ovsdb
-- This "go-nlan" project -- Golang/gRPC/OpenConfig/protobuf/etcd
 
 ##Architecture
 ```

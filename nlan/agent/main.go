@@ -20,7 +20,7 @@ import (
 
 type agent struct{}
 
-func route(ope int, in *nlan.Request, configMode int) string {
+func route(crud int, in *nlan.Request, configMode int) string {
 	model := in.Model
 	log.Print(model)
 	ptn := model.GetPtn()
@@ -30,17 +30,7 @@ func route(ope int, in *nlan.Request, configMode int) string {
 	cmd, cmdp := util.GetCmd(logger, configMode)
 	con := &con.Context{Cmd: cmd, CmdP: cmdp, Logger: logger}
 	if ptn != nil {
-		switch ope {
-		case env.ADD:
-			logger.Print("--ADD")
-			config_ptn.Add(ptn, con)
-		case env.UPDATE:
-			logger.Print("--UPDATE")
-			config_ptn.Update(ptn, con)
-		case env.DELETE:
-			logger.Print("--DELETE")
-			config_ptn.Delete(ptn, con)
-		}
+		config_ptn.Crud(crud, ptn, con)
 	}
 	if dvr != nil {
 		//
@@ -48,28 +38,28 @@ func route(ope int, in *nlan.Request, configMode int) string {
 	return logbuf.String()
 }
 
-// Add method
+// gRPC Add method
 func (a *agent) Add(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	logMessage := route(env.ADD, in, util.CONFIG)
 	response := nlan.Response{Exit: 0, LogMessage: logMessage}
 	return &response, nil
 }
 
-// Update method
+// gRPC Update method
 func (a *agent) Update(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	logMessage := route(env.UPDATE, in, util.CONFIG)
 	response := nlan.Response{Exit: 0, LogMessage: logMessage}
 	return &response, nil
 }
 
-// Delete method
+// gRPC Delete method
 func (a *agent) Delete(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	logMessage := route(env.DELETE, in, util.CONFIG)
 	response := nlan.Response{Exit: 0, LogMessage: logMessage}
 	return &response, nil
 }
 
-// Hello method
+// gRPC Hello method
 func (a *agent) Hello(ctx context.Context, cp *nlan.Capabilities) (*nlan.Capabilities, error) {
 	// TODO: impl
 	c := []string{"hello"}

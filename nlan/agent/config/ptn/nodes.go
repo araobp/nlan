@@ -38,8 +38,10 @@ func AddNodes(nodes *nlan.Nodes, con *context.Context) (string, string) {
 	return brTun, brInt
 }
 
-func UpdateNodes(nodes *nlan.Nodes, con *context.Context) {
+func UpdateNodes(nodes *nlan.Nodes, con *context.Context) (string, string) {
+	return "", ""
 }
 
-func DeleteNodes(nodes *nlan.Nodes, con *context.Context) {
+func DeleteNodes(nodes *nlan.Nodes, con *context.Context) (string, string) {
+	return "", ""
 }

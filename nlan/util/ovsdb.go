@@ -3,6 +3,7 @@
 package util
 
 import (
+	"container/list"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -96,7 +97,30 @@ func GetOfport(port string) int {
 	return ofport
 }
 
-func GetVxlanPorts(peers []string) []int {
-	//
-	return nil
+// Fetches VXLAN ofport from OVSDB.
+func GetVxlanPorts(peers *[]string) *list.List {
+	cond := Condition("type", "==", "vxlan")
+	ope := Operation{
+		Op:      "select",
+		Table:   "Interface",
+		Where:   []interface{}{cond},
+		Columns: []string{"ofport", "options"},
+	}
+	resp := RequestSync("transact", []interface{}{DATABASE, ope})
+	var r Response
+	json.Unmarshal(resp, &r)
+	rows := r.Result[0].Rows
+	l := list.New()
+	for _, ip := range *peers {
+		for _, row := range rows {
+			options := row["options"].(map[string]interface{})
+			ip_ := options["remote_ip"].(string)
+			if ip == ip_ {
+				ofport := int(row["ofport"].(float64))
+				log.Printf("ofport: %d\n", ofport)
+				l.PushBack(ofport)
+			}
+		}
+	}
+	return l
 }

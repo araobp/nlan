@@ -2,12 +2,30 @@ package ptn
 
 import (
 	"github.com/araobp/go-nlan/nlan/agent/context"
+	"github.com/araobp/go-nlan/nlan/env"
 	"github.com/araobp/go-nlan/nlan/model/nlan"
 )
 
-func Add(in *nlan.Ptn, con *context.Context) {
+func Crud(crud int, in *nlan.Ptn, con *context.Context) {
 	networks := in.GetNetworks()
 	logger := con.Logger
+	var crudNodes func(*nlan.Nodes, *context.Context) (string, string)
+	var crudLinks func(*nlan.Links, *context.Context, string, string)
+	var crudL2Vpn func(*nlan.L2Vpn, *context.Context, string, string)
+	switch crud {
+	case env.ADD:
+		crudNodes = AddNodes
+		crudLinks = AddLinks
+		crudL2Vpn = AddL2Vpn
+	case env.UPDATE:
+		crudNodes = UpdateNodes
+		crudLinks = UpdateLinks
+		crudL2Vpn = UpdateL2Vpn
+	case env.DELETE:
+		crudNodes = DeleteNodes
+		crudLinks = DeleteLinks
+		crudL2Vpn = DeleteL2Vpn
+	}
 	for _, net := range networks {
 		logger.Println(net)
 		nodes := net.GetNodes()
@@ -22,28 +40,10 @@ func Add(in *nlan.Ptn, con *context.Context) {
 		if l2vpn == nil {
 			logger.Fatal("l2vpn required")
 		}
-		brTun, brInt := AddNodes(nodes, con)
-		AddLinks(links, con, brTun, brInt)
+		brTun, brInt := crudNodes(nodes, con)
+		crudLinks(links, con, brTun, brInt)
 		for _, vpn := range l2vpn {
-			AddL2Vpn(vpn, con)
+			crudL2Vpn(vpn, con, brTun, brInt)
 		}
-	}
-}
-
-func Update(in *nlan.Ptn, con *context.Context) {
-	networks := in.GetNetworks()
-	for _, net := range networks {
-		con.Logger.Println(net)
-		nodes := net.GetNodes()
-		UpdateNodes(nodes, con)
-	}
-}
-
-func Delete(in *nlan.Ptn, con *context.Context) {
-	networks := in.GetNetworks()
-	for _, net := range networks {
-		con.Logger.Println(net)
-		nodes := net.GetNodes()
-		DeleteNodes(nodes, con)
 	}
 }

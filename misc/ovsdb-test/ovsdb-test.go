@@ -31,7 +31,7 @@ func Condition(column string, function string, value interface{}) []interface{} 
 }
 
 func read(conn net.Conn) []byte {
-	buf := make([]byte, 1024)
+	buf := make([]byte, 4096)
 	n, err := conn.Read(buf)
 	if err != nil {
 		log.Fatal(err)

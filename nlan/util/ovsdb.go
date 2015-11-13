@@ -13,6 +13,7 @@ import (
 const (
 	DATABASE = "Open_vSwitch"
 	SOCK     = "/var/run/openvswitch/db.sock"
+	BUFSIZE  = 4096
 )
 
 type jsonrpc struct {
@@ -26,6 +27,12 @@ type Operation struct {
 	Table   string        `json:"table"`
 	Where   []interface{} `json:"where"`
 	Columns []string      `json:"columns"`
+}
+
+type OperationWoColumns struct {
+	Op    string        `json:"op"`
+	Table string        `json:"table"`
+	Where []interface{} `json:"where"`
 }
 
 type Response struct {
@@ -43,7 +50,7 @@ func Condition(column string, function string, value interface{}) []interface{} 
 }
 
 func read(conn net.Conn) []byte {
-	buf := make([]byte, 1024)
+	buf := make([]byte, BUFSIZE)
 	n, err := conn.Read(buf)
 	if err != nil {
 		log.Fatal(err)
@@ -82,7 +89,7 @@ func RequestSync(method string, params []interface{}) []byte {
 // Fetches ofport from OVSDB.
 func GetOfport(port string) int {
 	cond := Condition("name", "==", port)
-	ope := Operation{
+	ope := OperationWoColumns{
 		Op:    "select",
 		Table: "Interface",
 		Where: []interface{}{cond},
@@ -113,12 +120,19 @@ func GetVxlanPorts(peers *[]string) *list.List {
 	l := list.New()
 	for _, ip := range *peers {
 		for _, row := range rows {
-			options := row["options"].(map[string]interface{})
-			ip_ := options["remote_ip"].(string)
-			if ip == ip_ {
-				ofport := int(row["ofport"].(float64))
-				log.Printf("ofport: %d\n", ofport)
-				l.PushBack(ofport)
+			options := row["options"].([]interface{})
+			for _, e := range options[1].([]interface{}) {
+				var ip_ string
+				elm := e.([]interface{})
+				if elm[0].(string) == "remote_ip" {
+					ip_ = elm[1].(string)
+					break
+				}
+				if ip == ip_ {
+					ofport := int(row["ofport"].(float64))
+					log.Printf("ofport: %d\n", ofport)
+					l.PushBack(ofport)
+				}
 			}
 		}
 	}

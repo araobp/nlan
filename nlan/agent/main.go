@@ -18,44 +18,44 @@ import (
 	"google.golang.org/grpc"
 )
 
-type agent struct{}
+type agent struct {
+	con *con.Context
+}
 
-func route(crud int, in *nlan.Request, configMode int) string {
+func (a *agent) route(crud int, in *nlan.Request, configMode int) {
 	model := in.Model
-	log.Print(model)
 	ptn := model.GetPtn()
 	dvr := model.GetDvr()
-	var logbuf bytes.Buffer
-	logger := log.New(&logbuf, "", log.LstdFlags)
-	cmd, cmdp := util.GetCmd(logger, configMode)
-	con := &con.Context{Cmd: cmd, CmdP: cmdp, Logger: logger}
 	if ptn != nil {
-		config_ptn.Crud(crud, ptn, con)
+		config_ptn.Crud(crud, ptn, a.con)
 	}
 	if dvr != nil {
 		//
 	}
-	return logbuf.String()
+}
+
+func (a *agent) logMessage() string {
+	c := a.con
+	buf := c.Logbuf
+	return buf.String()
 }
 
 // gRPC Add method
 func (a *agent) Add(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	logMessage := route(env.ADD, in, util.CONFIG)
-	response := nlan.Response{Exit: 0, LogMessage: logMessage}
+	a.route(env.UPDATE, in, util.CONFIG)
+	response := nlan.Response{Exit: 0, LogMessage: a.logMessage()}
 	return &response, nil
 }
 
 // gRPC Update method
 func (a *agent) Update(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	logMessage := route(env.UPDATE, in, util.CONFIG)
-	response := nlan.Response{Exit: 0, LogMessage: logMessage}
+	response := nlan.Response{Exit: 0, LogMessage: a.logMessage()}
 	return &response, nil
 }
 
 // gRPC Delete method
 func (a *agent) Delete(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	logMessage := route(env.DELETE, in, util.CONFIG)
-	response := nlan.Response{Exit: 0, LogMessage: logMessage}
+	response := nlan.Response{Exit: 0, LogMessage: a.logMessage()}
 	return &response, nil
 }
 
@@ -72,7 +72,7 @@ func main() {
 	ope := flag.String("ope", "ADD", "CRUD operation")
 	filename := flag.String("state", "", "state file")
 	roster := flag.String("roster", "", "roster file")
-	mode := flag.String("mode", "debug", "config mode")
+	mode := flag.String("mode", "config", "config mode")
 	flag.Parse()
 
 	var configMode int
@@ -84,6 +84,17 @@ func main() {
 	case "restart":
 		configMode = util.RESTART
 	}
+
+	var logbuf bytes.Buffer
+	logger := log.New(&logbuf, "", log.LstdFlags)
+	cmd, cmdp := util.GetCmd(logger, configMode)
+	c := &con.Context{Cmd: cmd, CmdP: cmdp, Logger: logger, Logbuf: &logbuf}
+	a := agent{con: c}
+
+	defer func() {
+		log.Print(logbuf.String())
+		common.WriteLog("nlan-agent.log", &logbuf)
+	}()
 
 	var states *[]st.State
 	switch {
@@ -111,19 +122,20 @@ func main() {
 				case "delete":
 					ope_ = env.DELETE
 				}
-				logMessage := route(ope_, &request, configMode)
-				log.Print(logMessage)
+				a.route(ope_, &request, configMode)
+				log.Print(logbuf.String())
 			}
 		}
 	default:
 		log.Print("### gRPC server mode ###")
 		util.RegisterHost()
 		listen, err := net.Listen("tcp", env.PORT)
+		defer listen.Close()
 		if err != nil {
 			log.Print(err)
 		}
 		s := grpc.NewServer()
-		nlan.RegisterNlanAgentServer(s, &agent{})
+		nlan.RegisterNlanAgentServer(s, &a)
 		s.Serve(listen)
 	}
 }

@@ -1,6 +1,7 @@
 package common
 
 import (
+	"bytes"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
@@ -38,4 +39,9 @@ func ReadState(filename *string, roster *string) (*[]st.State, *map[string]inter
 	log.Print(state_)
 
 	return &state_.States, &hosts
+}
+
+func WriteLog(filename string, buf *bytes.Buffer) error {
+	b := *buf
+	return ioutil.WriteFile("/tmp/"+filename, b.Bytes(), 0644)
 }

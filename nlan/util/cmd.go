@@ -18,15 +18,15 @@ type Command struct {
 
 // This function executes the command and waits for its output.
 func (c *Command) Cmd(name string, arg ...string) error {
-	out, err := exec.Command(name, arg...).Output()
-	c.Logger.Printf("cmd: %s %s\n", name, strings.Join(arg, " "))
-	c.Logger.Println(string(out))
+	_, err := exec.Command(name, arg...).Output()
+	c.Logger.Printf("cmd: %s %s", name, strings.Join(arg, " "))
+	//c.Logger.Println(string(out))
 	return err
 }
 
 // This function just skips executing the command.
 func (c *Command) CmdSkip(name string, arg ...string) error {
-	c.Logger.Printf("cmd skipped: %s %s\n", name, strings.Join(arg, " "))
+	c.Logger.Printf("cmd skipped: %s %s", name, strings.Join(arg, " "))
 	return nil
 }
 

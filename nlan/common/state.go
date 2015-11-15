@@ -42,6 +42,5 @@ func ReadState(filename *string, roster *string) (*[]st.State, *map[string]inter
 }
 
 func WriteLog(filename string, buf *bytes.Buffer) error {
-	b := *buf
-	return ioutil.WriteFile("/tmp/"+filename, b.Bytes(), 0644)
+	return ioutil.WriteFile("/tmp/"+filename, buf.Bytes(), 0644)
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/araobp/go-nlan/nlan/agent/context"
 	"github.com/araobp/go-nlan/nlan/model/nlan"
 	"github.com/araobp/go-nlan/nlan/util"
+	"strconv"
 )
 
 func AddNodes(nodes *nlan.Nodes, con *context.Context) (string, string) {
@@ -22,7 +23,7 @@ func AddNodes(nodes *nlan.Nodes, con *context.Context) (string, string) {
 	cmdp("ovs-vsctl", "add-port", brTun, patchTun, "--", "set", "interface", patchTun, "type=patch", "options:peer="+patchInt)
 	cmdp("ovs-vsctl", "set-fail-mode", brTun, "secure")
 	// Obtains ofport for 'patch-tun' port
-	patchTunNum := string(util.GetOfport(patchTun))
+	patchTunNum := strconv.Itoa(util.GetOfport(patchTun))
 	logger.Printf("patchTunNum(ofport): %s\n", patchTunNum)
 	// Adds flow entries onto br-tun
 	cmd("ovs-ofctl", "add-flow", brTun, "table=0,priority=1,in_port="+patchTunNum+",actions=resubmit(,1)")

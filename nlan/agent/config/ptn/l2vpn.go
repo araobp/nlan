@@ -5,6 +5,7 @@ import (
 	"github.com/araobp/go-nlan/nlan/agent/context"
 	"github.com/araobp/go-nlan/nlan/model/nlan"
 	"github.com/araobp/go-nlan/nlan/util"
+	"strconv"
 )
 
 func addVpls(sVni string, sVid string, ip string, brInt string, con *context.Context) {
@@ -47,9 +48,9 @@ func AddL2Vpn(l2vpn *nlan.L2Vpn, con *context.Context, brTun string, brInt strin
 	peers := l2vpn.Peers
 	vid := l2vpn.Vid
 	vni := l2vpn.Vni
-	logger.Printf("Adding vlan: %s", string(vid))
-	sVid := string(vid)
-	sVni := string(vni)
+	sVid := strconv.FormatUint(uint64(vid), 10)
+	sVni := strconv.FormatUint(uint64(vni), 10)
+	logger.Printf("Adding vlan: %s", sVid)
 	addVpls(sVid, sVni, ip, brInt, con)
 	addFlowEntries(sVid, sVni, &peers, brTun, con)
 }

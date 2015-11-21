@@ -34,28 +34,44 @@ func (a *agent) route(crud int, in *nlan.Request, configMode int) {
 	}
 }
 
+// Returns a log message as a string
 func (a *agent) logMessage() string {
 	c := a.con
 	buf := c.Logbuf
 	return buf.String()
 }
 
+// Returns a pointer to a log buffer
+func (a *agent) logBuf() *bytes.Buffer {
+	c := a.con
+	return c.Logbuf
+}
+
+// Returns a log file name
+func logFile() string {
+	target := os.Getenv("HOSTNAME")
+	return "nlan-agent-" + target + ".log"
+}
+
 // gRPC Add method
 func (a *agent) Add(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	a.route(env.UPDATE, in, util.CONFIG)
 	response := nlan.Response{Exit: 0, LogMessage: a.logMessage()}
+	common.WriteLog(logFile(), a.logBuf())
 	return &response, nil
 }
 
 // gRPC Update method
 func (a *agent) Update(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	response := nlan.Response{Exit: 0, LogMessage: a.logMessage()}
+	common.WriteLog(logFile(), a.logBuf())
 	return &response, nil
 }
 
 // gRPC Delete method
 func (a *agent) Delete(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	response := nlan.Response{Exit: 0, LogMessage: a.logMessage()}
+	common.WriteLog(logFile(), a.logBuf())
 	return &response, nil
 }
 
@@ -93,7 +109,7 @@ func main() {
 
 	defer func() {
 		log.Print(logbuf.String())
-		common.WriteLog("nlan-agent.log", &logbuf)
+		common.WriteLog(logFile(), &logbuf)
 	}()
 
 	var states *[]st.State

@@ -6,7 +6,7 @@ import subprocess
 IMAGE = 'nlan/agent:ver0.1'  # Docker image name
 
 name = lambda prefix, i: '{}{}'.format(prefix, str(i))
-run = lambda prefix, i: ['docker', 'run', '-i', '-t', '-d', '--privileged',
+run = lambda prefix, i: ['docker', 'run', '-i', '-t', '-d', '-v', '/tmp:/var/volume:rw', '--privileged',
         '--name', name(prefix, i), '--env', 'HOSTNAME='+name(prefix, i), IMAGE, '/root/bin/agent']
 stop = lambda prefix, i: ['docker', 'stop', name(prefix, i)]
 start = lambda prefix, i: ['docker', 'start', name(prefix, i)]

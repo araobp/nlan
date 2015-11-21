@@ -10,6 +10,8 @@ import (
 	"github.com/araobp/go-nlan/nlan/util"
 )
 
+const LOGDIR = "/var/volume/"
+
 // This function reads NLAN state file from a specified path.
 // Set roster to nil if roster is on etcd.
 func ReadState(filename *string, roster *string) (*[]st.State, *map[string]interface{}) {
@@ -42,5 +44,5 @@ func ReadState(filename *string, roster *string) (*[]st.State, *map[string]inter
 }
 
 func WriteLog(filename string, buf *bytes.Buffer) error {
-	return ioutil.WriteFile("/tmp/"+filename, buf.Bytes(), 0644)
+	return ioutil.WriteFile(LOGDIR+filename, buf.Bytes(), 0644)
 }

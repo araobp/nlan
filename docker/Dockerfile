@@ -7,6 +7,5 @@ FROM router
 ENV ETCD_ADDRESS "http://172.17.42.1:2379"
 ENV NO_PROXY 172.17.42.1,localhost
 ADD agent /root/bin/agent
-CMD service ssh start
-CMD service openvswitch-switch start
+CMD service openvswitch-switch start && service ssh start && /root/bin/agent
 

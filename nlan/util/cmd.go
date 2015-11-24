@@ -18,9 +18,14 @@ type Command struct {
 
 // This function executes the command and waits for its output.
 func (c *Command) Cmd(name string, arg ...string) error {
-	_, err := exec.Command(name, arg...).Output()
+	out, err := exec.Command(name, arg...).Output()
 	c.Logger.Printf("cmd: %s %s", name, strings.Join(arg, " "))
-	//c.Logger.Println(string(out))
+	if len(out) > 0 {
+		c.Logger.Println(string(out))
+	}
+	if err != nil {
+		c.Logger.Println(err)
+	}
 	return err
 }
 
@@ -32,18 +37,29 @@ func (c *Command) CmdSkip(name string, arg ...string) error {
 
 // This function returns Cmd or CmdSkip function.
 // When restarting NLAN agent, restart must be true.
-func GetCmd(logger *log.Logger, mode int) (func(string, ...string) error, func(string, ...string) error) {
+func GetCmd(logger *log.Logger, mode int, panicMode bool) (func(string, ...string) error, func(string, ...string) error) {
 	var c = Command{Logger: logger}
 
 	var f1 func(string, ...string) error
 	switch mode {
 	case DEBUG:
 		f1 = func(name string, arg ...string) error {
-			return c.CmdSkip(name, arg...)
+			err := c.CmdSkip(name, arg...)
+			if panicMode == true && err != nil {
+				panic(err)
+			} else {
+				return err
+			}
+
 		}
 	default:
 		f1 = func(name string, arg ...string) error {
-			return c.Cmd(name, arg...)
+			err := c.Cmd(name, arg...)
+			if panicMode == true && err != nil {
+				panic(err)
+			} else {
+				return err
+			}
 		}
 	}
 
@@ -51,11 +67,21 @@ func GetCmd(logger *log.Logger, mode int) (func(string, ...string) error, func(s
 	switch mode {
 	case RESTART, DEBUG:
 		f2 = func(name string, arg ...string) error {
-			return c.CmdSkip(name, arg...)
+			err := c.CmdSkip(name, arg...)
+			if panicMode == true && err != nil {
+				panic(err)
+			} else {
+				return err
+			}
 		}
 	default:
 		f2 = func(name string, arg ...string) error {
-			return c.Cmd(name, arg...)
+			err := c.Cmd(name, arg...)
+			if panicMode == true && err != nil {
+				panic(err)
+			} else {
+				return err
+			}
 		}
 	}
 

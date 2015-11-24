@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func addVpls(sVni string, sVid string, ip string, brInt string, con *context.Context) {
+func addVpls(sVid string, sVni string, ip string, brInt string, con *context.Context) {
 	cmd, cmdp := con.GetCmd()
 	_ = con.Logger
 	intBr := "int_br" + sVni
@@ -42,7 +42,7 @@ func addFlowEntries(sVid string, sVni string, peers *[]string, brTun string, con
 	cmd("ovs-ofctl", "add-flow", brTun, "table=21,priority=1,dl_vlan="+sVid+",actions=strip_vlan,set_tunnel:"+sVni+outputPorts)
 }
 
-func AddL2Vpn(l2vpn *nlan.L2Vpn, con *context.Context, brTun string, brInt string) {
+func AddL2Vpn(l2vpn *nlan.L2Vpn, con *context.Context, brTun string, brInt string) (string, string, string) {
 	logger := con.Logger
 	ip := l2vpn.Ip
 	peers := l2vpn.Peers
@@ -53,10 +53,13 @@ func AddL2Vpn(l2vpn *nlan.L2Vpn, con *context.Context, brTun string, brInt strin
 	logger.Printf("Adding vlan: %s", sVid)
 	addVpls(sVid, sVni, ip, brInt, con)
 	addFlowEntries(sVid, sVni, &peers, brTun, con)
+	return ip, sVid, sVni
 }
 
-func UpdateL2Vpn(l2vpn *nlan.L2Vpn, con *context.Context, brTun string, brInt string) {
+func UpdateL2Vpn(l2vpn *nlan.L2Vpn, con *context.Context, brTun string, brInt string) (string, string, string) {
+	return "", "", ""
 }
 
-func DeleteL2Vpn(l2vpn *nlan.L2Vpn, con *context.Context, brTun string, brInt string) {
+func DeleteL2Vpn(l2vpn *nlan.L2Vpn, con *context.Context, brTun string, brInt string) (string, string, string) {
+	return "", "", ""
 }

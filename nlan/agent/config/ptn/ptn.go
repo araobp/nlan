@@ -11,7 +11,7 @@ func Crud(crud int, in *nlan.Ptn, con *context.Context) {
 	logger := con.Logger
 	var crudNodes func(*nlan.Nodes, *context.Context) (string, string)
 	var crudLinks func(*nlan.Links, *context.Context, string, string)
-	var crudL2Vpn func(*nlan.L2Vpn, *context.Context, string, string)
+	var crudL2Vpn func(*nlan.L2Vpn, *context.Context, string, string) (string, string, string)
 	switch crud {
 	case env.ADD:
 		crudNodes = AddNodes
@@ -25,6 +25,8 @@ func Crud(crud int, in *nlan.Ptn, con *context.Context) {
 		crudNodes = DeleteNodes
 		crudLinks = DeleteLinks
 		crudL2Vpn = DeleteL2Vpn
+	default:
+		logger.Fatal("CRUD unidentified")
 	}
 	for _, net := range networks {
 		logger.Println(net)
@@ -40,10 +42,15 @@ func Crud(crud int, in *nlan.Ptn, con *context.Context) {
 		if l2vpn == nil {
 			logger.Fatal("l2vpn required")
 		}
+
+		logger.Printf("L2Sw: %s, Ptn: %s", nodes.L2Sw, nodes.Ptn)
 		brTun, brInt := crudNodes(nodes, con)
+		logger.Printf("crudNodes() completed")
+
 		crudLinks(links, con, brTun, brInt)
 		for _, vpn := range l2vpn {
-			crudL2Vpn(vpn, con, brTun, brInt)
+			ip, sVid, sVni := crudL2Vpn(vpn, con, brTun, brInt)
+			logger.Printf("crudL2Vpn() completed: %s, %s, %s", ip, sVid, sVni)
 		}
 	}
 }

@@ -30,7 +30,8 @@ func (r *result) Println() {
 	response := *r.response
 	exit := response.Exit
 	log := response.LogMessage
-	fmt.Printf("address: %s\nope: %d\nstate: %s\nexit: %d\nlog: %s\n", address, ope, state, exit, log)
+	fmt.Printf("address: %s\nope: %d\nstate: %s\nexit: %d\n", address, ope, state, exit)
+	fmt.Println(log)
 }
 
 var wg sync.WaitGroup
@@ -70,7 +71,6 @@ func deploy(address string, ope int, model *nlan.Model) {
 	if err != nil {
 		log.Print(err)
 	}
-	log.Print(response)
 	r := result{address: address, ope: ope, state: model, response: response}
 	channel <- r
 }

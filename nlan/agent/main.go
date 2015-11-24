@@ -22,16 +22,28 @@ type agent struct {
 	con *con.Context
 }
 
-func (a *agent) route(crud int, in *nlan.Request, configMode int) {
+func (a *agent) route(crud int, in *nlan.Request, configMode int) (exit uint32) {
 	model := in.Model
 	ptn := model.GetPtn()
 	dvr := model.GetDvr()
+
+	exit = 0
+	defer func() {
+		if r := recover(); r != nil {
+			c := a.con
+			logger := c.Logger
+			logger.Println(r)
+			exit = 1
+		}
+	}()
+
 	if ptn != nil {
 		config_ptn.Crud(crud, ptn, a.con)
 	}
 	if dvr != nil {
 		//
 	}
+	return exit
 }
 
 // Returns a log message as a string
@@ -55,22 +67,24 @@ func logFile() string {
 
 // gRPC Add method
 func (a *agent) Add(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	a.route(env.UPDATE, in, util.CONFIG)
-	response := nlan.Response{Exit: 0, LogMessage: a.logMessage()}
+	exit := a.route(env.ADD, in, util.CONFIG)
+	response := nlan.Response{Exit: exit, LogMessage: a.logMessage()}
 	common.WriteLog(logFile(), a.logBuf())
 	return &response, nil
 }
 
 // gRPC Update method
 func (a *agent) Update(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	response := nlan.Response{Exit: 0, LogMessage: a.logMessage()}
+	exit := a.route(env.UPDATE, in, util.CONFIG)
+	response := nlan.Response{Exit: exit, LogMessage: a.logMessage()}
 	common.WriteLog(logFile(), a.logBuf())
 	return &response, nil
 }
 
 // gRPC Delete method
 func (a *agent) Delete(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
-	response := nlan.Response{Exit: 0, LogMessage: a.logMessage()}
+	exit := a.route(env.DELETE, in, util.CONFIG)
+	response := nlan.Response{Exit: exit, LogMessage: a.logMessage()}
 	common.WriteLog(logFile(), a.logBuf())
 	return &response, nil
 }
@@ -85,6 +99,7 @@ func (a *agent) Hello(ctx context.Context, cp *nlan.Capabilities) (*nlan.Capabil
 
 func main() {
 	target := os.Getenv("HOSTNAME")
+	logPrefix := "[" + target + "]"
 	ope := flag.String("ope", "ADD", "CRUD operation")
 	filename := flag.String("state", "", "state file")
 	roster := flag.String("roster", "", "roster file")
@@ -102,8 +117,8 @@ func main() {
 	}
 
 	var logbuf bytes.Buffer
-	logger := log.New(&logbuf, "", log.LstdFlags)
-	cmd, cmdp := util.GetCmd(logger, configMode)
+	logger := log.New(&logbuf, logPrefix, log.LstdFlags)
+	cmd, cmdp := util.GetCmd(logger, configMode, true)
 	c := &con.Context{Cmd: cmd, CmdP: cmdp, Logger: logger, Logbuf: &logbuf}
 	a := agent{con: c}
 
@@ -115,7 +130,7 @@ func main() {
 	var states *[]st.State
 	switch {
 	case *filename != "":
-		log.Print("### Direct config mode ###")
+		logger.Print("### Direct config mode ###")
 
 		switch *roster {
 		case "":
@@ -143,12 +158,12 @@ func main() {
 			}
 		}
 	default:
-		log.Print("### gRPC server mode ###")
+		logger.Print("### gRPC server mode ###")
 		util.RegisterHost()
 		listen, err := net.Listen("tcp", env.PORT)
 		defer listen.Close()
 		if err != nil {
-			log.Print(err)
+			logger.Print(err)
 		}
 		s := grpc.NewServer()
 		nlan.RegisterNlanAgentServer(s, &a)

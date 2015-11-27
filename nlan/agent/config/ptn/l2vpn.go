@@ -12,7 +12,7 @@ func addVpls(sVid string, sVni string, ip string, brInt string, con *context.Con
 	cmd, cmdp := con.GetCmd()
 	_ = con.Logger
 	intBr := "int_br" + sVni
-	cmdp("ovs-vsctl", "add-port", brInt, intBr, "tag="+sVid, "-- set interface", intBr, "type=internal")
+	cmdp("ovs-vsctl", "add-port", brInt, intBr, "tag="+sVid, "--", "set", "interface", intBr, "type=internal")
 	cmd("ip", "link", "set", "dev", intBr, "up")
 	cmd("ip", "addr", "add", "dev", intBr, ip)
 }
@@ -35,8 +35,9 @@ func addFlowEntries(sVid string, sVni string, peers *[]string, brTun string, con
 	var buff bytes.Buffer
 	for e := l.Front(); e != nil; e = e.Next() {
 		v := e.Value
+		outPort := strconv.Itoa(v.(int))
 		buff.Write([]byte(",output:"))
-		buff.Write([]byte(string((v.(int64)))))
+		buff.Write([]byte(outPort))
 	}
 	outputPorts := buff.String()
 	cmd("ovs-ofctl", "add-flow", brTun, "table=21,priority=1,dl_vlan="+sVid+",actions=strip_vlan,set_tunnel:"+sVni+outputPorts)

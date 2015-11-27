@@ -99,7 +99,7 @@ func (a *agent) Hello(ctx context.Context, cp *nlan.Capabilities) (*nlan.Capabil
 
 func main() {
 	target := os.Getenv("HOSTNAME")
-	logPrefix := "[" + target + "]"
+	logPrefix := "[" + target + "] "
 	ope := flag.String("ope", "ADD", "CRUD operation")
 	filename := flag.String("state", "", "state file")
 	roster := flag.String("roster", "", "roster file")

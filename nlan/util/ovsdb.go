@@ -126,12 +126,12 @@ func GetVxlanPorts(peers *[]string) *list.List {
 				elm := e.([]interface{})
 				if elm[0].(string) == "remote_ip" {
 					ip_ = elm[1].(string)
+					if ip == ip_ {
+						ofport := int(row["ofport"].(float64))
+						log.Printf("ofport: %d\n", ofport)
+						l.PushBack(ofport)
+					}
 					break
-				}
-				if ip == ip_ {
-					ofport := int(row["ofport"].(float64))
-					log.Printf("ofport: %d\n", ofport)
-					l.PushBack(ofport)
 				}
 			}
 		}

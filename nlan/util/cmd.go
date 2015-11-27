@@ -18,7 +18,7 @@ type Command struct {
 
 // This function executes the command and waits for its output.
 func (c *Command) Cmd(name string, arg ...string) error {
-	out, err := exec.Command(name, arg...).Output()
+	out, err := exec.Command(name, arg...).CombinedOutput()
 	c.Logger.Printf("cmd: %s %s", name, strings.Join(arg, " "))
 	if len(out) > 0 {
 		c.Logger.Println(string(out))

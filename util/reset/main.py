@@ -4,10 +4,9 @@
 # The original script is written in 2014/3/17 as "init.py"
 
 from cmdutil import *
-import ovsdb
 
 # Initialize the configuration
-def run(ovsdb_clear=True):
+def run():
 
     # Stop all running Linux containers 
     try:
@@ -67,23 +66,6 @@ def run(ovsdb_clear=True):
     l = l.split('\n')
     for ns in l[:-1]:
         cmd('ip netns del', ns)
-
-    # Delete dnsmasq-related config
-    if __n__['platform'] == 'openwrt':
-        l = ovsdb.nlan_search('subnets', columns=['vni', 'ip_dvr'])
-        if l:
-            for d in l:
-                if 'ip_dvr' in d and 'dhcp' in d['ip_dvr']:
-                    vni = str(d['vni'])
-                    cmd('uci delete', 'network.int_dvr'+vni)
-                    cmd('uci delete', 'dhcp.int_dvr'+vni)
-                    cmd('uci commit')
-                    cmd('/etc/init.d/network restart')
-                    cmd('/etc/init.d/dnsmasq restart')
-
-    if ovsdb_clear is True:
-        # OVSDB transaction
-        ovsdb.Row.clear()
 
 if __name__ == '__main__':
     run()

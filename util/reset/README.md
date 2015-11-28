@@ -1,3 +1,5 @@
+Note: this script is to be replaced with a new gRPC clear method.
+
 This folder contains some scripts from github.com/araobp/neutron-lan to clear NLAN-related setting.
 
 

@@ -9,6 +9,7 @@ import (
 
 	config_ptn "github.com/araobp/go-nlan/nlan/agent/config/ptn"
 	con "github.com/araobp/go-nlan/nlan/agent/context"
+	"github.com/araobp/go-nlan/nlan/agent/rpc"
 	"github.com/araobp/go-nlan/nlan/common"
 	env "github.com/araobp/go-nlan/nlan/env"
 	nlan "github.com/araobp/go-nlan/nlan/model/nlan"
@@ -65,6 +66,10 @@ func logFile() string {
 	return "nlan-agent-" + target + ".log"
 }
 
+func clear() {
+	rpc.Clear()
+}
+
 // gRPC Add method
 func (a *agent) Add(ctx context.Context, in *nlan.Request) (*nlan.Response, error) {
 	exit := a.route(env.ADD, in, util.CONFIG)
@@ -95,6 +100,14 @@ func (a *agent) Hello(ctx context.Context, cp *nlan.Capabilities) (*nlan.Capabil
 	c := []string{"hello"}
 	cs := nlan.Capabilities{Capability: c}
 	return &cs, nil
+}
+
+// gRPC clear method
+func (a *agent) Clear(ctx context.Context, cp *nlan.ClearMode) (*nlan.Response, error) {
+	// nlan.ClearMode is ignored.
+	clear()
+	response := nlan.Response{Exit: 0, LogMessage: "Cleared"}
+	return &response, nil
 }
 
 func main() {

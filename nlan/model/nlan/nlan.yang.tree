@@ -33,4 +33,6 @@ module: nlan
    |  +--rw exit?          uint16
    |  +--rw log_message?   string
    +--rw capabilities
-      +--rw capability*   string
+   |  +--rw capability*   string
+   +--rw clear-mode
+      +--rw terminate?   boolean

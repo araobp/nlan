@@ -75,8 +75,31 @@ func deploy(address string, ope int, model *nlan.Model) {
 	channel <- r
 }
 
+func clearConfig(address string) {
+	defer wg.Done()
+	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	if err != nil {
+		log.Print(err)
+	}
+	defer conn.Close()
+	agent := nlan.NewNlanAgentClient(conn)
+	cont := context.Background()
+
+	// Clear
+	clearMode := nlan.ClearMode{Terminate: false}
+	response, err := agent.Clear(cont, &clearMode)
+	if err != nil {
+		log.Print(err)
+	}
+	log.Println(response)
+
+	r := result{address: address, response: response}
+	channel <- r
+}
+
 func main() {
 	filename := flag.String("state", "state.yaml", "state file")
+	clear := flag.Bool("clear", false, "clear config at NLAN agent")
 	flag.Parse()
 	log.Println(*filename)
 
@@ -93,7 +116,12 @@ func main() {
 		address := buffer.String()
 		model := v.Model
 		wg.Add(1)
-		go deploy(address, env.ADD, &model)
+		switch *clear {
+		case true:
+			go clearConfig(address)
+		case false:
+			go deploy(address, env.ADD, &model)
+		}
 	}
 	go func() {
 		fmt.Println("---------------------------")

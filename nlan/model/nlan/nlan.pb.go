@@ -11,6 +11,7 @@ It is generated from these files:
 It has these top-level messages:
 	Nlan
 	Capabilities
+	ClearMode
 	Request
 	Model
 	Dvr
@@ -43,8 +44,9 @@ var _ = math.Inf
 // NLAN module
 type Nlan struct {
 	Capabilities *Capabilities `protobuf:"bytes,1,opt,name=Capabilities" json:"Capabilities,omitempty"`
-	Request      *Request      `protobuf:"bytes,2,opt,name=Request" json:"Request,omitempty"`
-	Response     *Response     `protobuf:"bytes,3,opt,name=Response" json:"Response,omitempty"`
+	ClearMode    *ClearMode    `protobuf:"bytes,2,opt,name=ClearMode" json:"ClearMode,omitempty"`
+	Request      *Request      `protobuf:"bytes,3,opt,name=Request" json:"Request,omitempty"`
+	Response     *Response     `protobuf:"bytes,4,opt,name=Response" json:"Response,omitempty"`
 }
 
 func (m *Nlan) Reset()         { *m = Nlan{} }
@@ -54,6 +56,13 @@ func (*Nlan) ProtoMessage()    {}
 func (m *Nlan) GetCapabilities() *Capabilities {
 	if m != nil {
 		return m.Capabilities
+	}
+	return nil
+}
+
+func (m *Nlan) GetClearMode() *ClearMode {
+	if m != nil {
+		return m.ClearMode
 	}
 	return nil
 }
@@ -79,6 +88,14 @@ type Capabilities struct {
 func (m *Capabilities) Reset()         { *m = Capabilities{} }
 func (m *Capabilities) String() string { return proto.CompactTextString(m) }
 func (*Capabilities) ProtoMessage()    {}
+
+type ClearMode struct {
+	Terminate bool `protobuf:"varint,1,opt,name=Terminate" json:"Terminate,omitempty"`
+}
+
+func (m *ClearMode) Reset()         { *m = ClearMode{} }
+func (m *ClearMode) String() string { return proto.CompactTextString(m) }
+func (*ClearMode) ProtoMessage()    {}
 
 type Request struct {
 	Model *Model `protobuf:"bytes,1,opt,name=Model" json:"Model,omitempty"`
@@ -276,6 +293,7 @@ type NlanAgentClient interface {
 	Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Hello(ctx context.Context, in *Capabilities, opts ...grpc.CallOption) (*Capabilities, error)
+	Clear(ctx context.Context, in *ClearMode, opts ...grpc.CallOption) (*Response, error)
 }
 
 type nlanAgentClient struct {
@@ -322,6 +340,15 @@ func (c *nlanAgentClient) Hello(ctx context.Context, in *Capabilities, opts ...g
 	return out, nil
 }
 
+func (c *nlanAgentClient) Clear(ctx context.Context, in *ClearMode, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := grpc.Invoke(ctx, "/nlan.NlanAgent/Clear", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for NlanAgent service
 
 type NlanAgentServer interface {
@@ -329,6 +356,7 @@ type NlanAgentServer interface {
 	Update(context.Context, *Request) (*Response, error)
 	Delete(context.Context, *Request) (*Response, error)
 	Hello(context.Context, *Capabilities) (*Capabilities, error)
+	Clear(context.Context, *ClearMode) (*Response, error)
 }
 
 func RegisterNlanAgentServer(s *grpc.Server, srv NlanAgentServer) {
@@ -383,6 +411,18 @@ func _NlanAgent_Hello_Handler(srv interface{}, ctx context.Context, codec grpc.C
 	return out, nil
 }
 
+func _NlanAgent_Clear_Handler(srv interface{}, ctx context.Context, codec grpc.Codec, buf []byte) (interface{}, error) {
+	in := new(ClearMode)
+	if err := codec.Unmarshal(buf, in); err != nil {
+		return nil, err
+	}
+	out, err := srv.(NlanAgentServer).Clear(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 var _NlanAgent_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "nlan.NlanAgent",
 	HandlerType: (*NlanAgentServer)(nil),
@@ -402,6 +442,10 @@ var _NlanAgent_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Hello",
 			Handler:    _NlanAgent_Hello_Handler,
+		},
+		{
+			MethodName: "Clear",
+			Handler:    _NlanAgent_Clear_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{},

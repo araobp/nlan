@@ -136,4 +136,10 @@ module nlan {
       type string;
     }
   }
+
+  container clear-mode {
+    leaf terminate {
+      type boolean;
+    }
+  }
 }

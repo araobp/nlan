@@ -28,3 +28,15 @@ Then "dpkg -i" to install them.
 #PermitRootLogin wihtout-password
 PermitRootLogin yes
 ```
+
+[Step3] Allow containers to run tcpdump
+```
+$ mv /usr/sbin/tcpdump /usr/bin/tcpdump
+```
+(to avoid Permission Denied error)
+
+[Step4] Commit the image
+```
+$ docker commit <image name> image
+```
+

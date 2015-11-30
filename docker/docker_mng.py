@@ -4,15 +4,16 @@ import sys
 import subprocess
 
 IMAGE = 'nlan/agent:ver0.1'  # Docker image name
+NODES = ['pe1', 'pe2', 'pe3', 'pe4', 'rr', 'ce1', 'ce2', 'ce3', 'ce4']
 
-name = lambda prefix, i: '{}{}'.format(prefix, str(i))
-run = lambda prefix, i: ['docker', 'run', '-i', '-t', '-d', '-v',
+#name = lambda prefix, i: '{}{}'.format(prefix, str(i))
+run = lambda node: ['docker', 'run', '-i', '-t', '-d', '-v',
                         '/tmp:/var/volume:rw', '--privileged',
-                        '--name', name(prefix, i), '--env',
-                        'HOSTNAME='+name(prefix, i), IMAGE]
-stop = lambda prefix, i: ['docker', 'stop', name(prefix, i)]
-start = lambda prefix, i: ['docker', 'start', name(prefix, i)]
-rm = lambda prefix, i: ['docker', 'rm', name(prefix, i)]
+                        '--name', node, '--env',
+                        'HOSTNAME='+node, IMAGE]
+stop = lambda node: ['docker', 'stop', node]
+start = lambda node: ['docker', 'start', node]
+rm = lambda node: ['docker', 'rm', node]
 
 cmds = dict(run=run, stop=stop, start=start, rm=rm)
 
@@ -20,23 +21,12 @@ def build_command(command):
     '''
     Closure to build a func for executing a command to manage Docker.
     '''
-    def exec(prefix, max_):
-        for i in range(1, max_+1):
-            subprocess.call(command(prefix, i))
+    def exec():
+        for node in NODES:
+            subprocess.call(command(node))
     return exec
 
 if __name__ == '__main__':
-    '''
-    Usage example:
-    $ ./docker_mng.py openwrt1 run 10
-    $ ./docker_mng.py openwrt1 stop 10
-    $ ./docker_mng.py openwrt1 start 10
-    $ ./docker_mng.py openwrt1 rm 10
-    '''
 
-    prefix = sys.argv[1]
-    ope = sys.argv[2]
-    max_ = int(sys.argv[3])
-    build_command(cmds[ope])(prefix, max_)
-
-
+    ope = sys.argv[1]
+    build_command(cmds[ope])()

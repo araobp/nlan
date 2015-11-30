@@ -26,7 +26,13 @@ func (r *result) Println() {
 	fmt.Println("---")
 	address := r.address
 	ope := r.ope
-	state := *r.state
+	var state nlan.Model
+	switch ope {
+	case env.CLEAR:
+		state = nlan.Model{} // empty
+	default:
+		state = *r.state
+	}
 	response := *r.response
 	exit := response.Exit
 	log := response.LogMessage
@@ -34,12 +40,11 @@ func (r *result) Println() {
 	fmt.Println(log)
 }
 
-var wg sync.WaitGroup
-
 var channel = make(chan result)
+var wg sync.WaitGroup
+var count int
 
 func deploy(address string, ope int, model *nlan.Model) {
-	defer wg.Done()
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
 		log.Print(err)
@@ -76,7 +81,6 @@ func deploy(address string, ope int, model *nlan.Model) {
 }
 
 func clearConfig(address string) {
-	defer wg.Done()
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
 		log.Print(err)
@@ -93,11 +97,12 @@ func clearConfig(address string) {
 	}
 	log.Println(response)
 
-	r := result{address: address, response: response}
+	r := result{address: address, ope: env.CLEAR, response: response}
 	channel <- r
 }
 
 func main() {
+	count = 0
 	filename := flag.String("state", "state.yaml", "state file")
 	clear := flag.Bool("clear", false, "clear config at NLAN agent")
 	flag.Parse()
@@ -115,18 +120,25 @@ func main() {
 		buffer.WriteString(env.PORT)
 		address := buffer.String()
 		model := v.Model
-		wg.Add(1)
 		switch *clear {
 		case true:
+			count += 1
 			go clearConfig(address)
 		case false:
+			count += 1
 			go deploy(address, env.ADD, &model)
 		}
 	}
+	wg.Add(1)
 	go func() {
+		defer wg.Done()
 		fmt.Println("---------------------------")
 		for r := range channel {
 			r.Println()
+			count -= 1
+			if count <= 0 {
+				break
+			}
 		}
 	}()
 	wg.Wait()

@@ -138,3 +138,22 @@ func GetVxlanPorts(peers *[]string) *list.List {
 	}
 	return l
 }
+
+func GetBridgeNames() *list.List {
+	ope := Operation{
+		Op:      "select",
+		Table:   "Bridge",
+		Where:   []interface{}{}, // empty
+		Columns: []string{"name"},
+	}
+	resp := RequestSync("transact", []interface{}{DATABASE, ope})
+	var r Response
+	json.Unmarshal(resp, &r)
+	rows := r.Result[0].Rows
+	l := list.New()
+	for _, row := range rows {
+		bridge := row["name"].(string)
+		l.PushBack(bridge)
+	}
+	return l
+}

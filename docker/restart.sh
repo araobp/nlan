@@ -1,10 +1,7 @@
 #!/bin/bash
 
-ROUTER=router
-NUM=3
-
 go install github.com/araobp/go-nlan/nlan/agent
-./docker_mng.py $ROUTER stop $NUM
-./docker_mng.py $ROUTER rm $NUM
+./docker_mng.py stop
+./docker_mng.py rm
 ./build.sh
-./docker_mng.py $ROUTER run $NUM
+./docker_mng.py run

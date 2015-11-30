@@ -6,6 +6,7 @@ const (
 	ADD = iota
 	UPDATE
 	DELETE
+	CLEAR
 )
 
 const (

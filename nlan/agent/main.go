@@ -66,8 +66,8 @@ func logFile() string {
 	return "nlan-agent-" + target + ".log"
 }
 
-func clear() {
-	rpc.Clear()
+func clear(con *con.Context) {
+	rpc.Clear(con)
 }
 
 // gRPC Add method
@@ -105,7 +105,7 @@ func (a *agent) Hello(ctx context.Context, cp *nlan.Capabilities) (*nlan.Capabil
 // gRPC clear method
 func (a *agent) Clear(ctx context.Context, cp *nlan.ClearMode) (*nlan.Response, error) {
 	// nlan.ClearMode is ignored.
-	clear()
+	clear(a.con)
 	response := nlan.Response{Exit: 0, LogMessage: "Cleared"}
 	return &response, nil
 }

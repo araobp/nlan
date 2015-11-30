@@ -3,6 +3,8 @@
 ##Goal of this project
 The goal of this project is to study how DevOps tool for networking can be developed with Golang, YANG and Docker.
 
+Current status (as of November 30th, 2015): PTN simulation is working with multiple containers.
+
 ##Background and motivation
 - The classical definition of SDN is becoming obsolete for most of cases (excluding cases where dynamic control is required).
 - The next definition of SDN is similar to those of Cloud Management System (such as OpenStack) and PaaS (such as Kubernetes/Docker).

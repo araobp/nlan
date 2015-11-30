@@ -92,21 +92,3 @@ $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 ##Go plugin for vim
 
 Install [vim-go](https://github.com/fatih/vim-go) to your vim.
-
-##Interesting libraries written in Go lang
-
-###Docker-related
-- [Docker](https://github.com/docker/docker)
-- [Kubernetes](https://github.com/kubernetes/kubernetes)
-
-###Database-related
-- [etcd](https://github.com/coreos/etcd)
-- [mergo](https://github.com/imdario/mergo)
-- [ovsdb client](https://github.com/socketplane/libovsdb)
-- [yaml](https://github.com/go-yaml/yaml)
-- [goyang](https://github.com/openconfig/goyang)
-- [gocql](https://github.com/gocql/gocql)
-
-###RPC and protocols
-- [gRPC](https://github.com/grpc/grpc-go/)
-- [gobgp](https://github.com/osrg/gobgp)

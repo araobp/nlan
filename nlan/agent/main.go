@@ -8,6 +8,8 @@ import (
 	"os"
 
 	config_ptn "github.com/araobp/go-nlan/nlan/agent/config/ptn"
+	config_router "github.com/araobp/go-nlan/nlan/agent/config/router"
+	config_vhosts "github.com/araobp/go-nlan/nlan/agent/config/vhosts"
 	con "github.com/araobp/go-nlan/nlan/agent/context"
 	"github.com/araobp/go-nlan/nlan/agent/rpc"
 	"github.com/araobp/go-nlan/nlan/common"
@@ -27,6 +29,8 @@ func (a *agent) route(crud int, in *nlan.Request, configMode int) (exit uint32) 
 	model := in.Model
 	ptn := model.GetPtn()
 	dvr := model.GetDvr()
+	vhosts := model.GetVhosts()
+	router := model.GetRouter()
 
 	exit = 0
 	defer func() {
@@ -43,6 +47,12 @@ func (a *agent) route(crud int, in *nlan.Request, configMode int) (exit uint32) 
 	}
 	if dvr != nil {
 		//
+	}
+	if vhosts != nil {
+		config_vhosts.Crud(crud, vhosts, a.con)
+	}
+	if router != nil {
+		config_router.Crud(crud, router, a.con)
 	}
 	return exit
 }

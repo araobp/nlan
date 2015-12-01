@@ -6,7 +6,7 @@ module nlan {
   contact "https://github.com/arapbp";
 
   description "NLAN module";
-  revision 2015-10-11;
+  revision 2015-12-01;
 
   // distributed-virtual-router model
   grouping dvr-model {
@@ -108,14 +108,40 @@ module nlan {
     }
   }
 
+  // Virtual hosts model
+  grouping vhosts-model {
+    list vhost-props {
+      key network;
+      leaf network {
+        type string;
+      }
+      leaf vhosts {
+        type uint16;
+      }
+    }
+  }
+  
+  // Router model
+  grouping router-model {
+    leaf loopback {
+      type string;
+    }
+  }      
+
   // NLAN Request message
   container request {
-    choice model {
-      case dvr {
+    container model {
+      container dvr {
         uses dvr-model;
       }
-      case ptn {
+      container ptn {
         uses ptn-model;
+      }
+      container vhosts {
+        uses vhosts-model;
+      }
+      container router {
+        uses router-model;
       }
     }
   }

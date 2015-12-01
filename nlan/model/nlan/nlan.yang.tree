@@ -1,7 +1,7 @@
 module: nlan
    +--rw request
-   |  +--rw (model)?
-   |     +--:(dvr)
+   |  +--rw model
+   |     +--rw dvr
    |     |  +--rw ovs_bridges?   boolean
    |     |  +--rw vxlan* [local_ip]
    |     |  |  +--rw local_ip      string
@@ -15,20 +15,26 @@ module: nlan
    |     |     |  +--rw dhcp?   string
    |     |     +--rw ports*    string
    |     |     +--rw peers*    string
-   |     +--:(ptn)
-   |        +--rw networks* [id]
-   |           +--rw id        string
-   |           +--rw nodes
-   |           |  +--rw ptn?    string
-   |           |  +--rw l2sw?   string
-   |           +--rw links
-   |           |  +--rw local_ip      string
-   |           |  +--rw remote_ips*   string
-   |           +--rw l2-vpn* [vid]
-   |              +--rw vid      uint16
-   |              +--rw vni      uint32
-   |              +--rw peers*   string
-   |              +--rw ip       string
+   |     +--rw ptn
+   |     |  +--rw networks* [id]
+   |     |     +--rw id        string
+   |     |     +--rw nodes
+   |     |     |  +--rw ptn?    string
+   |     |     |  +--rw l2sw?   string
+   |     |     +--rw links
+   |     |     |  +--rw local_ip      string
+   |     |     |  +--rw remote_ips*   string
+   |     |     +--rw l2-vpn* [vid]
+   |     |        +--rw vid      uint16
+   |     |        +--rw vni      uint32
+   |     |        +--rw peers*   string
+   |     |        +--rw ip       string
+   |     +--rw vhosts
+   |     |  +--rw vhost-props* [network]
+   |     |     +--rw network    string
+   |     |     +--rw vhosts?    uint16
+   |     +--rw router
+   |        +--rw loopback?   string
    +--rw response
    |  +--rw exit?          uint16
    |  +--rw log_message?   string

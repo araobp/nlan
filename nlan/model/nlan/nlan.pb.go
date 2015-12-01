@@ -23,6 +23,9 @@ It has these top-level messages:
 	L2Vpn
 	Links
 	Nodes
+	Router
+	Vhosts
+	VhostProps
 	Response
 */
 package nlan
@@ -113,8 +116,10 @@ func (m *Request) GetModel() *Model {
 }
 
 type Model struct {
-	Dvr *Dvr `protobuf:"bytes,1,opt,name=Dvr" json:"Dvr,omitempty"`
-	Ptn *Ptn `protobuf:"bytes,2,opt,name=Ptn" json:"Ptn,omitempty"`
+	Dvr    *Dvr    `protobuf:"bytes,1,opt,name=Dvr" json:"Dvr,omitempty"`
+	Ptn    *Ptn    `protobuf:"bytes,2,opt,name=Ptn" json:"Ptn,omitempty"`
+	Router *Router `protobuf:"bytes,3,opt,name=Router" json:"Router,omitempty"`
+	Vhosts *Vhosts `protobuf:"bytes,4,opt,name=Vhosts" json:"Vhosts,omitempty"`
 }
 
 func (m *Model) Reset()         { *m = Model{} }
@@ -131,6 +136,20 @@ func (m *Model) GetDvr() *Dvr {
 func (m *Model) GetPtn() *Ptn {
 	if m != nil {
 		return m.Ptn
+	}
+	return nil
+}
+
+func (m *Model) GetRouter() *Router {
+	if m != nil {
+		return m.Router
+	}
+	return nil
+}
+
+func (m *Model) GetVhosts() *Vhosts {
+	if m != nil {
+		return m.Vhosts
 	}
 	return nil
 }
@@ -272,6 +291,38 @@ type Nodes struct {
 func (m *Nodes) Reset()         { *m = Nodes{} }
 func (m *Nodes) String() string { return proto.CompactTextString(m) }
 func (*Nodes) ProtoMessage()    {}
+
+type Router struct {
+	Loopback string `protobuf:"bytes,1,opt,name=Loopback" json:"Loopback,omitempty"`
+}
+
+func (m *Router) Reset()         { *m = Router{} }
+func (m *Router) String() string { return proto.CompactTextString(m) }
+func (*Router) ProtoMessage()    {}
+
+type Vhosts struct {
+	VhostProps []*VhostProps `protobuf:"bytes,1,rep,name=VhostProps" json:"VhostProps,omitempty"`
+}
+
+func (m *Vhosts) Reset()         { *m = Vhosts{} }
+func (m *Vhosts) String() string { return proto.CompactTextString(m) }
+func (*Vhosts) ProtoMessage()    {}
+
+func (m *Vhosts) GetVhostProps() []*VhostProps {
+	if m != nil {
+		return m.VhostProps
+	}
+	return nil
+}
+
+type VhostProps struct {
+	Network string `protobuf:"bytes,1,opt,name=Network" json:"Network,omitempty"`
+	Vhosts  uint32 `protobuf:"varint,2,opt,name=Vhosts" json:"Vhosts,omitempty"`
+}
+
+func (m *VhostProps) Reset()         { *m = VhostProps{} }
+func (m *VhostProps) String() string { return proto.CompactTextString(m) }
+func (*VhostProps) ProtoMessage()    {}
 
 type Response struct {
 	Exit       uint32 `protobuf:"varint,1,opt,name=Exit" json:"Exit,omitempty"`

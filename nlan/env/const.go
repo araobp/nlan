@@ -12,4 +12,6 @@ const (
 const (
 	DVR = iota
 	PTN
+	VHOSTS
+	ROUTER
 )

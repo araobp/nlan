@@ -35,7 +35,15 @@ $ mv /usr/sbin/tcpdump /usr/bin/tcpdump
 ```
 (to avoid Permission Denied error)
 
-[Step4] Commit the image
+[Step4] Install Quagga
+
+Install Quagga and enable zebra, ospfd and bgpd.
+
+Dont't forget to append the following to ~/.bashrc:
+```
+export VTYSH_PAGER=more
+```
+[Step5] Commit the image
 ```
 $ docker commit <image name> image
 ```

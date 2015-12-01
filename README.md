@@ -13,10 +13,13 @@ Current status (as of November 30th, 2015): PTN simulation is working with multi
 - Write codes! Powerpoint documents, no thanks.
 - Respect CLI! Think "CLI for SDN"! (YANG/NETCONF is sort of "CLI for SDN", but we may re-invent another form of "CLI for SDN" supporting transaction/rollback)
 
-##Use case
+##Use cases
 - Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"
 - Network simulation for open source SDN controllers such as OpenDaylight.
 - DevOps for networking with whitebox routers/switches.
+
+##Future use cases
+If some SoC for SOHO routers supports VXLAN off-loading in future, I will develop SDN for LAN/WAN with this code (nlan/go-nlan). A sort of "(wired, not wireless) LAN controller".
 
 ##Network simulation with Linux containers
 I use Linux containers as virtual routers, and this tool will set up virtual links (L0/L1) and virtual switches (L2) over the containers. Then I will run Quagga/Zebra(L3) daemons over the virtual routers to study how legacy routing protocols work.

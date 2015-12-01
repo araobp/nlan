@@ -197,9 +197,9 @@ States:
                 Ip: 10.202.11.2/24
       Vhosts:
         VhostProps:
-          - Network: 172.20.1.1/24
-            Vhosts: 2
           - Network: 172.21.1.1/24
+            Vhosts: 2
+          - Network: 172.22.1.1/24
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.1/32
@@ -225,9 +225,9 @@ States:
                 Ip: 10.202.12.2/24
       Vhosts:
         VhostProps:
-          - Network: 172.20.2.1/24
-            Vhosts: 2
           - Network: 172.21.2.1/24
+            Vhosts: 2
+          - Network: 172.22.2.1/24
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.2/32
@@ -253,9 +253,9 @@ States:
                 Ip: 10.204.13.2/24
       Vhosts:
         VhostProps:
-          - Network: 172.20.3.1/24
-            Vhosts: 2
           - Network: 172.21.3.1/24
+            Vhosts: 2
+          - Network: 172.22.3.1/24
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.3/32
@@ -281,9 +281,9 @@ States:
                 Ip: 10.204.14.2/24
       Vhosts:
         VhostProps:
-          - Network: 172.20.4.1/24
-            Vhosts: 2
           - Network: 172.21.4.1/24
+            Vhosts: 2
+          - Network: 172.22.4.1/24
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.4/32

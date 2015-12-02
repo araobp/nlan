@@ -35,7 +35,7 @@ I also want to prove that Golang is the best language for DevOps and SDN.
 - Network simulation for open source SDN controllers such as OpenDaylight
 
 ##Future use cases
-If some SoC for SOHO routers supports VXLAN off-loading in future, I will develop SDN for LAN/WAN with this code (nlan/go-nlan). A sort of "(wired, not wireless) LAN controller".
+If some SoC for SOHO routers supports VXLAN off-loading in future, I will develop SDN for LAN/WAN with this code (nlan). A sort of "(wired, not wireless) LAN controller".
 
 ##Network simulation with Linux containers
 I use Linux containers as virtual routers, and this tool will set up virtual links (L0/L1) and virtual switches (L2) over the containers. Then I will run Quagga/Zebra(L3) daemons over the virtual routers to study how legacy routing protocols work.
@@ -67,13 +67,13 @@ Go stub generation
 ~~~~~~~~~~~                ~~~~~~~~~~~~~~~                ~~~~~~~~~~~~~
                                proto3
 ```
-- [YANG model](./nlan/model/nlan/nlan.yang)
-- [protobuf model](./nlan/model/nlan/nlan.proto)
-- [rpc model](./nlan/model/nlan/rpc.proto)
-- [Go gRPC stub](./nlan/model/nlan/nlan.pb.go)
+- [YANG model](./model/nlan/nlan.yang)
+- [protobuf model](./model/nlan/nlan.proto)
+- [rpc model](./model/nlan/rpc.proto)
+- [Go gRPC stub](./model/nlan/nlan.pb.go)
 
 ##Declarative state representation
-See [ptn.yaml](nlan/etc/ptn.yaml) as a declarative state representation of simulated Packet Transport Network.
+See [ptn.yaml](./etc/ptn.yaml) as a declarative state representation of simulated Packet Transport Network.
 
 #Development environment setup
 

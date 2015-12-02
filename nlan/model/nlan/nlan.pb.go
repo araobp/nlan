@@ -24,6 +24,7 @@ It has these top-level messages:
 	Links
 	Nodes
 	Router
+	Ospf
 	Vhosts
 	VhostProps
 	Response
@@ -293,12 +294,29 @@ func (m *Nodes) String() string { return proto.CompactTextString(m) }
 func (*Nodes) ProtoMessage()    {}
 
 type Router struct {
-	Loopback string `protobuf:"bytes,1,opt,name=Loopback" json:"Loopback,omitempty"`
+	Loopback string  `protobuf:"bytes,1,opt,name=Loopback" json:"Loopback,omitempty"`
+	Ospf     []*Ospf `protobuf:"bytes,2,rep,name=Ospf" json:"Ospf,omitempty"`
 }
 
 func (m *Router) Reset()         { *m = Router{} }
 func (m *Router) String() string { return proto.CompactTextString(m) }
 func (*Router) ProtoMessage()    {}
+
+func (m *Router) GetOspf() []*Ospf {
+	if m != nil {
+		return m.Ospf
+	}
+	return nil
+}
+
+type Ospf struct {
+	Area    string   `protobuf:"bytes,1,opt,name=Area" json:"Area,omitempty"`
+	Network []string `protobuf:"bytes,2,rep,name=Network" json:"Network,omitempty"`
+}
+
+func (m *Ospf) Reset()         { *m = Ospf{} }
+func (m *Ospf) String() string { return proto.CompactTextString(m) }
+func (*Ospf) ProtoMessage()    {}
 
 type Vhosts struct {
 	VhostProps []*VhostProps `protobuf:"bytes,1,rep,name=VhostProps" json:"VhostProps,omitempty"`

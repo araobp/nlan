@@ -35,6 +35,9 @@ module: nlan
    |     |     +--rw vhosts?    uint16
    |     +--rw router
    |        +--rw loopback?   string
+   |        +--rw ospf* [area]
+   |           +--rw area       string
+   |           +--rw network*   string
    +--rw response
    |  +--rw exit?          uint16
    |  +--rw log_message?   string

@@ -12,29 +12,29 @@ service NlanAgent {
 
 // NLAN module
 message Nlan {
-  Capabilities Capabilities = 1; // nlan/nlan.yang:160:3
-  ClearMode ClearMode = 2; // nlan/nlan.yang:166:3
-  Request Request = 3; // nlan/nlan.yang:132:3
-  Response Response = 4; // nlan/nlan.yang:150:3
+  Capabilities Capabilities = 1; // nlan/nlan.yang:169:3
+  ClearMode ClearMode = 2; // nlan/nlan.yang:175:3
+  Request Request = 3; // nlan/nlan.yang:141:3
+  Response Response = 4; // nlan/nlan.yang:159:3
 }
 
 message Capabilities {
-  repeated string Capability = 1; // nlan/nlan.yang:161:5
+  repeated string Capability = 1; // nlan/nlan.yang:170:5
 }
 
 message ClearMode {
-  bool Terminate = 1; // nlan/nlan.yang:167:5
+  bool Terminate = 1; // nlan/nlan.yang:176:5
 }
 
 message Request {
-  Model Model = 1; // nlan/nlan.yang:133:5
+  Model Model = 1; // nlan/nlan.yang:142:5
 }
 
 message Model {
-  Dvr Dvr = 1; // nlan/nlan.yang:134:7
-  Ptn Ptn = 2; // nlan/nlan.yang:137:7
-  Router Router = 3; // nlan/nlan.yang:143:7
-  Vhosts Vhosts = 4; // nlan/nlan.yang:140:7
+  Dvr Dvr = 1; // nlan/nlan.yang:143:7
+  Ptn Ptn = 2; // nlan/nlan.yang:146:7
+  Router Router = 3; // nlan/nlan.yang:152:7
+  Vhosts Vhosts = 4; // nlan/nlan.yang:149:7
 }
 
 message Dvr {
@@ -92,6 +92,12 @@ message Nodes {
 
 message Router {
   string Loopback = 1; // nlan/nlan.yang:126:5
+  repeated Ospf Ospf = 2; // nlan/nlan.yang:129:5
+}
+
+message Ospf {
+  string Area = 1; // nlan/nlan.yang:131:7
+  repeated string Network = 2; // nlan/nlan.yang:134:7
 }
 
 message Vhosts {
@@ -104,6 +110,6 @@ message VhostProps {
 }
 
 message Response {
-  uint32 Exit = 1; // nlan/nlan.yang:151:5
-  string LogMessage = 2; // nlan/nlan.yang:154:5
+  uint32 Exit = 1; // nlan/nlan.yang:160:5
+  string LogMessage = 2; // nlan/nlan.yang:163:5
 }

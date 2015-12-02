@@ -43,6 +43,11 @@ Dont't forget to append the following to ~/.bashrc:
 ```
 export VTYSH_PAGER=more
 ```
+
+Also, change owner.group of /etc/quagga/*.conf
+```
+$ chown quagga.quagga /etc/quagga/*.conf
+```
 [Step5] Commit the image
 ```
 $ docker commit <image name> image

@@ -126,6 +126,15 @@ module nlan {
     leaf loopback {
       type string;
     }
+    list ospf {
+      key area;
+      leaf area {
+        type string;
+      }
+      leaf-list network {
+        type string;
+      }
+    }
   }      
 
   // NLAN Request message

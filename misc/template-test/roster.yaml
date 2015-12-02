@@ -1,7 +1,0 @@
-#!test
-roster:
-  - {{.router1}}
-  - {{.router2}}
-  - {{.router3}}
-  - 192.168.56.104
-

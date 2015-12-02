@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package nlan;
+
+service NlanAgent {
+  rpc Add (Request) returns (Response) {}
+  rpc Update (Request) returns (Response) {}
+  rpc Delete (Request) returns (Response) {}
+  rpc Hello (Capabilities) returns (Capabilities) {}
+  rpc Clear (ClearMode) returns (Response) {}
+}

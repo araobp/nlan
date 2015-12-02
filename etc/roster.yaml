@@ -1,0 +1,8 @@
+# This is just test data.
+# go-nlan uses etcd as a kind of dynamic DNS.
+#
+
+router1: 10.0.0.1
+router2: 10.0.0.2
+router3: 10.0.0.3
+

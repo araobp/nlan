@@ -1,0 +1,289 @@
+# This is just test data...
+#
+States:
+  - Router: pe1
+    Model:
+      Ptn:   
+        Networks:
+          - Id: wan
+            Nodes:
+              Ptn: ptnpe1w
+              L2sw: l2swpe1w
+            Links:
+              LocalIp: {{.pe1}} 
+              RemoteIps: [{{.pe2}}, {{.pe3}}, {{.pe4}}, {{.rr}}]
+            L2Vpn:
+              - Vid: 101
+                Vni: 1
+                Peers: [{{.pe2}}, {{.pe3}}, {{.pe4}}, {{.rr}}]
+                Ip: 10.200.1.101/24
+              - Vid: 102
+                Vni: 2
+                Peers: [{{.pe2}}, {{.pe3}}, {{.pe4}}, {{.rr}}]
+                Ip: 10.200.2.101/24
+          - Id: access 
+            Nodes:
+              Ptn: ptnpe1a
+              L2sw: l2swpe1a
+            Links:
+              LocalIp: {{.pe1}} 
+              RemoteIps: [{{.ce1}}, {{.ce2}}]
+            L2Vpn:
+              - Vid: 11
+                Vni: 111
+                Peers: [{{.ce1}}]
+                Ip: 10.201.11.1/24
+              - Vid: 12
+                Vni: 112
+                Peers: [{{.ce2}}]
+                Ip: 10.201.12.1/24
+      Router:   
+        Loopback: 10.1.1.1/32
+  - Router: pe2
+    Model:
+      Ptn:   
+        Networks:
+          - Id: wan
+            Nodes:
+              Ptn: ptnpe2w
+              L2sw: l2swpe2w
+            Links:
+              LocalIp: {{.pe2}} 
+              RemoteIps: [{{.pe1}}, {{.pe3}}, {{.pe4}}, {{.rr}}]
+            L2Vpn:
+              - Vid: 101
+                Vni: 1
+                Peers: [{{.pe1}}, {{.pe3}}, {{.pe4}}, {{.rr}}]
+                Ip: 10.200.1.102/24
+              - Vid: 102
+                Vni: 2
+                Peers: [{{.pe2}}, {{.pe3}}, {{.pe4}}, {{.rr}}]
+                Ip: 10.200.2.102/24
+          - Id: access 
+            Nodes:
+              Ptn: ptnpe2a
+              L2sw: l2swpe2a
+            Links:
+              LocalIp: {{.pe2}} 
+              RemoteIps: [{{.ce1}}, {{.ce2}}]
+            L2Vpn:
+              - Vid: 11
+                Vni: 211
+                Peers: [{{.ce1}}]
+                Ip: 10.202.11.1/24
+              - Vid: 12
+                Vni: 212
+                Peers: [{{.ce2}}]
+                Ip: 10.202.12.1/24
+      Router:   
+        Loopback: 10.1.1.2/32
+  - Router: pe3
+    Model:
+      Ptn:   
+        Networks:
+          - Id: wan
+            Nodes:
+              Ptn: ptnpe3w
+              L2sw: l2swpe3w
+            Links:
+              LocalIp: {{.pe3}} 
+              RemoteIps: [{{.pe1}}, {{.pe2}}, {{.pe4}}, {{.rr}}]
+            L2Vpn:
+              - Vid: 101
+                Vni: 1
+                Peers: [{{.pe1}}, {{.pe2}}, {{.pe4}}, {{.rr}}]
+                Ip: 10.200.1.103/24
+              - Vid: 102
+                Vni: 2
+                Peers: [{{.pe1}}, {{.pe2}}, {{.pe4}}, {{.rr}}]
+                Ip: 10.200.2.103/24
+          - Id: access 
+            Nodes:
+              Ptn: ptnpe3a
+              L2sw: l2swpe3a
+            Links:
+              LocalIp: {{.pe3}} 
+              RemoteIps: [{{.ce3}}, {{.ce4}}]
+            L2Vpn:
+              - Vid: 13
+                Vni: 313 
+                Peers: [{{.ce3}}]
+                Ip: 10.203.13.1/24
+              - Vid: 14
+                Vni: 314 
+                Peers: [{{.ce4}}]
+                Ip: 10.203.14.1/24
+      Router:   
+        Loopback: 10.1.1.3/32
+  - Router: pe4
+    Model:
+      Ptn:   
+        Networks:
+          - Id: wan
+            Nodes:
+              Ptn: ptnpe4w
+              L2sw: l2swpe4w
+            Links:
+              LocalIp: {{.pe4}} 
+              RemoteIps: [{{.pe1}}, {{.pe2}}, {{.pe3}}, {{.rr}}]
+            L2Vpn:
+              - Vid: 101
+                Vni: 1
+                Peers: [{{.pe1}}, {{.pe2}}, {{.pe3}}, {{.rr}}]
+                Ip: 10.200.1.104/24
+              - Vid: 102
+                Vni: 2
+                Peers: [{{.pe1}}, {{.pe2}}, {{.pe3}}, {{.rr}}]
+                Ip: 10.200.2.104/24
+          - Id: access 
+            Nodes:
+              Ptn: ptnpe4a
+              L2sw: l2swpe4a
+            Links:
+              LocalIp: {{.pe4}} 
+              RemoteIps: [{{.ce3}}, {{.ce4}}]
+            L2Vpn:
+              - Vid: 13
+                Vni: 413 
+                Peers: [{{.ce3}}]
+                Ip: 10.204.13.1/24
+              - Vid: 14
+                Vni: 414 
+                Peers: [{{.ce4}}]
+                Ip: 10.204.14.1/24
+      Router:   
+        Loopback: 10.1.1.4/32
+  - Router: rr 
+    Model:
+      Ptn:   
+        Networks:
+          - Id: wan
+            Nodes:
+              Ptn: ptnrrw
+              L2sw: l2swrrw
+            Links:
+              LocalIp: {{.rr}} 
+              RemoteIps: [{{.pe1}}, {{.pe2}}, {{.pe3}}, {{.pe4}}]
+            L2Vpn:
+              - Vid: 101
+                Vni: 1
+                Peers: [{{.pe1}}, {{.pe2}}, {{.pe3}}, {{.pe4}}]
+                Ip: 10.200.1.105/24
+              - Vid: 102
+                Vni: 2
+                Peers: [{{.pe1}}, {{.pe2}}, {{.pe3}}, {{.pe4}}]
+                Ip: 10.200.2.105/24
+      Router:   
+        Loopback: 10.1.1.5/32
+  - Router: ce1 
+    Model:
+      Ptn:   
+        Networks:
+          - Id: access 
+            Nodes:
+              Ptn: ptnce1a
+              L2sw: l2swce1a
+            Links:
+              LocalIp: {{.ce1}} 
+              RemoteIps: [{{.pe1}}, {{.pe2}}]
+            L2Vpn:
+              - Vid: 1
+                Vni: 111 
+                Peers: [{{.pe1}}]
+                Ip: 10.201.11.2/24
+              - Vid: 2 
+                Vni: 211 
+                Peers: [{{.pe2}}]
+                Ip: 10.202.11.2/24
+      Vhosts:
+        VhostProps:
+          - Network: 172.21.1.1/24
+            Vhosts: 2
+          - Network: 172.22.1.1/24
+            Vhosts: 2
+      Router:   
+        Loopback: 10.1.2.1/32
+  - Router: ce2 
+    Model:
+      Ptn:   
+        Networks:
+          - Id: access 
+            Nodes:
+              Ptn: ptnce2a
+              L2sw: l2swce2a
+            Links:
+              LocalIp: {{.ce2}} 
+              RemoteIps: [{{.pe1}}, {{.pe2}}]
+            L2Vpn:
+              - Vid: 1
+                Vni: 112 
+                Peers: [{{.pe1}}]
+                Ip: 10.201.12.2/24
+              - Vid: 2 
+                Vni: 212 
+                Peers: [{{.pe2}}]
+                Ip: 10.202.12.2/24
+      Vhosts:
+        VhostProps:
+          - Network: 172.21.2.1/24
+            Vhosts: 2
+          - Network: 172.22.2.1/24
+            Vhosts: 2
+      Router:   
+        Loopback: 10.1.2.2/32
+  - Router: ce3 
+    Model:
+      Ptn:   
+        Networks:
+          - Id: access 
+            Nodes:
+              Ptn: ptnce3a
+              L2sw: l2swce3a
+            Links:
+              LocalIp: {{.ce3}} 
+              RemoteIps: [{{.pe3}}, {{.pe4}}]
+            L2Vpn:
+              - Vid: 3
+                Vni: 313 
+                Peers: [{{.pe3}}]
+                Ip: 10.203.13.2/24
+              - Vid: 4 
+                Vni: 413 
+                Peers: [{{.pe4}}]
+                Ip: 10.204.13.2/24
+      Vhosts:
+        VhostProps:
+          - Network: 172.21.3.1/24
+            Vhosts: 2
+          - Network: 172.22.3.1/24
+            Vhosts: 2
+      Router:   
+        Loopback: 10.1.2.3/32
+  - Router: ce4 
+    Model:
+      Ptn:   
+        Networks:
+          - Id: access 
+            Nodes:
+              Ptn: ptnce4a
+              L2sw: l2swce4a
+            Links:
+              LocalIp: {{.ce4}} 
+              RemoteIps: [{{.pe3}}, {{.pe4}}]
+            L2Vpn:
+              - Vid: 3
+                Vni: 314 
+                Peers: [{{.pe3}}]
+                Ip: 10.203.14.2/24
+              - Vid: 4 
+                Vni: 414 
+                Peers: [{{.pe4}}]
+                Ip: 10.204.14.2/24
+      Vhosts:
+        VhostProps:
+          - Network: 172.21.4.1/24
+            Vhosts: 2
+          - Network: 172.22.4.1/24
+            Vhosts: 2
+      Router:   
+        Loopback: 10.1.2.4/32

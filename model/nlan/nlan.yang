@@ -1,0 +1,180 @@
+module nlan {
+
+  yang-version 1;
+  namespace "urn:araobp:nlan:bridges";
+  prefix "nlan";
+  contact "https://github.com/arapbp";
+
+  description "NLAN module";
+  revision 2015-12-01;
+
+  // distributed-virtual-router model
+  grouping dvr-model {
+
+    leaf ovs_bridges {
+      type boolean;
+      default true;
+    }
+
+    list vxlan {
+      key local_ip;
+      leaf local_ip {
+        type string;
+      }
+      leaf-list remote_ips {
+        type string;
+      }
+    }
+  
+    list subnets {
+      key vid;
+      leaf vid {
+        type uint16;
+     }
+     leaf vni {
+        type uint32;
+        mandatory true;
+     }
+     list ip_dvr {
+       key addr;
+       leaf addr {
+         type string;
+       }
+       leaf mode {
+         type string;
+         mandatory true;
+       }
+       leaf dhcp {
+         type string;
+         default "diabled";
+       }
+     }
+     leaf-list ports {
+        type string;
+      }
+      leaf-list peers {
+        type string;
+      }
+    }
+  }
+
+  // simulated packet-transport-network model
+  grouping ptn-model {
+
+    list networks {
+      key id;
+      leaf id {
+        type string;
+      }
+      // simulated packet-transport-nodes
+      container nodes {
+        leaf ptn {
+          type string;
+        }
+        leaf l2sw {
+          type string;
+        }
+      }
+
+      // simulated links among packet-transport-nodes
+      container links {
+        leaf local_ip {
+          type string;
+          mandatory true;
+        }
+        leaf-list remote_ips {
+          type string;
+        }
+      }
+
+      // simulated layer-2 VPNs
+      list l2-vpn {
+        key vid;
+        leaf vid {
+          type uint16;
+        }
+        leaf vni {
+          type uint32;
+          mandatory true;
+        }
+        leaf-list peers {
+          type string;
+        }
+        leaf ip {
+          type string;
+          mandatory true;
+        }
+      }
+    }
+  }
+
+  // Virtual hosts model
+  grouping vhosts-model {
+    list vhost-props {
+      key network;
+      leaf network {
+        type string;
+      }
+      leaf vhosts {
+        type uint16;
+      }
+    }
+  }
+  
+  // Router model
+  grouping router-model {
+    leaf loopback {
+      type string;
+    }
+    list ospf {
+      key area;
+      leaf area {
+        type string;
+      }
+      leaf-list network {
+        type string;
+      }
+    }
+  }      
+
+  // NLAN Request message
+  container request {
+    container model {
+      container dvr {
+        uses dvr-model;
+      }
+      container ptn {
+        uses ptn-model;
+      }
+      container vhosts {
+        uses vhosts-model;
+      }
+      container router {
+        uses router-model;
+      }
+    }
+  }
+
+  // NLAN Response message
+  container response {
+    leaf exit {
+      type uint16;  // shell command exit code
+    }
+    leaf log_message {
+      type string;  // log messages
+    }
+  }
+
+  // NLAN Master/Agent capabilities
+  container capabilities {
+    leaf-list capability {
+      type string;
+    }
+  }
+
+  container clear-mode {
+    leaf terminate {
+      type boolean;
+    }
+  }
+}

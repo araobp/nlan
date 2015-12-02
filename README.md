@@ -2,6 +2,32 @@
 
 This project re-uses outputs from my other project "[neutron-lan](https://github.com/araobp/neutron-lan)".
 
+##Installation
+[Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
+
+[Step 2] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
+```
+$ ./setup.sh
+```
+[Step 3]
+Try this to deploy "PTN/Vhost/Router" services:
+```
+$ ./master.sh
+```
+The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230).
+
+[Step 4]
+Open ssh session to the containers:
+```
+$ cd docker
+$ ./ssh.sh pe1
+       :
+$ ./ssh.sh ce1
+       :
+```
+
+Then you can do whatever you try.
+
 ##Background and motivation
 I want to develop a very simple DevOps framework for networking containers for several use cases.
 

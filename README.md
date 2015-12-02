@@ -1,22 +1,22 @@
-# Rewrite [neutron-lan](https://github.com/araobp/neutron-lan) with Go lang, YANG and Docker
+# Very simple DevOps framework for networking containers with VXLAN
 
-##Goal of this project
-The goal of this project is to study how DevOps tool for networking can be developed with Golang, YANG and Docker.
+This project re-uses outputs from my other project "[neutron-lan](https://github.com/araobp/neutron-lan)".
 
-Current status (as of November 30th, 2015): PTN simulation is working with multiple containers.
+##Key technologies used for this project
+- Golang
+- Open vSwitch, OVSDB and JSON-RPC(RFC7047)
+- VXLAN
+- Docker
+- etcd
+- YANG/goyang
+- JSON/YAML
+- Protocol buffers and gRPC
+- Quagga
 
-##Background and motivation
-- The classical definition of SDN is becoming obsolete for most of cases (excluding cases where dynamic control is required).
-- The next definition of SDN is similar to those of Cloud Management System (such as OpenStack) and PaaS (such as Kubernetes/Docker).
-
-##Policy
-- Write codes! Powerpoint documents, no thanks.
-- Respect CLI! Think "CLI for SDN"! (YANG/NETCONF is sort of "CLI for SDN", but we may re-invent another form of "CLI for SDN" supporting transaction/rollback)
-
-##Use cases
+##Target use cases
+- DevOps for networking containers
 - Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"
-- Network simulation for open source SDN controllers such as OpenDaylight.
-- DevOps for networking with whitebox routers/switches.
+- Network simulation for open source SDN controllers such as OpenDaylight
 
 ##Future use cases
 If some SoC for SOHO routers supports VXLAN off-loading in future, I will develop SDN for LAN/WAN with this code (nlan/go-nlan). A sort of "(wired, not wireless) LAN controller".
@@ -35,12 +35,6 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
         V       V
     [Agent]   [Agent] --- Local DB
 ```
-##Rewrite works overview
-- Write NLAN network service models in YANG
-- Use gRPC instead of "Python OrderedDict over SSH"
-- Rewirte NLAN Master and Agent (config/rpc) in Go lang
-- Remove OVSDB-dependency as much as possible
-- Bi-directional RPCs (any libraries available on github?)
 
 ##NLAN model in YANG and protobuf
 Go stub generation
@@ -65,8 +59,10 @@ Go stub generation
 ##Declarative state representation
 See [ptn.yaml](nlan/etc/ptn.yaml) as a declarative state representation of simulated Packet Transport Network.
 
-##Preparations
-I use a very old PC with a 32bit CPU, so I need to build 32bit binary from source codes:
+#Development environment setup
+
+##Building Golang and protobuf for 32bit Linux
+I use a very old PC with a 32bit CPU at home, so I need to build 32bit binary from source codes:
 - Go lang installation: https://golang.org/dl/
 - Protobuf build and installation: https://github.com/google/protobuf/blob/master/INSTALL.txt
 ```

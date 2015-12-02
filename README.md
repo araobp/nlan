@@ -65,12 +65,6 @@ Go stub generation
 ##Declarative state representation
 See [ptn.yaml](nlan/etc/ptn.yaml) as a declarative state representation of simulated Packet Transport Network.
 
-##JSON database with YANG as a schema language for JSON
-
-I used ovsdb as a JSON database with OVSDB-schema in my [neutron-lan](http://github.com/araobp/neutron-lan) project.
-
-[Some thoughts](./DATABASE.md) for this project.
-
 ##Preparations
 I use a very old PC with a 32bit CPU, so I need to build 32bit binary from source codes:
 - Go lang installation: https://golang.org/dl/

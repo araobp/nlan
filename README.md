@@ -25,6 +25,7 @@ $ ./ssh.sh pe1
 $ ./ssh.sh ce1
        :
 ```
+The password is "root".
 
 Then you can do whatever you try.
 

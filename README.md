@@ -2,6 +2,16 @@
 
 This project re-uses outputs from my other project "[neutron-lan](https://github.com/araobp/neutron-lan)".
 
+##Background and motivation
+I want to develop a very simple DevOps framework for networking containers for several use cases.
+
+This project was inspired by the following open source project:
+- OpenStack Neutron
+- Salt
+- OpenDaylight
+
+I also want to prove that Golang is the best language for DevOps and SDN.
+
 ##Key technologies used for this project
 - Golang
 - Open vSwitch, OVSDB and JSON-RPC(RFC7047)
@@ -12,6 +22,12 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - JSON/YAML
 - Protocol buffers and gRPC
 - Quagga
+
+##NLAN services
+- PTN: Packet Transport Network (Layer 1 and Layer 2)
+- DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)
+- vHosts: netns-based virtual hosts
+- Router: Quagga configuration
 
 ##Target use cases
 - DevOps for networking containers

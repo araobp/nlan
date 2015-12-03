@@ -36,8 +36,8 @@ module: nlan
    |     +--rw router
    |        +--rw loopback?   string
    |        +--rw ospf* [area]
-   |           +--rw area       string
-   |           +--rw network*   string
+   |           +--rw area        string
+   |           +--rw networks*   string
    +--rw response
    |  +--rw exit?          uint16
    |  +--rw log_message?   string

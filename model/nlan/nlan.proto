@@ -97,7 +97,7 @@ message Router {
 
 message Ospf {
   string Area = 1; // nlan/nlan.yang:131:7
-  repeated string Network = 2; // nlan/nlan.yang:134:7
+  repeated string Networks = 2; // nlan/nlan.yang:134:7
 }
 
 message Vhosts {

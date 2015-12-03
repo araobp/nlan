@@ -310,8 +310,8 @@ func (m *Router) GetOspf() []*Ospf {
 }
 
 type Ospf struct {
-	Area    string   `protobuf:"bytes,1,opt,name=Area" json:"Area,omitempty"`
-	Network []string `protobuf:"bytes,2,rep,name=Network" json:"Network,omitempty"`
+	Area     string   `protobuf:"bytes,1,opt,name=Area" json:"Area,omitempty"`
+	Networks []string `protobuf:"bytes,2,rep,name=Networks" json:"Networks,omitempty"`
 }
 
 func (m *Ospf) Reset()         { *m = Ospf{} }

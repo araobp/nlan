@@ -131,7 +131,7 @@ module nlan {
       leaf area {
         type string;
       }
-      leaf-list network {
+      leaf-list networks {
         type string;
       }
     }

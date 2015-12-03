@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo "Compiling NLAN model..."
-cd nlan/model
+cd model
 ./yang.sh
 ./protoc.sh
-cd ../..
+cd ..
 
 echo "Buidling NLAN master..."
 go build

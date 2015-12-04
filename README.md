@@ -57,12 +57,11 @@ I also want to prove that Golang is the best language for DevOps and SDN.
 - Router: Quagga configuration
 
 ##Target use cases
-- DevOps for networking containers
-- Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"
-- Network simulation for open source SDN controllers such as OpenDaylight
 
-##Future use cases
-If some SoC for SOHO routers supports VXLAN off-loading in future, I will develop SDN for LAN/WAN with this code (nlan). A sort of "(wired, not wireless) LAN controller".
+[Use case 1] Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"
+
+[Use case 2] SONO NFV (Network Functions Virtualization)
+![SONO-NFV](https://docs.google.com/drawings/d/11fJUimZVrGxqAdq-hJK4abDu0ZThkfHGtbl_94zW0rQ/pub?w=640&h=480)
 
 ##Network simulation with Linux containers
 I use Linux containers as virtual routers, and this tool will set up virtual links (L0/L1) and virtual switches (L2) over the containers. Then I will run Quagga/Zebra(L3) daemons over the virtual routers to study how legacy routing protocols work.

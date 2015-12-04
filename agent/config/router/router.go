@@ -50,7 +50,7 @@ func addRouter(loopback string, ospf []*nlan.Ospf, con *context.Context) {
 	if ospf != nil {
 		var script [][]string
 		script = append(script, []string{"router", "ospf"})
-		script = append(script, []string{"redistributed", "connected"})
+		script = append(script, []string{"redistribute", "connected"})
 		for _, o := range ospf {
 			area := o.Area
 			networks := o.Networks

@@ -60,6 +60,8 @@ I also want to prove that Golang is the best language for DevOps and SDN.
 
 [Use case 1] Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"
 
+![WAN simulation](https://docs.google.com/drawings/d/1VKfKlwnzWQ2-ImfXeB5uNegGBK0BnaGU_4lS8h4Qpcw/pub?w=640&h=480)
+
 [Use case 2] SONO NFV (Network Functions Virtualization)
 ![SONO-NFV](https://docs.google.com/drawings/d/11fJUimZVrGxqAdq-hJK4abDu0ZThkfHGtbl_94zW0rQ/pub?w=640&h=480)
 

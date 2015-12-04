@@ -42,6 +42,8 @@ States:
         Ospf:
           - Area: 0.0.0.0
             Networks: [10.200.1.101/24, 10.200.2.101/24]
+          - Area: 0.0.0.0
+            Networks: [10.201.11.1/24, 10.201.12.1/24]
   - Router: pe2
     Model:
       Ptn:   
@@ -83,6 +85,8 @@ States:
         Ospf:
           - Area: 0.0.0.0
             Networks: [10.200.1.102/24, 10.200.2.102/24]
+          - Area: 0.0.0.0
+            Networks: [10.202.11.1/24, 10.202.12.1/24]
   - Router: pe3
     Model:
       Ptn:   
@@ -124,6 +128,8 @@ States:
         Ospf:
           - Area: 0.0.0.0
             Networks: [10.200.1.103/24, 10.200.2.103/24]
+          - Area: 0.0.0.0
+            Networks: [10.203.13.1/24, 10.203.14.1/24]
   - Router: pe4
     Model:
       Ptn:   
@@ -165,6 +171,8 @@ States:
         Ospf:
           - Area: 0.0.0.0
             Networks: [10.200.1.104/24, 10.200.2.104/24]
+          - Area: 0.0.0.0
+            Networks: [10.204.13.1/24, 10.204.14.1/24]
   - Router: rr 
     Model:
       Ptn:   
@@ -218,6 +226,9 @@ States:
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.1/32
+        Ospf:
+          - Area: 0.0.0.0
+            Networks: [10.201.11.2/24, 10.202.11.2/24]
   - Router: ce2 
     Model:
       Ptn:   
@@ -246,6 +257,9 @@ States:
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.2/32
+        Ospf:
+          - Area: 0.0.0.0
+            Networks: [10.201.12.2/24, 10.202.12.2/24]
   - Router: ce3 
     Model:
       Ptn:   
@@ -274,6 +288,9 @@ States:
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.3/32
+        Ospf:
+          - Area: 0.0.0.0
+            Networks: [10.203.13.2/24, 10.204.13.2/24]
   - Router: ce4 
     Model:
       Ptn:   
@@ -302,3 +319,6 @@ States:
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.4/32
+        Ospf:
+          - Area: 0.0.0.0
+            Networks: [10.203.14.2/24, 10.204.14.2/24]

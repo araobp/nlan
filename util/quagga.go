@@ -15,11 +15,13 @@ func appendScript(args *[]string, arg string) {
 
 func VtyshBatch(script [][]string) []string {
 	var args []string
-	appendScript(&args, CONF_T)
-	for _, arg := range script {
-		appendScript(&args, strings.Join(arg, " "))
+	if len(script) > 0 {
+		appendScript(&args, CONF_T)
+		for _, arg := range script {
+			appendScript(&args, strings.Join(arg, " "))
+		}
+		appendScript(&args, END)
+		appendScript(&args, WRITE_FILE)
 	}
-	appendScript(&args, END)
-	appendScript(&args, WRITE_FILE)
 	return args
 }

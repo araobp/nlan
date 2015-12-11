@@ -24,6 +24,8 @@ It has these top-level messages:
 	Links
 	Nodes
 	Router
+	Bgp
+	Neighbors
 	Ospf
 	Vhosts
 	VhostProps
@@ -294,13 +296,21 @@ func (m *Nodes) String() string { return proto.CompactTextString(m) }
 func (*Nodes) ProtoMessage()    {}
 
 type Router struct {
-	Loopback string  `protobuf:"bytes,1,opt,name=Loopback" json:"Loopback,omitempty"`
-	Ospf     []*Ospf `protobuf:"bytes,2,rep,name=Ospf" json:"Ospf,omitempty"`
+	Bgp      []*Bgp  `protobuf:"bytes,1,rep,name=Bgp" json:"Bgp,omitempty"`
+	Loopback string  `protobuf:"bytes,2,opt,name=Loopback" json:"Loopback,omitempty"`
+	Ospf     []*Ospf `protobuf:"bytes,3,rep,name=Ospf" json:"Ospf,omitempty"`
 }
 
 func (m *Router) Reset()         { *m = Router{} }
 func (m *Router) String() string { return proto.CompactTextString(m) }
 func (*Router) ProtoMessage()    {}
+
+func (m *Router) GetBgp() []*Bgp {
+	if m != nil {
+		return m.Bgp
+	}
+	return nil
+}
 
 func (m *Router) GetOspf() []*Ospf {
 	if m != nil {
@@ -308,6 +318,32 @@ func (m *Router) GetOspf() []*Ospf {
 	}
 	return nil
 }
+
+type Bgp struct {
+	As        uint32       `protobuf:"varint,1,opt,name=As" json:"As,omitempty"`
+	Neighbors []*Neighbors `protobuf:"bytes,2,rep,name=Neighbors" json:"Neighbors,omitempty"`
+}
+
+func (m *Bgp) Reset()         { *m = Bgp{} }
+func (m *Bgp) String() string { return proto.CompactTextString(m) }
+func (*Bgp) ProtoMessage()    {}
+
+func (m *Bgp) GetNeighbors() []*Neighbors {
+	if m != nil {
+		return m.Neighbors
+	}
+	return nil
+}
+
+type Neighbors struct {
+	Peer                 string `protobuf:"bytes,1,opt,name=Peer" json:"Peer,omitempty"`
+	RemoteAs             uint32 `protobuf:"varint,2,opt,name=RemoteAs" json:"RemoteAs,omitempty"`
+	RouteReflectorClient bool   `protobuf:"varint,3,opt,name=RouteReflectorClient" json:"RouteReflectorClient,omitempty"`
+}
+
+func (m *Neighbors) Reset()         { *m = Neighbors{} }
+func (m *Neighbors) String() string { return proto.CompactTextString(m) }
+func (*Neighbors) ProtoMessage()    {}
 
 type Ospf struct {
 	Area     string   `protobuf:"bytes,1,opt,name=Area" json:"Area,omitempty"`

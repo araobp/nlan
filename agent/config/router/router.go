@@ -5,15 +5,18 @@ import (
 	"github.com/araobp/nlan/env"
 	"github.com/araobp/nlan/model/nlan"
 	"github.com/araobp/nlan/util"
+
+	"strconv"
 )
 
 func Crud(crud int, in *nlan.Router, con *context.Context) {
 
 	loopback := in.Loopback
 	ospf := in.GetOspf()
+	bgp := in.GetBgp()
 	logger := con.Logger
 	logger.Print("Router called...")
-	var crudRouter func(string, []*nlan.Ospf, *context.Context)
+	var crudRouter func(string, []*nlan.Ospf, []*nlan.Bgp, *context.Context)
 
 	switch crud {
 	case env.ADD:
@@ -27,7 +30,7 @@ func Crud(crud int, in *nlan.Router, con *context.Context) {
 	}
 
 	logger.Printf("Loopback: %s", loopback)
-	crudRouter(loopback, ospf, con)
+	crudRouter(loopback, ospf, bgp, con)
 	logger.Print("crudRouter() completed")
 }
 
@@ -42,31 +45,70 @@ func routerOspfNetworks(s *[][]string, area string, networks []string) {
 	}
 }
 
-func addRouter(loopback string, ospf []*nlan.Ospf, con *context.Context) {
+func routerBgpNeighbors(s *[][]string, neighs []*nlan.Neighbors) {
+	for _, n := range neighs {
+		peer := n.Peer
+		as := n.RemoteAs
+		client := n.RouteReflectorClient
+		n := []string{}
+		n = append(n, "neighbor")
+		n = append(n, peer)
+		n = append(n, "remote-as")
+		n = append(n, strconv.FormatUint(uint64(as), 10))
+		*s = append(*s, n)
+		if client == true {
+			c := []string{}
+			c = append(c, "neighbor")
+			c = append(c, peer)
+			c = append(c, "route-reflector-client")
+			*s = append(*s, c)
+		}
+	}
+}
+
+func addRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
 
 	cmd, cmdp := con.GetCmd()
 	logger := con.Logger
 	cmd("ip", "addr", "add", "dev", "lo", loopback)
+	var script [][]string
 	if ospf != nil {
-		var script [][]string
 		script = append(script, []string{"router", "ospf"})
-		script = append(script, []string{"redistribute", "connected"})
+		// TODO: redistribution option
+		//script = append(script, []string{"redistribute", "connected"})
+		// TODO: redistribution option
+		//script = append(script, []string{"redistribute", "bgp"})
 		for _, o := range ospf {
 			area := o.Area
 			networks := o.Networks
-			logger.Print("Networks: %v", networks)
+			logger.Print("OSPF Networks: %v", networks)
 			routerOspfNetworks(&script, area, networks)
 		}
 		script = append(script, []string{"exit"})
+	}
+	if bgp != nil {
+		for _, b := range bgp {
+			as := b.As
+			script = append(script, []string{"router", "bgp", strconv.FormatUint(uint64(as), 10)})
+			script = append(script, []string{"redistribute", "connected"})
+			script = append(script, []string{"redistribute", "ospf"})
+			neigh := b.GetNeighbors()
+			if neigh != nil {
+				routerBgpNeighbors(&script, neigh)
+			}
+		}
+		script = append(script, []string{"exit"})
+	}
+	if len(script) > 0 {
 		batch := util.VtyshBatch(script)
 		cmdp("vtysh", batch...)
 	}
 }
 
-func updateRouter(loopback string, ospf []*nlan.Ospf, con *context.Context) {
+func updateRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
 	//
 }
 
-func deleteRouter(loopback string, ospf []*nlan.Ospf, con *context.Context) {
+func deleteRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
 	//
 }

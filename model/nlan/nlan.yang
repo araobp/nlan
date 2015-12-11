@@ -135,6 +135,25 @@ module nlan {
         type string;
       }
     }
+    list bgp {
+      key as;
+      leaf as {
+        type uint16;
+      }
+      list neighbors {
+        key peer;
+        leaf peer {
+          type string;
+        }
+        leaf remote-as {
+          type uint16;
+        }
+        leaf route-reflector-client {
+          type boolean;
+          default false;
+        }
+      }
+    }
   }      
 
   // NLAN Request message

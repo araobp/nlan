@@ -6,7 +6,7 @@ cd model
 ./protoc.sh
 cd ..
 
-echo "Buidling NLAN master..."
+echo "Building NLAN master..."
 go build
 
 echo "Building containers with NLAN agent embedded..."

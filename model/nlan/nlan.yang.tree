@@ -36,8 +36,14 @@ module: nlan
    |     +--rw router
    |        +--rw loopback?   string
    |        +--rw ospf* [area]
-   |           +--rw area        string
-   |           +--rw networks*   string
+   |        |  +--rw area        string
+   |        |  +--rw networks*   string
+   |        +--rw bgp* [as]
+   |           +--rw as           uint16
+   |           +--rw neighbors* [peer]
+   |              +--rw peer                      string
+   |              +--rw remote-as?                uint16
+   |              +--rw route-reflector-client?   boolean
    +--rw response
    |  +--rw exit?          uint16
    |  +--rw log_message?   string

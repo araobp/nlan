@@ -2,34 +2,8 @@
 
 This project re-uses outputs from my other project "[neutron-lan](https://github.com/araobp/neutron-lan)".
 
-##Installation
-[Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
-
-[Step 2] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
-```
-$ ./setup.sh
-```
-[Step 3]
-Try this to deploy "PTN/Vhost/Router" services:
-```
-$ ./master.sh
-```
-The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230).
-
-[Step 4]
-Open ssh session to the containers:
-```
-$ cd docker
-$ ./ssh.sh pe1
-       :
-$ ./ssh.sh ce1
-       :
-```
-The password is "root".
-
-Then you can do whatever you try.
-
 ##Background and motivation
+
 I want to develop a very simple DevOps framework for networking containers for several use cases.
 
 This project was inspired by the following open source project:
@@ -57,12 +31,13 @@ I also want to prove that Golang is the best language for DevOps and SDN.
 - Router: Quagga configuration
 
 ##Target use cases
-- DevOps for networking containers
-- Network simulation, especially simulated WAN to test routing daemons (such as quagga/zebra) and other SDN-related "go-something"
-- Network simulation for open source SDN controllers such as OpenDaylight
 
-##Future use cases
-If some SoC for SOHO routers supports VXLAN off-loading in future, I will develop SDN for LAN/WAN with this code (nlan). A sort of "(wired, not wireless) LAN controller".
+### Use case 1: Network simulation
+
+![WAN simulation](https://docs.google.com/drawings/d/1VKfKlwnzWQ2-ImfXeB5uNegGBK0BnaGU_4lS8h4Qpcw/pub?w=640&h=480)
+
+### Use case 2: SONO NFV (Network Functions Virtualization)
+![SONO-NFV](https://docs.google.com/drawings/d/11fJUimZVrGxqAdq-hJK4abDu0ZThkfHGtbl_94zW0rQ/pub?w=640&h=480)
 
 ##Network simulation with Linux containers
 I use Linux containers as virtual routers, and this tool will set up virtual links (L0/L1) and virtual switches (L2) over the containers. Then I will run Quagga/Zebra(L3) daemons over the virtual routers to study how legacy routing protocols work.
@@ -101,6 +76,34 @@ Go stub generation
 
 ##Declarative state representation
 See [ptn.yaml](./etc/ptn.yaml) as a declarative state representation of simulated Packet Transport Network.
+
+#NLAN installation
+
+[Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
+
+[Step 2] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
+```
+$ ./setup.sh
+```
+[Step 3]
+Try this to deploy "PTN/Vhost/Router" services:
+```
+$ ./master.sh
+```
+The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230).
+
+[Step 4]
+Open ssh session to the containers:
+```
+$ cd docker
+$ ./ssh.sh pe1
+       :
+$ ./ssh.sh ce1
+       :
+```
+The password is "root".
+
+Then you can do whatever you try.
 
 #Development environment setup
 

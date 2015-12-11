@@ -1,4 +1,4 @@
-```
-$ etcdctl mkdir /hosts
-$ export ETCD_ADDRESS=<etcd address>
-```
+#NLAN Agent
+
+NLAN agent runs on each Linxu container.
+

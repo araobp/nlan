@@ -42,13 +42,12 @@ States:
         Ospf:
           - Area: 0.0.0.0
             Networks: [10.200.1.101/24, 10.200.2.101/24]
-          - Area: 0.0.0.1
-            Networks: [10.201.11.1/24, 10.201.12.1/24]
         Bgp:
           - As: 100
             Neighbors:
               - Peer: 10.200.1.105
                 RemoteAs: 100
+                NextHopSelf: true
               - Peer: 10.201.11.2
                 RemoteAs: 1001
               - Peer: 10.201.12.2
@@ -94,13 +93,12 @@ States:
         Ospf:
           - Area: 0.0.0.0
             Networks: [10.200.1.102/24, 10.200.2.102/24]
-          - Area: 0.0.0.1
-            Networks: [10.202.11.1/24, 10.202.12.1/24]
         Bgp:
           - As: 100
             Neighbors:
               - Peer: 10.200.1.105
                 RemoteAs: 100
+                NextHopSelf: true
               - Peer: 10.202.11.2
                 RemoteAs: 1001
               - Peer: 10.202.12.2
@@ -146,13 +144,12 @@ States:
         Ospf:
           - Area: 0.0.0.0
             Networks: [10.200.1.103/24, 10.200.2.103/24]
-          - Area: 0.0.0.1
-            Networks: [10.203.13.1/24, 10.203.14.1/24]
         Bgp:
           - As: 100
             Neighbors:
               - Peer: 10.200.1.105
                 RemoteAs: 100
+                NextHopSelf: true
               - Peer: 10.203.13.2
                 RemoteAs: 1003
               - Peer: 10.203.14.2
@@ -198,13 +195,12 @@ States:
         Ospf:
           - Area: 0.0.0.0
             Networks: [10.200.1.104/24, 10.200.2.104/24]
-          - Area: 0.0.0.2
-            Networks: [10.204.13.1/24, 10.204.14.1/24]
         Bgp:
           - As: 100
             Neighbors:
               - Peer: 10.200.1.105
                 RemoteAs: 100
+                NextHopSelf: true
               - Peer: 10.204.13.2
                 RemoteAs: 1003
               - Peer: 10.204.14.2
@@ -277,15 +273,12 @@ States:
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.1/32
-        Ospf:
-          - Area: 0.0.0.1
-            Networks: [10.201.11.2/24, 10.202.11.2/24]
         Bgp:
           - As: 1001
             Neighbors:
-              - Peer: 10.201.11.2
+              - Peer: 10.201.11.1
                 RemoteAs: 100
-              - Peer: 10.202.11.2
+              - Peer: 10.202.11.1
                 RemoteAs: 100
   - Router: ce2 
     Model:
@@ -315,15 +308,12 @@ States:
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.2/32
-        Ospf:
-          - Area: 0.0.0.1
-            Networks: [10.201.12.2/24, 10.202.12.2/24]
         Bgp:
           - As: 1002
             Neighbors:
-              - Peer: 10.201.11.2
+              - Peer: 10.201.12.1
                 RemoteAs: 100
-              - Peer: 10.202.11.2
+              - Peer: 10.202.12.1
                 RemoteAs: 100
   - Router: ce3 
     Model:
@@ -353,15 +343,12 @@ States:
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.3/32
-        Ospf:
-          - Area: 0.0.0.2
-            Networks: [10.203.13.2/24, 10.204.13.2/24]
         Bgp:
           - As: 1003
             Neighbors:
-              - Peer: 10.203.13.2
+              - Peer: 10.203.13.1
                 RemoteAs: 100
-              - Peer: 10.204.13.2
+              - Peer: 10.204.13.1
                 RemoteAs: 100
   - Router: ce4 
     Model:
@@ -391,13 +378,10 @@ States:
             Vhosts: 2
       Router:   
         Loopback: 10.1.2.4/32
-        Ospf:
-          - Area: 0.0.0.2
-            Networks: [10.203.14.2/24, 10.204.14.2/24]
         Bgp:
           - As: 1004
             Neighbors:
-              - Peer: 10.203.14.2
+              - Peer: 10.203.14.1
                 RemoteAs: 100
-              - Peer: 10.204.14.2
+              - Peer: 10.204.14.1
                 RemoteAs: 100

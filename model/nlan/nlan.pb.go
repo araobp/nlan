@@ -336,9 +336,10 @@ func (m *Bgp) GetNeighbors() []*Neighbors {
 }
 
 type Neighbors struct {
-	Peer                 string `protobuf:"bytes,1,opt,name=Peer" json:"Peer,omitempty"`
-	RemoteAs             uint32 `protobuf:"varint,2,opt,name=RemoteAs" json:"RemoteAs,omitempty"`
-	RouteReflectorClient bool   `protobuf:"varint,3,opt,name=RouteReflectorClient" json:"RouteReflectorClient,omitempty"`
+	NextHopSelf          bool   `protobuf:"varint,1,opt,name=NextHopSelf" json:"NextHopSelf,omitempty"`
+	Peer                 string `protobuf:"bytes,2,opt,name=Peer" json:"Peer,omitempty"`
+	RemoteAs             uint32 `protobuf:"varint,3,opt,name=RemoteAs" json:"RemoteAs,omitempty"`
+	RouteReflectorClient bool   `protobuf:"varint,4,opt,name=RouteReflectorClient" json:"RouteReflectorClient,omitempty"`
 }
 
 func (m *Neighbors) Reset()         { *m = Neighbors{} }

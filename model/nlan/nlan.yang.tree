@@ -44,6 +44,7 @@ module: nlan
    |              +--rw peer                      string
    |              +--rw remote-as?                uint16
    |              +--rw route-reflector-client?   boolean
+   |              +--rw next-hop-self?            boolean
    +--rw response
    |  +--rw exit?          uint16
    |  +--rw log_message?   string

@@ -50,6 +50,7 @@ func routerBgpNeighbors(s *[][]string, neighs []*nlan.Neighbors) {
 		peer := n.Peer
 		as := n.RemoteAs
 		client := n.RouteReflectorClient
+		nextHopSelf := n.NextHopSelf
 		n := []string{}
 		n = append(n, "neighbor")
 		n = append(n, peer)
@@ -62,6 +63,13 @@ func routerBgpNeighbors(s *[][]string, neighs []*nlan.Neighbors) {
 			c = append(c, peer)
 			c = append(c, "route-reflector-client")
 			*s = append(*s, c)
+		}
+		if nextHopSelf == true {
+			n := []string{}
+			n = append(n, "neighbor")
+			n = append(n, peer)
+			n = append(n, "next-hop-self")
+			*s = append(*s, n)
 		}
 	}
 }

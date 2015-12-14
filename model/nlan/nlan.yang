@@ -152,6 +152,10 @@ module nlan {
           type boolean;
           default false;
         }
+	leaf next-hop-self {
+	  type boolean;
+          default false;
+	}
       }
     }
   }      

@@ -12,29 +12,29 @@ service NlanAgent {
 
 // NLAN module
 message Nlan {
-  Capabilities Capabilities = 1; // nlan/nlan.yang:188:3
-  ClearMode ClearMode = 2; // nlan/nlan.yang:194:3
-  Request Request = 3; // nlan/nlan.yang:160:3
-  Response Response = 4; // nlan/nlan.yang:178:3
+  Capabilities Capabilities = 1; // nlan/nlan.yang:192:3
+  ClearMode ClearMode = 2; // nlan/nlan.yang:198:3
+  Request Request = 3; // nlan/nlan.yang:164:3
+  Response Response = 4; // nlan/nlan.yang:182:3
 }
 
 message Capabilities {
-  repeated string Capability = 1; // nlan/nlan.yang:189:5
+  repeated string Capability = 1; // nlan/nlan.yang:193:5
 }
 
 message ClearMode {
-  bool Terminate = 1; // nlan/nlan.yang:195:5
+  bool Terminate = 1; // nlan/nlan.yang:199:5
 }
 
 message Request {
-  Model Model = 1; // nlan/nlan.yang:161:5
+  Model Model = 1; // nlan/nlan.yang:165:5
 }
 
 message Model {
-  Dvr Dvr = 1; // nlan/nlan.yang:162:7
-  Ptn Ptn = 2; // nlan/nlan.yang:165:7
-  Router Router = 3; // nlan/nlan.yang:171:7
-  Vhosts Vhosts = 4; // nlan/nlan.yang:168:7
+  Dvr Dvr = 1; // nlan/nlan.yang:166:7
+  Ptn Ptn = 2; // nlan/nlan.yang:169:7
+  Router Router = 3; // nlan/nlan.yang:175:7
+  Vhosts Vhosts = 4; // nlan/nlan.yang:172:7
 }
 
 message Dvr {
@@ -102,9 +102,10 @@ message Bgp {
 }
 
 message Neighbors {
-  string Peer = 1; // nlan/nlan.yang:145:9
-  uint32 RemoteAs = 2; // nlan/nlan.yang:148:9
-  bool RouteReflectorClient = 3; // nlan/nlan.yang:151:9
+  bool NextHopSelf = 1; // nlan/nlan.yang:155:2
+  string Peer = 2; // nlan/nlan.yang:145:9
+  uint32 RemoteAs = 3; // nlan/nlan.yang:148:9
+  bool RouteReflectorClient = 4; // nlan/nlan.yang:151:9
 }
 
 message Ospf {
@@ -122,6 +123,6 @@ message VhostProps {
 }
 
 message Response {
-  uint32 Exit = 1; // nlan/nlan.yang:179:5
-  string LogMessage = 2; // nlan/nlan.yang:182:5
+  uint32 Exit = 1; // nlan/nlan.yang:183:5
+  string LogMessage = 2; // nlan/nlan.yang:186:5
 }

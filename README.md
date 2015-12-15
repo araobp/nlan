@@ -16,6 +16,8 @@ As my hobby, I just want to develop a very simple DevOps framework for networkin
 
 ### Use case 1: Network simulation
 
+Implementation status: nearly completed (as of 16-DEC-2015).
+
 This use case makes use of NLAN's PTN, vHosts and Router services.
 ![WAN simulation](https://docs.google.com/drawings/d/1VKfKlwnzWQ2-ImfXeB5uNegGBK0BnaGU_4lS8h4Qpcw/pub?w=640&h=480)
 
@@ -24,6 +26,9 @@ This use case makes use of NLAN's PTN, vHosts and Router services.
 - [ptn-ospf.yaml](./etc/ptn-ospf.yaml)
 
 ### Use case 2: SOHO NFV (Network Functions Virtualization)
+
+Implementation status: planned.
+
 ![SONO-NFV](https://docs.google.com/drawings/d/11fJUimZVrGxqAdq-hJK4abDu0ZThkfHGtbl_94zW0rQ/pub?w=640&h=480)
 
 ##Network simulation with Linux containers

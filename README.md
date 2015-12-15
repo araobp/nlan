@@ -36,6 +36,10 @@ I also want to prove that Golang is the best language for DevOps and SDN.
 
 ![WAN simulation](https://docs.google.com/drawings/d/1VKfKlwnzWQ2-ImfXeB5uNegGBK0BnaGU_4lS8h4Qpcw/pub?w=640&h=480)
 
+State files:
+- [ptn-bgp.yaml](./etc/ptn-bgp.yaml)
+- [ptn-ospf.yaml](./etc/ptn-ospf.yaml)
+
 ### Use case 2: SOHO NFV (Network Functions Virtualization)
 ![SONO-NFV](https://docs.google.com/drawings/d/11fJUimZVrGxqAdq-hJK4abDu0ZThkfHGtbl_94zW0rQ/pub?w=640&h=480)
 

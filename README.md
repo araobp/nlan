@@ -34,9 +34,10 @@ I also want to prove that Golang is the best language for DevOps and SDN.
 
 ### Use case 1: Network simulation
 
+This use case makes use of NLAN's PTN, vHost and Router services.
 ![WAN simulation](https://docs.google.com/drawings/d/1VKfKlwnzWQ2-ImfXeB5uNegGBK0BnaGU_4lS8h4Qpcw/pub?w=640&h=480)
 
-State files:
+####Declarative state representations:
 - [ptn-bgp.yaml](./etc/ptn-bgp.yaml)
 - [ptn-ospf.yaml](./etc/ptn-ospf.yaml)
 
@@ -77,9 +78,6 @@ Go stub generation
 - [protobuf model](./model/nlan/nlan.proto)
 - [rpc model](./model/nlan/rpc.proto)
 - [Go gRPC stub](./model/nlan/nlan.pb.go)
-
-##Declarative state representation
-See [ptn.yaml](./etc/ptn.yaml) as a declarative state representation of simulated Packet Transport Network.
 
 #NLAN installation
 

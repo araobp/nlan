@@ -78,14 +78,19 @@ func addRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context
 
 	cmd, cmdp := con.GetCmd()
 	logger := con.Logger
+
+	// Loopback address
 	cmd("ip", "addr", "add", "dev", "lo", loopback)
+
+	// Allow receiving packets from non-best-path interfaces
+	cmd("sysctl", "-w", "net.ipv4.conf.all.rp_filter=2")
+	// Allow routing packets with local addresses
+	cmd("sysctl", "-w", "net.ipv4.conf.all.accept_local=1")
+
 	var script [][]string
 	if ospf != nil {
 		script = append(script, []string{"router", "ospf"})
-		// TODO: redistribution option
-		//script = append(script, []string{"redistribute", "connected"})
-		// TODO: redistribution option
-		//script = append(script, []string{"redistribute", "bgp"})
+		script = append(script, []string{"redistribute", "connected"})
 		for _, o := range ospf {
 			area := o.Area
 			networks := o.Networks
@@ -99,7 +104,6 @@ func addRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context
 			as := b.As
 			script = append(script, []string{"router", "bgp", strconv.FormatUint(uint64(as), 10)})
 			script = append(script, []string{"redistribute", "connected"})
-			script = append(script, []string{"redistribute", "ospf"})
 			neigh := b.GetNeighbors()
 			if neigh != nil {
 				routerBgpNeighbors(&script, neigh)

@@ -1,4 +1,4 @@
-#Requirements for a simple go struct object database
+#Requirements for a go struct object database
 
 The package "github.com/araobp/nlan/util" includes command execution utilities: cmd() and cmpd(). When rebooting a Docker container, NLAN agent needs to load NLAN state from a local database to resume NLAN state by executing cmd(). On the other hand, cmdp() just skips its execution when restarting, since its state survives over reboots.
 

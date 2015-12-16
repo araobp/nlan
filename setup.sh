@@ -11,7 +11,7 @@ go build
 
 echo "Building containers with NLAN agent embedded..."
 cd docker
-docker build docker_mng.go
+go build docker_mng.go
 ./etcd.sh >/dev/null 2>&1 &
 ./restart.sh
 cd ..

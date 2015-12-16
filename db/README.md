@@ -1,6 +1,6 @@
 #Requirements for a go struct object database
 
-The package "github.com/araobp/nlan/util" includes command execution utilities: cmd() and cmdp(). When rebooting a Docker container, NLAN agent needs to load NLAN state from a local database to resume NLAN state by executing cmd(). On the other hand, cmdp() just skips its execution when restarting, since its state survives over reboots.
+The package "github.com/araobp/nlan/util" includes command execution utilities: cmd() and cmdp(). When rebooting a Docker container, NLAN agent needs to load NLAN state from a local database to resume NLAN services by executing cmd(). On the other hand, cmdp() just skips its execution when restarting, since its state survives over reboots.
 
 I considered using [tiedot](https://github.com/HouzuoGuo/tiedot) as a document-oriented database, but it seems too heavy for NLAN, since I am planning to run NLAN on Raspberry Pi.
 

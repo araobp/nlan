@@ -27,6 +27,8 @@ This use case makes use of NLAN's PTN, vHosts and Router services.
 
 ### Use case 2: SOHO NFV (Network Functions Virtualization)
 
+This is the next use case I am going to work on...
+
 ![SONO-NFV](https://docs.google.com/drawings/d/11fJUimZVrGxqAdq-hJK4abDu0ZThkfHGtbl_94zW0rQ/pub?w=640&h=480)
 
 ##Network simulation with Linux containers

@@ -11,11 +11,13 @@ import (
 	"github.com/araobp/nlan/common"
 	"github.com/araobp/nlan/env"
 	nlan "github.com/araobp/nlan/model/nlan"
+	"github.com/araobp/nlan/util"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
 
 type result struct {
+	router   string
 	address  string
 	ope      int
 	state    *nlan.Model
@@ -24,10 +26,8 @@ type result struct {
 
 func (r *result) Println() {
 	fmt.Println("---")
-	address := r.address
-	ope := r.ope
 	var state nlan.Model
-	switch ope {
+	switch r.ope {
 	case env.CLEAR:
 		state = nlan.Model{} // empty
 	default:
@@ -36,7 +36,7 @@ func (r *result) Println() {
 	response := *r.response
 	exit := response.Exit
 	log := response.LogMessage
-	fmt.Printf("address: %s\nope: %d\nstate: %s\nexit: %d\n", address, ope, state, exit)
+	fmt.Printf("router: %s, address: %s\nope: %d\nstate: %s\nexit: %d\n", r.router, r.address, r.ope, state, exit)
 	fmt.Println(log)
 }
 
@@ -44,7 +44,7 @@ var channel = make(chan result)
 var wg sync.WaitGroup
 var count int
 
-func deploy(address string, ope int, model *nlan.Model) {
+func deploy(router string, address string, ope int, state *nlan.Model) {
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
 		log.Print(err)
@@ -63,7 +63,7 @@ func deploy(address string, ope int, model *nlan.Model) {
 	log.Println(cs_agent)
 
 	// NLAN Request
-	request := nlan.Request{Model: model}
+	request := nlan.Request{Model: state}
 	var response *nlan.Response
 	switch ope {
 	case env.ADD:
@@ -76,11 +76,11 @@ func deploy(address string, ope int, model *nlan.Model) {
 	if err != nil {
 		log.Print(err)
 	}
-	r := result{address: address, ope: ope, state: model, response: response}
+	r := result{router: router, address: address, ope: ope, state: state, response: response}
 	channel <- r
 }
 
-func clearConfig(address string) {
+func clearConfig(router string, address string) {
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
 		log.Print(err)
@@ -97,7 +97,8 @@ func clearConfig(address string) {
 	}
 	log.Println(response)
 
-	r := result{address: address, ope: env.CLEAR, response: response}
+	r := result{router: router, address: address, ope: env.CLEAR, response: response}
+
 	channel <- r
 }
 
@@ -119,14 +120,15 @@ func main() {
 		buffer.WriteString(ip)
 		buffer.WriteString(env.PORT)
 		address := buffer.String()
-		model := v.Model
+		state := v.Model
 		switch *clear {
 		case true:
 			count += 1
-			go clearConfig(address)
+			go clearConfig(router, address)
 		case false:
 			count += 1
-			go deploy(address, env.ADD, &model)
+			util.SetMode(router, env.INIT)
+			go deploy(router, address, env.ADD, &state)
 		}
 	}
 	wg.Add(1)
@@ -135,6 +137,8 @@ func main() {
 		fmt.Println("---------------------------")
 		for r := range channel {
 			r.Println()
+			util.SetState(r.router, r.state)
+			util.SetMode(r.router, env.RESTART)
 			count -= 1
 			if count <= 0 {
 				break

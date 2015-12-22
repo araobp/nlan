@@ -32,26 +32,28 @@ func (a *agent) route(crud int, in *nlan.Request, configMode int) (exit uint32) 
 	vhosts := model.GetVhosts()
 	router := model.GetRouter()
 
+	logger := a.con.Logger
 	exit = 0
 	defer func() {
 		if r := recover(); r != nil {
-			c := a.con
-			logger := c.Logger
 			logger.Println(r)
 			exit = 1
 		}
 	}()
 
 	if ptn != nil {
+		logger.Print("Routing to PTN module...")
 		config_ptn.Crud(crud, ptn, a.con)
 	}
 	if dvr != nil {
 		//
 	}
 	if vhosts != nil {
+		logger.Print("Routing to VHOSTS module...")
 		config_vhosts.Crud(crud, vhosts, a.con)
 	}
 	if router != nil {
+		logger.Print("Routing to ROUTER module...")
 		config_router.Crud(crud, router, a.con)
 	}
 	return exit
@@ -135,8 +137,6 @@ func main() {
 		configMode = util.DEBUG
 	case "config":
 		configMode = util.CONFIG
-	case "restart":
-		configMode = util.RESTART
 	}
 
 	var logbuf bytes.Buffer
@@ -182,7 +182,20 @@ func main() {
 		}
 	default:
 		logger.Print("### gRPC server mode ###")
-		util.RegisterHost()
+		router := util.RegisterHost()
+
+		mode := util.GetMode(router)
+		logger.Printf("Start mode: %d", mode)
+		if mode == env.RESTART {
+			logger.Print("Restarting...")
+			state := new(nlan.Model)
+			util.GetState(router, state)
+			request := nlan.Request{Model: state}
+			logger.Printf("State for %s: %v", router, state)
+			logger.Printf("Request: %v", request)
+			exit := a.route(env.ADD, &request, configMode)
+			logger.Printf("Restarted: %d", exit)
+		}
 		listen, err := net.Listen("tcp", env.PORT)
 		defer listen.Close()
 		if err != nil {

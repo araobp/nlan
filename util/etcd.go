@@ -1,14 +1,16 @@
 package util
 
 import (
+	"encoding/json"
 	"log"
 	"net"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
+	"github.com/araobp/nlan/env"
 	"github.com/coreos/etcd/client"
-	"github.com/golang/protobuf/proto"
 	"golang.org/x/net/context"
 )
 
@@ -34,7 +36,7 @@ func getKapi() (client.KeysAPI, context.Context) {
 }
 
 // Registers a host IP address with etcd
-func RegisterHost() {
+func RegisterHost() string {
 
 	hostname := os.Getenv("HOSTNAME")
 	if hostname == "" {
@@ -55,6 +57,7 @@ func RegisterHost() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	return hostname
 }
 
 // Gets a list of all host names and their addresses from etcd
@@ -71,7 +74,7 @@ func ListHosts() map[string]interface{} {
 	for _, node := range nodes {
 		path := strings.Split(node.Key, "/")
 		ipmask := strings.Split(node.Value, "/")
-		hostname := path[2]
+		hostname := path[3]
 		ip := ipmask[0]
 		hosts[hostname] = ip
 	}
@@ -79,11 +82,11 @@ func ListHosts() map[string]interface{} {
 }
 
 // Sets NLAN state to etcd
-func SetState(hostname string, pb proto.Message) {
+func SetState(hostname string, state interface{}) {
 
 	kapi, cont := getKapi()
-	key := "/nlan/config/" + hostname
-	wire, _ := proto.Marshal(pb)
+	key := "/nlan/state/" + hostname + "/json"
+	wire, _ := json.Marshal(state)
 	value := string(wire)
 	_, err := kapi.Set(cont, key, value, nil)
 	if err != nil {
@@ -92,14 +95,42 @@ func SetState(hostname string, pb proto.Message) {
 }
 
 // Gets NLAN state from etcd
-func GetState(hostname string, pb proto.Message) {
+func GetState(hostname string, state interface{}) {
 
 	kapi, cont := getKapi()
-	key := "/nlan/config/" + hostname
-	r, err := kapi.Get(cont, key, &client.GetOptions{Recursive: false})
+	key := "/nlan/state/" + hostname + "/json"
+	r, err := kapi.Get(cont, key, &client.GetOptions{Recursive: true})
+	if err == nil {
+		wire := []byte(r.Node.Value)
+		err = json.Unmarshal(wire, state)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+}
+
+// Sets NLAN mode to etcd
+func SetMode(hostname string, mode int) {
+
+	kapi, cont := getKapi()
+	key := "/nlan/state/" + hostname + "/mode"
+	value := strconv.Itoa(mode)
+	_, err := kapi.Set(cont, key, value, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	wire := []byte(r.Node.Value)
-	proto.Unmarshal(wire, pb)
+}
+
+// Gets NLAN mode from etcd
+func GetMode(hostname string) int {
+
+	var i int
+	kapi, cont := getKapi()
+	key := "/nlan/state/" + hostname + "/mode"
+	r, err := kapi.Get(cont, key, &client.GetOptions{Recursive: false})
+	if err != nil {
+		i = env.INIT
+	}
+	i, _ = strconv.Atoi(r.Node.Value)
+	return i
 }

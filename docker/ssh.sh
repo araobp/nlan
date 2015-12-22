@@ -1,5 +1,5 @@
 #!/bin/bash
 
-ip=`etcdctl get /hosts/$1 | cut -d '/' -f1`
+ip=`etcdctl get /nlan/hosts/$1 | cut -d '/' -f1`
 ssh root@$ip
 

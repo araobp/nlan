@@ -15,3 +15,8 @@ const (
 	VHOSTS
 	ROUTER
 )
+
+const (
+	INIT = iota
+	RESTART
+)

@@ -65,7 +65,9 @@ func GetCmd(logger *log.Logger, mode int, panicMode bool) (func(string, ...strin
 
 	var f2 func(string, ...string) error
 	switch mode {
-	case RESTART, DEBUG:
+	// TODO: RESTART mode
+	//case RESTART, DEBUG:
+	case DEBUG:
 		f2 = func(name string, arg ...string) error {
 			err := c.CmdSkip(name, arg...)
 			if panicMode == true && err != nil {

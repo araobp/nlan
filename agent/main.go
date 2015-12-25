@@ -128,20 +128,36 @@ func main() {
 	ope := flag.String("ope", "ADD", "CRUD operation")
 	filename := flag.String("state", "", "state file")
 	roster := flag.String("roster", "", "roster file")
-	mode := flag.String("mode", "config", "config mode")
+	modeOption := flag.String("mode", "config", "config mode")
 	flag.Parse()
 
+	router := util.RegisterHost()
+	mode := util.GetMode(router)
 	var configMode int
-	switch *mode {
+	switch *modeOption {
 	case "debug":
 		configMode = util.DEBUG
 	case "config":
-		configMode = util.CONFIG
+		switch mode {
+		case env.RESTART:
+			configMode = util.RESTART
+		case env.INIT:
+			configMode = util.CONFIG
+		default:
+			configMode = util.CONFIG
+		}
 	}
 
 	var logbuf bytes.Buffer
 	logger := log.New(&logbuf, logPrefix, log.LstdFlags)
+	logger.Printf("Start mode: %d", mode)
 	cmd, cmdp := util.GetCmd(logger, configMode, true)
+
+	//Adds a secondary IP address to eth0
+	secondary := util.GetSecondaryIp(router)
+	if secondary != "" {
+		cmd("ip", "address", "add", secondary, "dev", "eth0")
+	}
 	c := &con.Context{Cmd: cmd, CmdP: cmdp, Logger: logger, Logbuf: &logbuf}
 	a := agent{con: c}
 
@@ -182,10 +198,7 @@ func main() {
 		}
 	default:
 		logger.Print("### gRPC server mode ###")
-		router := util.RegisterHost()
 
-		mode := util.GetMode(router)
-		logger.Printf("Start mode: %d", mode)
 		if mode == env.RESTART {
 			logger.Print("Restarting...")
 			state := new(nlan.Model)
@@ -195,6 +208,7 @@ func main() {
 			logger.Printf("Request: %v", request)
 			exit := a.route(env.ADD, &request, configMode)
 			logger.Printf("Restarted: %d", exit)
+			common.WriteLog(logFile(), &logbuf)
 		}
 		listen, err := net.Listen("tcp", env.PORT)
 		defer listen.Close()

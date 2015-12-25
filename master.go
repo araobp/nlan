@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 	"sync"
 
 	"github.com/araobp/nlan/common"
@@ -106,7 +107,14 @@ func main() {
 	count = 0
 	filename := flag.String("state", "state.yaml", "state file")
 	clear := flag.Bool("clear", false, "clear config at NLAN agent")
+	reset := flag.Bool("reset", false, "reset NLAN state on etcd")
 	flag.Parse()
+
+	if *reset == true {
+		util.ResetState()
+		os.Exit(0)
+	}
+
 	log.Println(*filename)
 
 	states, hosts := common.ReadState(filename, nil)

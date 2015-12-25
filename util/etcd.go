@@ -61,22 +61,28 @@ func RegisterHost() string {
 }
 
 // Gets a list of all host names and their addresses from etcd
-func ListHosts() map[string]interface{} {
+func ListHosts(secondary bool) map[string]interface{} {
 
 	kapi, cont := getKapi()
-	key := "/nlan/hosts"
-	list, err := kapi.Get(cont, key, &client.GetOptions{Recursive: true})
-	if err != nil {
-		log.Fatal(err)
+	var key string
+	switch secondary {
+	case false:
+		key = "/nlan/hosts"
+
+	case true:
+		key = "/nlan/ip"
 	}
-	nodes := list.Node.Nodes
+	list, err := kapi.Get(cont, key, &client.GetOptions{Recursive: true})
 	hosts := make(map[string]interface{})
-	for _, node := range nodes {
-		path := strings.Split(node.Key, "/")
-		ipmask := strings.Split(node.Value, "/")
-		hostname := path[3]
-		ip := ipmask[0]
-		hosts[hostname] = ip
+	if err != nil {
+		nodes := list.Node.Nodes
+		for _, node := range nodes {
+			path := strings.Split(node.Key, "/")
+			ipmask := strings.Split(node.Value, "/")
+			hostname := path[3]
+			ip := ipmask[0]
+			hosts[hostname] = ip
+		}
 	}
 	return hosts
 }
@@ -130,7 +136,35 @@ func GetMode(hostname string) int {
 	r, err := kapi.Get(cont, key, &client.GetOptions{Recursive: false})
 	if err != nil {
 		i = env.INIT
+	} else {
+		i, _ = strconv.Atoi(r.Node.Value)
 	}
-	i, _ = strconv.Atoi(r.Node.Value)
 	return i
+}
+
+// Resets NLAN state on etcd
+func ResetState() {
+
+	kapi, cont := getKapi()
+	key := "/nlan/state"
+	list, err := kapi.Get(cont, key, &client.GetOptions{Recursive: false})
+	if err == nil {
+		nodes := list.Node.Nodes
+		for _, node := range nodes {
+			kapi.Delete(cont, node.Key, &client.DeleteOptions{Recursive: true})
+		}
+	}
+}
+
+// Gets a secondary IP address from etcd
+func GetSecondaryIp(hostname string) string {
+
+	kapi, cont := getKapi()
+	key := "/nlan/ip/" + hostname
+	var secondary string
+	r, err := kapi.Get(cont, key, &client.GetOptions{Recursive: false})
+	if err == nil {
+		secondary = r.Node.Value
+	}
+	return secondary
 }

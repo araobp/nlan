@@ -27,3 +27,7 @@ func TestSetAndGetState(t *testing.T) {
 	log.Print(pb)
 	log.Print(pb.VhostProps)
 }
+
+func TestReset(t *testing.T) {
+	ResetState()
+}

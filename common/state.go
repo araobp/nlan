@@ -25,8 +25,11 @@ func ReadState(filename *string, roster *string) (*[]st.State, *map[string]inter
 
 	// Converts YAML to Go struct
 	var hosts map[string]interface{}
+	var secondary map[string]interface{}
+
 	if roster == nil {
-		hosts = util.ListHosts()
+		hosts = util.ListHosts(false)
+		secondary = util.ListHosts(true)
 	} else {
 		r, err := ioutil.ReadFile(*roster)
 		if err != nil {
@@ -37,12 +40,18 @@ func ReadState(filename *string, roster *string) (*[]st.State, *map[string]inter
 	log.Print(hosts)
 	state_ := st.NetworkState{}
 	statestring := string(state)
-	util.Yaml2Struct(&statestring, &state_, hosts)
+	if len(secondary) > 0 {
+		util.Yaml2Struct(&statestring, &state_, secondary)
+	} else {
+		util.Yaml2Struct(&statestring, &state_, hosts)
+	}
 	log.Print(state_)
 
 	return &state_.States, &hosts
 }
 
 func WriteLog(filename string, buf *bytes.Buffer) error {
-	return ioutil.WriteFile(LOGDIR+filename, buf.Bytes(), 0644)
+	err := ioutil.WriteFile(LOGDIR+filename, buf.Bytes(), 0644)
+	buf.Reset()
+	return err
 }

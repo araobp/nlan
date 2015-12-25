@@ -7,5 +7,6 @@ FROM router
 ENV ETCD_ADDRESS "http://172.17.42.1:2379"
 ENV NO_PROXY 172.17.42.1,localhost
 ADD agent /root/bin/agent
+//ADD gobgpd /root/bin/gobgpd
 CMD service openvswitch-switch start && service quagga start && service ssh start && /root/bin/agent
 

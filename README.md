@@ -25,6 +25,10 @@ This use case makes use of NLAN's PTN, vHosts and Router services.
 - [ptn-bgp.yaml](./etc/ptn-bgp.yaml)
 - [ptn-ospf.yaml](./etc/ptn-ospf.yaml)
 
+####Quagga and GoBGP:
+This use case makes use of Quagga, but gobgp may optionally be used as Route Reflector.
+- [gobgpd.conf](./etc/gobgpd.conf)
+
 ### Use case 2: SOHO NFV (Network Functions Virtualization)
 
 This is the next use case I am going to work on...

@@ -35,6 +35,9 @@ This is the next use case I am going to work on... (as my hobby: not so practica
 
 ![SONO-NFV](https://docs.google.com/drawings/d/11fJUimZVrGxqAdq-hJK4abDu0ZThkfHGtbl_94zW0rQ/pub?w=640&h=480)
 
+####Installation
+- [Setting up the software on Raspberry Pi](./RPI.md)
+
 ####Raspberry Pi cluster
 You could make a super computer with a cluser of RPIs. Here is a example: 
 * http://likemagicappears.com/projects/raspberry-pi-cluster/

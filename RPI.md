@@ -1,4 +1,4 @@
-#Installation
+#Setting up the software on Raspberry Pi
 
 ![Raspberry Pi](https://raw.github.com/araobp/neutron-lan/master/misc/rpi.png)
 

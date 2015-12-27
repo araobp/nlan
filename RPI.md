@@ -42,4 +42,5 @@ Note: it took two hours to complete the building processes.
 ## [Step4] protocol buffers
 ```
 $ apt-get clone https://github.com/google/protobuf
+$ apt-get install autoconf
 ```

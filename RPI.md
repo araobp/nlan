@@ -18,9 +18,9 @@ $ apt-get update
 $ apt-get install python2.7
 $ apt-get install python-pip
 $ apt-get install python3.4
-$ apt-get install python-pip
+$ apt-get install python3-pip
 ```
-Note: python3.4 is optional.
+Note: python3.4 and pip3 are optional.
 
 ## [Step3] Go
 ```

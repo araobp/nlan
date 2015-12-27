@@ -48,6 +48,7 @@ $ apt-get install autoconf
 $ apt-get install unzip
 $ apt-get install libtool
 $ apt-get install g++
+$ apt-get install make
 $ cd protobuf
 $ ./autogen.sh
 $ ./configure

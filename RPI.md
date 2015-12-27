@@ -15,6 +15,7 @@ Raspberry Pi 1 Model B
 python2.7 is required for pyang.
 ```
 $ apt-get install python2.7
+$ apt-get install python-pip
 $ apt-get install python3.4
 ```
 Note: python3.4 is optional.

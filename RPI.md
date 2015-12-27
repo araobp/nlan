@@ -1,6 +1,6 @@
 #Installation
 
-![RPI](https://github.com/araobp/neutron-lan/misc/rpi.png)
+![Raspberry Pi](https://raw.github.com/araobp/neutron-lan/master/misc/rpi.png)
 
 ## [Step1] Hypriot
 - [Hypriot Docker image](http://blog.hypriot.com/downloads/)

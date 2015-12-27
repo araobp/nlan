@@ -44,4 +44,17 @@ Note: it took two hours to complete the building processes.
 $ apt-get clone https://github.com/google/protobuf
 $ apt-get install autoconf
 $ apt-get install unzip
+$ apt-get install libtool
+$ cd protobuf
+$ ./autogen.sh
+$ ./configure
+$ make
+$ make install
 ```
+
+## [Step5] Networking modules
+
+### Linux Bridge
+
+### Open vSwitch
+

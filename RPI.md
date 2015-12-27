@@ -2,6 +2,8 @@
 
 ![Raspberry Pi](https://raw.github.com/araobp/neutron-lan/master/misc/rpi.png)
 
+Raspberry Pi 1 Model B
+
 ## [Step1] Hypriot
 - [Hypriot Docker image](http://blog.hypriot.com/downloads/)
 - [Win32 Disk Imager](http://sourceforge.net/projects/win32diskimager/)

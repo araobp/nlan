@@ -38,6 +38,7 @@ Then append the following two lines to $HOME/.bashrc:
 ```
 export GOROOT=$HOME/go
 export PATH=$PATH:$GOROOT/bin
+export GOPATH=$PATH/work
 ```
 
 Note: it took two hours to complete the building processes.

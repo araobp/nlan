@@ -12,6 +12,11 @@ As my hobby, I just want to develop a very simple DevOps framework for networkin
 - vHosts: netns-based virtual hosts
 - Router: Quagga configuration
 
+To be added:
+- Links: direct linking (VXLAN or internal)
+- Bridges: non-distributed virtual switch
+- :
+
 ##Target use cases
 
 Use case 1 has already been implemented, and use case 2 is being planned at the moment.

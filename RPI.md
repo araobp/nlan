@@ -29,4 +29,17 @@ $ cd $HOME/go/src
 $ ./make.bash
 $ ulimit -s 1024
 ```
+Then append the following two lines to $HOME/.bashrc:
+```
+export GOROOT=$HOME/go
+export PATH=$PATH:$GOROOT/bin
+```
+
+Note: it took two hours to complete the building processes.
+
 [Reference] http://dave.cheney.net/2015/09/04/building-go-1-5-on-the-raspberry-pi
+
+## [Step4] protocol buffers
+```
+$ apt-get clone https://github.com/google/protobuf
+```

@@ -25,5 +25,6 @@ $ curl https://storage.googleapis.com/golang/go1.5.2.src.tar.gz | tar xz
 $ export GOROOT_BOOTSTRAP=/root/go-linux-arm-bootstrap
 $ cd $HOME/go/src
 $ ./make.bash
+$ ulimit -s 1024
 ```
 [Reference] http://dave.cheney.net/2015/09/04/building-go-1-5-on-the-raspberry-pi

@@ -47,6 +47,7 @@ $ apt-get clone https://github.com/google/protobuf
 $ apt-get install autoconf
 $ apt-get install unzip
 $ apt-get install libtool
+$ apt-get install g++
 $ cd protobuf
 $ ./autogen.sh
 $ ./configure

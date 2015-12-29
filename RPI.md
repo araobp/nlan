@@ -196,6 +196,15 @@ $ scp gobgp root@172.17.0.2:~/bin
 $ scp gobgpd root@172.17.0.2:~/bin
 ```
 
+At the container,
+```
+$ dpkg -i openvswitch-common_2.4.0-1_armhf.deb
+$ dpkg -i openvswitch-switch_2.4.0-1_armhf.deb
+```
+If you encounter dependency problems, try:
+```
+$ apt-get -f install
+```
 ### Commit the change
 ```
 $ docker commit base router
@@ -215,3 +224,8 @@ $ go get github.com/araobp/nlan
 $ cd ~/work/src/github.com/araobp/nlan
 $ ./setup.sh
 ```
+
+## Dependency hell...
+I took a lot of steps to setup the software, because I needed to resolve dependency problems.
+
+I know the reason why a lot of people are migrating to Go.

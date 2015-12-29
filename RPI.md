@@ -94,7 +94,12 @@ docker0         8000.024244da82d8       no
 
 ## [Step7] etcd
 ```
-$ go get github.com/coreos/etcd
+$ go get github.co
+$ cd ~/work/src/github.com/coreos/etcd
+$ cp etcd ~/work/bin
+$ cd etcdctl
+$ go build main.go -o etcdctl
+$ cp etcdctl ~/work/bin
 ```
 
 ## [Step7] nlan installation

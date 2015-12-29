@@ -98,7 +98,7 @@ $ go get github.co
 $ cd ~/work/src/github.com/coreos/etcd
 $ cp etcd ~/work/bin
 $ cd etcdctl
-$ go build main.go -o etcdctl
+$ go build -o etcdctl
 $ cp etcdctl ~/work/bin
 ```
 

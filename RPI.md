@@ -122,3 +122,8 @@ $ cp etcdctl ~/work/bin
 ```
 $ go get github.com/araobp/nlan
 ```
+
+## [Step8] Pulling rpi-raspbian docker image
+```
+$ docker pull resin/rpi-raspbian
+```

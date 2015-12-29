@@ -59,6 +59,9 @@ $ ./autogen.sh
 $ ./configure
 $ make
 $ make install
+$ go get github.com/golang/protobuf/proto
+$ go get github.com/golang/protobuf/protoc-gen-go
+$ cp ~/work/src/github.com/golang/protobuf/protoc-gen-go/protoc-gen-go ~/work/bin
 ```
 Note: it took hours...
 

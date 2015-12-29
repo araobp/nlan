@@ -41,6 +41,7 @@ func main() {
 		fmt.Printf("%s", out)
 		if err != nil {
 			fmt.Println("Operation failure")
+			fmt.Println(err)
 			os.Exit(1)
 		}
 	}

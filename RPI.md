@@ -94,8 +94,11 @@ docker0         8000.024244da82d8       no
 ```
 ### GoBGP
 ```
-$ go get github.com/osrg/gpbgp
+$ go get github.com/osrg/gpbgp/gobgpd
+$ go get github.com/osrg/gpbgp/gobgp
 ```
+Note: GoBGP is optinal -- you may run gobgpd instead of quagga/bgp on Route Reflector container.
+
 ### Open vSwitch
 Compile and build deb packages:
 ```

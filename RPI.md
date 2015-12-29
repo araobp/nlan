@@ -97,12 +97,15 @@ docker0         8000.024244da82d8       no
 ```
 $ wget http://openvswitch.org/releases/openvswitch-2.4.0.tar.gz
 $ tar zxvf openvswitch-2.4.0.tar.gz
+$ cd openvswitch-2.4.0
 $ apt-get install build-essential fakeroot
 $ apt-get install debhelper autoconf automake libssl-dev bzip2 openssl graphviz python-all procps python-qt4 python-zopeinterface python-twisted-conch libtool
+$ `DEB_BUILD_OPTIONS='parallel=8 nocheck' fakeroot debian/rules binary`
 ```
-
 ### Quagga
-
+```
+$ apt-get install quagga
+```
 ### GoBGP
 
 ## [Step7] etcd

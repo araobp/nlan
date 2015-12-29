@@ -94,6 +94,12 @@ bridge name     bridge id               STP enabled     interfaces
 docker0         8000.024244da82d8       no
 ```
 ### Open vSwitch
+```
+$ wget http://openvswitch.org/releases/openvswitch-2.4.0.tar.gz
+$ tar zxvf openvswitch-2.4.0.tar.gz
+$ apt-get install build-essential fakeroot
+$ apt-get install debhelper autoconf automake libssl-dev bzip2 openssl graphviz python-all procps python-qt4 python-zopeinterface python-twisted-conch libtool
+```
 
 ### Quagga
 

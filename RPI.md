@@ -146,17 +146,12 @@ $ go build -o etcdctl
 $ cp etcdctl ~/work/bin
 ```
 
-## [Step8] nlan installation
-```
-$ go get github.com/araobp/nlan
-```
-
-## [Step9] Pulling rpi-raspbian docker image
+## [Step8] Pulling rpi-raspbian docker image
 ```
 $ docker pull resin/rpi-raspbian
 ```
 
-### [Step10] Creating "router" container
+### [Step9] Creating "router" container
 
 #### Installing required utilities
 ```
@@ -204,4 +199,8 @@ $ scp gobgpd root@172.17.0.2:~/bin
 #### Commit the change
 ```
 $ docker commit base router
+```
+## [Step10] nlan installation
+```
+$ go get github.com/araobp/nlan
 ```

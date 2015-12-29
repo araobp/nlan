@@ -156,15 +156,18 @@ $ go get github.com/araobp/nlan
 $ docker pull resin/rpi-raspbian
 ```
 
-### [Step10] Create "router" container
+### [Step10] Creating "router" container
+
 #### Installing required utilities
 ```
-$ docker run --name router -i -t resin/rpi-raspbian /bin/bash
+$ docker run --name base -i -t resin/rpi-raspbian /bin/bash
 root@dce29feab2aa:/# apt-get update
 root@dce29feab2aa:/# apt-get install ssh
 root@dce29feab2aa:/# apt-get install bridge-utils
 root@dce29feab2aa:/# apt-get install quagga
 root@dce29feab2aa:/# apt-get install vim
+root@dce29feab2aa:/# cd
+root@dce29feab2aa:/# mkdir bin
 ```
 #### Allowing SSH root loging
 Append the following to /etc/ssh/sshd_config to allow ssh root login to the Docker container:
@@ -176,7 +179,7 @@ Then
 ```
 $ /etc/init.d/ssh start
 ```
-####
+#### Copying additional packages and binaries to the container
 Copy ovs packages and gobgp to the container:
 ```
 $ ip addr show dev eth0
@@ -193,4 +196,12 @@ At the docker host,
 $ cd
 $ scp openvswitch-common_2.4.0-1_armhf.deb root@172.17.0.2:~
 $ scp openvswitch-switch_2.4.0-1_armhf.deb root@172.17.0.2:~
+$ cd ~/work/bin
+$ scp gobgp root@172.17.0.2:~/bin
+$ scp gobgpd root@172.17.0.2:~/bin
+```
+
+#### Commit the change
+```
+$ docker commit base router
 ```

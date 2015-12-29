@@ -77,7 +77,14 @@ netns has already been supported on this kernel, so I do not need to reconfigure
 
 ### Linux Bridge
 ```
-apt-get install bridge-utils
+$ apt-get install bridge-utils
+```
+
+Confirm that docker0 has already been created:
+```
+$ brctl show
+bridge name     bridge id               STP enabled     interfaces
+docker0         8000.024244da82d8       no
 ```
 ### Open vSwitch
 

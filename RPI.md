@@ -86,7 +86,6 @@ netns has already been supported on this kernel, so I do not need to reconfigure
 ```
 $ apt-get install bridge-utils
 ```
-
 Confirm that docker0 has already been created:
 ```
 $ brctl show
@@ -94,6 +93,7 @@ bridge name     bridge id               STP enabled     interfaces
 docker0         8000.024244da82d8       no
 ```
 ### Open vSwitch
+Compile and build deb packages:
 ```
 $ wget http://openvswitch.org/releases/openvswitch-2.4.0.tar.gz
 $ tar zxvf openvswitch-2.4.0.tar.gz
@@ -103,6 +103,7 @@ $ apt-get install debhelper autoconf automake libssl-dev bzip2 openssl graphviz 
 $ `DEB_BUILD_OPTIONS='parallel=8 nocheck' fakeroot debian/rules binary`
 ```
 
+Then install deb packages:
 ```
 $ cd
 $ apt-get install dkms uuid-runtime
@@ -120,12 +121,21 @@ $ go build -o etcdctl
 $ cp etcdctl ~/work/bin
 ```
 
-## [Step7] nlan installation
+## [Step8] nlan installation
 ```
 $ go get github.com/araobp/nlan
 ```
 
-## [Step8] Pulling rpi-raspbian docker image
+## [Step9] Pulling rpi-raspbian docker image
 ```
 $ docker pull resin/rpi-raspbian
+```
+
+### [Step10] Create "router" image
+```
+$ docker run -i -t resin/rpi-raspbian /bin/bash
+root@dce29feab2aa:/# apt-get update
+root@dce29feab2aa:/# apt-get install ssh
+root@dce29feab2aa:/# apt-get install bridge-utils
+root@dce29feab2aa:/# apt-get install quagga
 ```

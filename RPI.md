@@ -92,3 +92,11 @@ docker0         8000.024244da82d8       no
 
 ### GoBGP
 
+## [Step7] etcd installation
+```
+$ go get github.com/coreos/etcd
+```
+## [Step8] nlan installation
+```
+$ go get github.com/araobp/nlan
+```

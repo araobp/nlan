@@ -110,7 +110,25 @@ $ apt-get install debhelper autoconf automake libssl-dev bzip2 openssl graphviz 
 $ `DEB_BUILD_OPTIONS='parallel=8 nocheck' fakeroot debian/rules binary`
 ```
 
-Then install deb packages:
+Confirm that deb packages have been created:
+```
+$ cd
+$ ls -F
+      :
+openvswitch-2.4.0/
+openvswitch-common_2.4.0-1_armhf.deb
+openvswitch-datapath-dkms_2.4.0-1_all.deb
+openvswitch-datapath-source_2.4.0-1_all.deb
+openvswitch-dbg_2.4.0-1_armhf.deb
+openvswitch-ipsec_2.4.0-1_armhf.deb
+openvswitch-pki_2.4.0-1_all.deb
+openvswitch-switch_2.4.0-1_armhf.deb
+openvswitch-test_2.4.0-1_all.deb
+openvswitch-testcontroller_2.4.0-1_armhf.deb
+openvswitch-vtep_2.4.0-1_armhf.deb
+      :
+```
+Then install part of the deb packages:
 ```
 $ cd
 $ apt-get install dkms uuid-runtime

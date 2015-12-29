@@ -131,11 +131,41 @@ $ go get github.com/araobp/nlan
 $ docker pull resin/rpi-raspbian
 ```
 
-### [Step10] Create "router" image
+### [Step10] Create "router" container
+#### Installing required utilities
 ```
-$ docker run -i -t resin/rpi-raspbian /bin/bash
+$ docker run --name router -i -t resin/rpi-raspbian /bin/bash
 root@dce29feab2aa:/# apt-get update
 root@dce29feab2aa:/# apt-get install ssh
 root@dce29feab2aa:/# apt-get install bridge-utils
 root@dce29feab2aa:/# apt-get install quagga
+root@dce29feab2aa:/# apt-get install vim
+```
+#### Allowing SSH root loging
+Append the following to /etc/ssh/sshd_config to allow ssh root login to the Docker container:
+```
+#PermitRootLogin wihtout-password
+PermitRootLogin yes
+```
+Then
+```
+$ /etc/init.d/ssh start
+```
+####
+Copy ovs packages and gobgp to the container:
+```
+$ ip addr show dev eth0
+18: eth0@if19: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.2/16 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:acff:fe11:2/64 scope link
+       valid_lft forever preferred_lft forever
+```
+
+At the docker host,
+```
+$ cd
+$ scp openvswitch-common_2.4.0-1_armhf.deb root@172.17.0.2:~
+$ scp openvswitch-switch_2.4.0-1_armhf.deb root@172.17.0.2:~
 ```

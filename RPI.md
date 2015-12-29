@@ -60,8 +60,12 @@ $ ./configure
 $ make
 $ make install
 ```
-
 Note: it took hours...
+
+Do not forget to append the following line to your .bashrc:
+```
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
+```
 
 ## [Step5] YANG
 

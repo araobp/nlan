@@ -60,6 +60,8 @@ $ make
 $ make install
 ```
 
+Note: it took hours...
+
 ## [Step5] YANG
 
 ```

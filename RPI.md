@@ -4,7 +4,7 @@
 
 ![Raspberry Pi](https://raw.github.com/araobp/neutron-lan/master/misc/rpi.png)
 
-My Raspberry Pi 1 Model B+ that I bought in Akihabara in Feb 2014.
+My Raspberry Pi 1 Model B that I bought in Akihabara in Feb 2014.
 
 ## [Step1] Hypriot (Debian Linux with docker pre-installed)
 I used 8Gbytes SD memory card. zenmap is to find IP address that DHCP server (on my home gateway) assigned to my Raspberry Pi.

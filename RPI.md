@@ -7,6 +7,7 @@
 Raspberry Pi 1 Model B
 
 ## [Step1] Hypriot (Debian Linux with docker pre-installed)
+I used 8Gbytes SD memory card. zenmap is to find IP address that DHCP server (on my home gateway) assigned to my Raspberry Pi.
 - [Hypriot Docker image](http://blog.hypriot.com/downloads/)
 - [Win32 Disk Imager](http://sourceforge.net/projects/win32diskimager/)
 - [zenmap](https://nmap.org/)

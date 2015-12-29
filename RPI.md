@@ -174,6 +174,26 @@ Then
 ```
 $ /etc/init.d/ssh start
 ```
+### Setting up Quagga
+```
+$ cd /etc/quagga
+$ touch zebra.conf
+$ touch ospfd.conf
+$ touch bgpd.conf
+```
+
+Then edit "/etc/quagga/daemons" as follows:
+```
+zebra=yes
+bgpd=yes
+ospfd=yes
+ospf6d=no
+ripd=no
+ripngd=no
+isisd=no
+babeld=no
+```
+
 ### Copying additional packages and binaries to the container
 Copy ovs packages and gobgp to the container:
 ```

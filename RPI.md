@@ -76,7 +76,9 @@ $ go get github.com/openconfig/goyang
 netns has already been supported on this kernel, so I do not need to reconfigure the kernel to add netns.
 
 ### Linux Bridge
-
+```
+apt-get install bridge-utils
+```
 ### Open vSwitch
 
 ### Quagga

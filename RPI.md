@@ -151,9 +151,9 @@ $ cp etcdctl ~/work/bin
 $ docker pull resin/rpi-raspbian
 ```
 
-### [Step9] Creating "router" container
+## [Step9] Creating "router" container
 
-#### Installing required utilities
+### Installing required utilities
 ```
 $ docker run --name base -i -t resin/rpi-raspbian /bin/bash
 root@dce29feab2aa:/# apt-get update
@@ -164,7 +164,7 @@ root@dce29feab2aa:/# apt-get install vim
 root@dce29feab2aa:/# cd
 root@dce29feab2aa:/# mkdir bin
 ```
-#### Allowing SSH root loging
+### Allowing SSH root loging
 Append the following to /etc/ssh/sshd_config to allow ssh root login to the Docker container:
 ```
 #PermitRootLogin wihtout-password
@@ -174,7 +174,7 @@ Then
 ```
 $ /etc/init.d/ssh start
 ```
-#### Copying additional packages and binaries to the container
+### Copying additional packages and binaries to the container
 Copy ovs packages and gobgp to the container:
 ```
 $ ip addr show dev eth0
@@ -196,11 +196,22 @@ $ scp gobgp root@172.17.0.2:~/bin
 $ scp gobgpd root@172.17.0.2:~/bin
 ```
 
-#### Commit the change
+### Commit the change
 ```
 $ docker commit base router
+$ docker images
+REPOSITORY           TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+router               latest              47057103372d        6 minutes ago       165.1 MB
+resin/rpi-raspbian   latest              e97a8531a526        5 days ago          80.28 MB
+hypriot/rpi-swarm    latest              039c550f6208        7 weeks ago         10.92 MB
 ```
 ## [Step10] nlan installation
 ```
 $ go get github.com/araobp/nlan
+```
+
+## [Step11] Setting up NLAN and creating router containers
+```
+$ cd ~/work/src/github.com/araobp/nlan
+$ ./setup.sh
 ```

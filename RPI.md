@@ -102,6 +102,14 @@ $ apt-get install build-essential fakeroot
 $ apt-get install debhelper autoconf automake libssl-dev bzip2 openssl graphviz python-all procps python-qt4 python-zopeinterface python-twisted-conch libtool
 $ `DEB_BUILD_OPTIONS='parallel=8 nocheck' fakeroot debian/rules binary`
 ```
+
+```
+$ cd
+$ apt-get install dkms uuid-runtime
+$ dpkg -i openvswitch-common_2.4.0-1_armhf.deb
+$ dpkg -i openvswitch-switch_2.4.0-1_armhf.deb
+$ dpkg -i openvswitch-datapath-dkms_2.4.0-1_all.deb
+```
 ## [Step7] etcd
 ```
 $ go get github.co

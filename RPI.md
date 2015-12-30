@@ -158,6 +158,7 @@ $ docker pull resin/rpi-raspbian
 $ docker run --name base -i -t resin/rpi-raspbian /bin/bash
 root@dce29feab2aa:/# apt-get update
 root@dce29feab2aa:/# apt-get install ssh
+root@dce29feab2aa:/# apt-get install iputils-ping
 root@dce29feab2aa:/# apt-get install bridge-utils
 root@dce29feab2aa:/# apt-get install quagga
 root@dce29feab2aa:/# apt-get install vim
@@ -243,6 +244,17 @@ $ go get github.com/araobp/nlan
 ```
 $ cd ~/work/src/github.com/araobp/nlan
 $ ./setup.sh
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+dad01276cbb9        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago       Up 7 minutes                            ce4
+6babcf9cfed6        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago       Up 7 minutes                            ce3
+50d0d0a82dee        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago       Up 7 minutes                            ce2
+02165f398b7a        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago       Up 7 minutes                            ce1
+d621e51bd766        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago       Up 7 minutes                            rr
+475e8aeb37ed        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago       Up 7 minutes                            pe4
+1a862e95ec36        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago       Up 7 minutes                            pe3
+13b6228fb516        nlan/agent:ver0.1   "/bin/sh -c 'service "   8 minutes ago       Up 7 minutes                            pe2
+692c49789d53        nlan/agent:ver0.1   "/bin/sh -c 'service "   8 minutes ago       Up 8 minutes                            pe1
 $ ./master.sh ptn-bgp
 ```
 

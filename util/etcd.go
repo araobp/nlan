@@ -74,7 +74,7 @@ func ListHosts(secondary bool) map[string]interface{} {
 	}
 	list, err := kapi.Get(cont, key, &client.GetOptions{Recursive: true})
 	hosts := make(map[string]interface{})
-	if err != nil {
+	if err == nil {
 		nodes := list.Node.Nodes
 		for _, node := range nodes {
 			path := strings.Split(node.Key, "/")

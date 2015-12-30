@@ -33,9 +33,21 @@ This use case makes use of NLAN's PTN, vHosts and Router services.
 ####Running the simulated network on Raspberry Pi
 This is sort of micro NFV(Network Function Virtualization) on a single Rapsberry Pi.
 - Nine virtual routers (Linux containers)
-- Eight virutal hosts (netns)
+- Sixteen virutal hosts (netns)
+
+You can learn how routing protocols work on this simulated network.
 
 [Setting up the software on Raspberry Pi](./RPI.md)
+
+Log in the virtual routers with ssh, and try "ip" or "vtysh" commands:
+- ip route
+- ip addr
+- ip link
+- ip netns
+- vtysh: show run
+- vtysh: show ip route
+- vtysh: show ip bgp
+     :
 
 ####Quagga and GoBGP:
 This use case makes use of Quagga, but [gobgp](https://github.com/osrg/gobgp) may optionally be used as Route Reflector or Route Server on "RR" container in the fig above.

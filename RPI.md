@@ -243,6 +243,7 @@ $ go get github.com/araobp/nlan
 ```
 $ cd ~/work/src/github.com/araobp/nlan
 $ ./setup.sh
+$ ./master.sh ptn-bgp
 ```
 
 ## Dependency hell...

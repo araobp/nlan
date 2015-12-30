@@ -257,6 +257,92 @@ d621e51bd766        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago  
 692c49789d53        nlan/agent:ver0.1   "/bin/sh -c 'service "   8 minutes ago       Up 8 minutes                            pe1
 $ ./master.sh ptn-bgp
 ```
+## [Step12] Using the simulated WAN
+```
+$ cd docker
+$ ./ssh ce1
+root@ce1:~# ip route
+default via 172.17.0.1 dev eth0
+10.1.1.1 via 10.201.11.1 dev int_br111  proto zebra
+10.1.1.2 via 10.202.11.1 dev int_br211  proto zebra
+10.1.1.3 via 10.202.11.1 dev int_br211  proto zebra
+10.1.1.4 via 10.202.11.1 dev int_br211  proto zebra
+10.1.1.5 via 10.202.11.1 dev int_br211  proto zebra
+10.1.2.2 via 10.202.11.1 dev int_br211  proto zebra
+10.1.2.3 via 10.202.11.1 dev int_br211  proto zebra
+10.1.2.4 via 10.202.11.1 dev int_br211  proto zebra
+10.10.10.0/24 dev eth0  proto kernel  scope link  src 10.10.10.6
+10.200.1.0/24 via 10.202.11.1 dev int_br211  proto zebra
+10.200.2.0/24 via 10.202.11.1 dev int_br211  proto zebra
+10.201.11.0/24 dev int_br111  proto kernel  scope link  src 10.201.11.2
+10.201.12.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.202.11.0/24 dev int_br211  proto kernel  scope link  src 10.202.11.2
+10.202.12.0/24 via 10.202.11.1 dev int_br211  proto zebra
+10.203.13.0/24 via 10.202.11.1 dev int_br211  proto zebra
+10.203.14.0/24 via 10.202.11.1 dev int_br211  proto zebra
+10.204.13.0/24 via 10.202.11.1 dev int_br211  proto zebra
+10.204.14.0/24 via 10.202.11.1 dev int_br211  proto zebra
+172.17.0.0/16 dev eth0  proto kernel  scope link  src 172.17.0.7
+172.21.1.0/24 dev br_172.21.1.1  proto kernel  scope link  src 172.21.1.1
+172.21.2.0/24 via 10.202.11.1 dev int_br211  proto zebra
+172.21.3.0/24 via 10.202.11.1 dev int_br211  proto zebra
+172.21.4.0/24 via 10.202.11.1 dev int_br211  proto zebra
+172.22.1.0/24 dev br_172.22.1.1  proto kernel  scope link  src 172.22.1.1
+172.22.2.0/24 via 10.202.11.1 dev int_br211  proto zebra
+172.22.3.0/24 via 10.202.11.1 dev int_br211  proto zebra
+172.22.4.0/24 via 10.202.11.1 dev int_br211  proto zebra
+
+root@ce1:~# ping 172.22.3.3
+PING 172.22.3.3 (172.22.3.3) 56(84) bytes of data.
+64 bytes from 172.22.3.3: icmp_seq=1 ttl=61 time=19.1 ms
+64 bytes from 172.22.3.3: icmp_seq=2 ttl=61 time=2.11 ms
+64 bytes from 172.22.3.3: icmp_seq=3 ttl=61 time=2.06 ms
+^C
+--- 172.22.3.3 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 2.067/7.785/19.178/8.056 ms
+
+root@ce1:~# vtysh
+
+Hello, this is Quagga (version 0.99.23.1).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+ce1# show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, A - Babel,
+       > - selected route, * - FIB route
+
+K>* 0.0.0.0/0 via 172.17.0.1, eth0
+B>* 10.1.1.1/32 [20/0] via 10.201.11.1, int_br111, 00:12:51
+B>* 10.1.1.2/32 [20/0] via 10.202.11.1, int_br211, 00:12:55
+B>* 10.1.1.3/32 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 10.1.1.4/32 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 10.1.1.5/32 [20/0] via 10.202.11.1, int_br211, 00:12:25
+C>* 10.1.2.1/32 is directly connected, lo
+B>* 10.1.2.2/32 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 10.1.2.3/32 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 10.1.2.4/32 [20/0] via 10.202.11.1, int_br211, 00:12:25
+C>* 10.10.10.0/24 is directly connected, eth0
+B>* 10.200.1.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:55
+B>* 10.200.2.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:55
+C>* 10.201.11.0/24 is directly connected, int_br111
+B>* 10.201.12.0/24 [20/0] via 10.201.11.1, int_br111, 00:12:51
+C>* 10.202.11.0/24 is directly connected, int_br211
+B>* 10.202.12.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:55
+B>* 10.203.13.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 10.203.14.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 10.204.13.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 10.204.14.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
+C>* 127.0.0.0/8 is directly connected, lo
+C>* 172.17.0.0/16 is directly connected, eth0
+C>* 172.21.1.0/24 is directly connected, br_172.21.1.1
+B>* 172.21.2.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 172.21.3.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 172.21.4.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
+C>* 172.22.1.0/24 is directly connected, br_172.22.1.1
+B>* 172.22.2.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
+B>* 172.22.3.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
+```
 
 ## Dependency hell...
 I took a lot of steps to setup the software, because I needed to resolve dependency problems.

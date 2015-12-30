@@ -31,7 +31,11 @@ This use case makes use of NLAN's PTN, vHosts and Router services.
 - [ptn-ospf.yaml](./etc/ptn-ospf.yaml)
 
 ####Running the simulated network on Raspberry Pi
-- [Setting up the software on Raspberry Pi](./RPI.md)
+This is sort of micro NFV(Network Function Virtualization) on a single Rapsberry Pi.
+- Nine virtual routers (Linux containers)
+- Eight virutal hosts (netns)
+
+[Setting up the software on Raspberry Pi](./RPI.md)
 
 ####Quagga and GoBGP:
 This use case makes use of Quagga, but [gobgp](https://github.com/osrg/gobgp) may optionally be used as Route Reflector or Route Server on "RR" container in the fig above.

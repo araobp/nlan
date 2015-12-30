@@ -1,6 +1,6 @@
 #Setting up the software on Raspberry Pi
 
-2015/12/27
+2015/12/27-2015/12/30
 
 ![Raspberry Pi](https://raw.github.com/araobp/neutron-lan/master/misc/rpi.png)
 

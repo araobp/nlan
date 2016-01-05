@@ -5,6 +5,9 @@ import (
 	"github.com/araobp/nlan/env"
 	"github.com/araobp/nlan/model/nlan"
 	"github.com/araobp/nlan/util"
+        gobgp "github.com/osrg/gobgp/server"
+	"github.com/osrg/gobgp/packet"
+ 	api "github.com/osrg/gobgp/api"
 
 	"strconv"
 )
@@ -12,11 +15,22 @@ import (
 func Crud(crud int, in *nlan.Router, con *context.Context) {
 
 	loopback := in.Loopback
+        embedded := in.EmbeddedBgp  // quagga-bgpd(false) or gobgp(true)
 	ospf := in.GetOspf()
 	bgp := in.GetBgp()
 	logger := con.Logger
 	logger.Print("Router called...")
-	var crudRouter func(string, []*nlan.Ospf, []*nlan.Bgp, *context.Context)
+
+        var s *gobgp.BgpServer
+        var g *gobgp.Server
+        if embedded {
+          s = gobgp.NewBgpServer()
+          go s.Serve()
+          g = gobgp.NewGrpcServer(50051, s.GrpcReqCh)
+          go g.Serve()
+        }
+
+	var crudRouter func(string, bool, *gobgp.BgpServer, []*nlan.Ospf, []*nlan.Bgp, *context.Context)
 
 	switch crud {
 	case env.ADD:
@@ -30,7 +44,7 @@ func Crud(crud int, in *nlan.Router, con *context.Context) {
 	}
 
 	logger.Printf("Loopback: %s", loopback)
-	crudRouter(loopback, ospf, bgp, con)
+	crudRouter(loopback, embedded, s, ospf, bgp, con)
 	logger.Print("crudRouter() completed")
 }
 
@@ -74,7 +88,31 @@ func routerBgpNeighbors(s *[][]string, neighs []*nlan.Neighbors) {
 	}
 }
 
-func addRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
+func gobgpReqModNeighbor(s *gobgp.BgpServer, neighs []*nlan.Neighbors) {
+	for _, n := range neighs {
+		peer := n.Peer
+              	as := n.RemoteAs
+		client := n.RouteReflectorClient
+		p := api.Peer{}
+		p.Conf = &api.PeerConf{
+			NeighborAddress: peer,
+			PeerAs: as,
+		}
+		if client == true {
+			p.RouteReflector = &api.RouteReflector{
+				RouteReflectorClient: true,
+			}
+		}
+		req := gobgp.NewGrpcRequest(gobgp.REQ_MOD_NEIGHBOR, "", bgp.RouteFamily(0), &api.ModNeighborArguments{
+        					Operation: api.Operation_ADD,
+        					Peer: &p,
+        					})
+		s.GrpcReqCh <- req
+    		_ = <-req.ResponseCh
+	}
+}
+
+func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
 
 	cmd, cmdp := con.GetCmd()
 	logger := con.Logger
@@ -101,12 +139,19 @@ func addRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context
 	}
 	if bgp != nil {
 		for _, b := range bgp {
-			as := b.As
-			script = append(script, []string{"router", "bgp", strconv.FormatUint(uint64(as), 10)})
-			script = append(script, []string{"redistribute", "connected"})
+			if embedded {
+                               gobgpReqModGlobalConfig(s, int64(b.As))
+                        } else {
+				script = append(script, []string{"router", "bgp", strconv.FormatUint(uint64(b.As), 10)})
+				script = append(script, []string{"redistribute", "connected"})
+			}
 			neigh := b.GetNeighbors()
 			if neigh != nil {
-				routerBgpNeighbors(&script, neigh)
+				if embedded {
+					gobgpReqModNeighbor(s, neigh)
+				} else {
+					routerBgpNeighbors(&script, neigh)
+				}
 			}
 		}
 		script = append(script, []string{"exit"})
@@ -117,10 +162,24 @@ func addRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context
 	}
 }
 
-func updateRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
+func gobgpReqModGlobalConfig(s *gobgp.BgpServer, as int64) {
+        req := gobgp.NewGrpcRequest(gobgp.REQ_MOD_GLOBAL_CONFIG, "", bgp.RouteFamily(0), &api.ModGlobalConfigArguments{
+        Operation: api.Operation_ADD,
+        Global: &api.Global{
+            As:         uint32(as),
+            ListenPort: -1, // gobgp won't listen on tcp:179
+        },
+    })
+    s.GrpcReqCh <- req
+    //res := <-req.ResponseCh	
+    _ = <-req.ResponseCh	
+}
+
+
+func updateRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
 	//
 }
 
-func deleteRouter(loopback string, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
+func deleteRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
 	//
 }

@@ -126,6 +126,11 @@ module nlan {
     leaf loopback {
       type string;
     }
+    // quagga-bgpd(false) or gobgp(true)
+    leaf embedded-bgp {
+      type boolean;
+      default false;
+    }
     list ospf {
       key area;
       leaf area {

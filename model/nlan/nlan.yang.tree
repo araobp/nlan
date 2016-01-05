@@ -34,7 +34,8 @@ module: nlan
    |     |     +--rw network    string
    |     |     +--rw vhosts?    uint16
    |     +--rw router
-   |        +--rw loopback?   string
+   |        +--rw loopback?       string
+   |        +--rw embedded-bgp?   boolean
    |        +--rw ospf* [area]
    |        |  +--rw area        string
    |        |  +--rw networks*   string

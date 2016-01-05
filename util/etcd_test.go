@@ -9,7 +9,9 @@ import (
 
 func TestRegisterAndListState(t *testing.T) {
 	RegisterHost()
-	hosts := ListHosts()
+	hosts := ListHosts(true)
+	log.Printf("%v", hosts)
+	hosts = ListHosts(false)
 	log.Printf("%v", hosts)
 }
 

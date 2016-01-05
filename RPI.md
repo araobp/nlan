@@ -260,7 +260,7 @@ $ ./master.sh ptn-bgp
 ## [Step12] Using the simulated WAN
 ```
 $ cd docker
-$ ./ssh ce1
+$ ./ssh.sh ce1
 root@ce1:~# ip route
 default via 172.17.0.1 dev eth0
 10.1.1.1 via 10.201.11.1 dev int_br111  proto zebra

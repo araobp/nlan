@@ -239,6 +239,17 @@ hypriot/rpi-swarm    latest              039c550f6208        7 weeks ago        
 ```
 $ go get github.com/araobp/nlan
 ```
+NOTE: You have to modify Dockerfile (./docker/Dockerfile) to run nlan on HypriotOS, as follows:
+```
+  FROM router
++ ENV ETCD_ADDRESS "http://172.17.0.1:2379"
+- ENV ETCD_ADDRESS "http://172.17.42.1:2379"
++ ENV NO_PROXY 172.17.0.1,localhost
+- ENV NO_PROXY 172.17.42.1,localhost
+  ADD agent /root/bin/agent
+  ADD gobgp /root/bin/gobgp
+  CMD service openvswitch-switch start && service quagga start && service ssh start && /root/bin/agent
+```
 
 ## [Step11] Setting up NLAN and creating router containers
 ```

@@ -127,12 +127,12 @@ Go stub generation
 - [Go gRPC stub](./model/nlan/nlan.pb.go)
 
 ##Key technologies used for this project
-- Golang
+- [go](https://github.com/golang/go)
 - Open vSwitch, OVSDB and JSON-RPC(RFC7047)
 - VXLAN
-- Docker
-- etcd
-- YANG/goyang
+- [docker](https://github.com/docker/docker)
+- [etcd](https://github.com/coreos/etcd)
+- YANG/[goyang](https://github.com/openconfig/goyang)
 - JSON/YAML
 - Protocol buffers and gRPC
 - quagga

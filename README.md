@@ -74,6 +74,7 @@ You can also launch gobgpd from NLAN agent by including "EmbeddedBgp: true" in y
                 RemoteAs: 100
                 RouteReflectorClient: true
 ```
+- [Using gobgp command](./GOBGP.md)
 
 ### Use case 2: SOHO NFV (Network Functions Virtualization)
 

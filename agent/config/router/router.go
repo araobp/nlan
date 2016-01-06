@@ -119,6 +119,23 @@ func gobgpReqModNeighbor(s *gobgp.BgpServer, neighs []*nlan.Neighbors, con *cont
 	}
 }
 
+func gobgpReqModGlobalConfig(s *gobgp.BgpServer, routerId string, as int64, con *context.Context) {
+	logger := con.Logger
+	req := gobgp.NewGrpcRequest(gobgp.REQ_MOD_GLOBAL_CONFIG, "", bgp.RouteFamily(0), &api.ModGlobalConfigArguments{
+		Operation: api.Operation_ADD,
+		Global: &api.Global{
+			As:         uint32(as),
+			RouterId:   routerId,
+			ListenPort: -1, // gobgp won't listen on tcp:179
+		},
+	})
+	s.GrpcReqCh <- req
+	res := <-req.ResponseCh
+	if err := res.Err(); err != nil {
+		logger.Print(err)
+	}
+}
+
 func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
 
 	cmd, cmdp := con.GetCmd()
@@ -167,23 +184,6 @@ func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.
 	if len(script) > 0 && !embedded {
 		batch := util.VtyshBatch(script)
 		cmdp("vtysh", batch...)
-	}
-}
-
-func gobgpReqModGlobalConfig(s *gobgp.BgpServer, routerId string, as int64, con *context.Context) {
-	logger := con.Logger
-	req := gobgp.NewGrpcRequest(gobgp.REQ_MOD_GLOBAL_CONFIG, "", bgp.RouteFamily(0), &api.ModGlobalConfigArguments{
-		Operation: api.Operation_ADD,
-		Global: &api.Global{
-			As:         uint32(as),
-			RouterId:   routerId,
-			ListenPort: -1, // gobgp won't listen on tcp:179
-		},
-	})
-	s.GrpcReqCh <- req
-	res := <-req.ResponseCh
-	if err := res.Err(); err != nil {
-		logger.Print(err)
 	}
 }
 

@@ -135,7 +135,8 @@ Go stub generation
 - YANG/goyang
 - JSON/YAML
 - Protocol buffers and gRPC
-- Quagga
+- quagga
+- [gobgp](https://github.com/osrg/gobgp)
 
 #NLAN installation
 

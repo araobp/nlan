@@ -215,6 +215,7 @@ States:
                 Ip: 10.200.2.105/24
       Router:   
         Loopback: 10.1.1.5/32
+        EmbeddedBgp: true
         Bgp:
           - As: 100
             Neighbors:

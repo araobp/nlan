@@ -10,6 +10,7 @@ echo "Building NLAN master..."
 go build
 
 echo "Building containers with NLAN agent embedded..."
+cp `which gobgp` ./docker/gobgp
 cd docker
 go build docker_mng.go
 ./etcd.sh >/dev/null 2>&1 &

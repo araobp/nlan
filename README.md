@@ -53,6 +53,28 @@ Log in the virtual routers with ssh, and try "ip" or "vtysh" commands:
 This use case makes use of Quagga, but [gobgp](https://github.com/osrg/gobgp) may optionally be used as Route Reflector or Route Server on "RR" container in the fig above.
 - [gobgpd.conf](./etc/gobgpd.conf)
 
+You can also launch gobgpd from NLAN agent by including "EmbeddedBgp: true" in your NLAN state file:
+```
+      Router:
+        Loopback: 10.1.1.5/32
+        EmbeddedBgp: true
+        Bgp:
+          - As: 100
+            Neighbors:
+              - Peer: 10.200.1.101
+                RemoteAs: 100
+                RouteReflectorClient: true
+              - Peer: 10.200.1.102
+                RemoteAs: 100
+                RouteReflectorClient: true
+              - Peer: 10.200.1.103
+                RemoteAs: 100
+                RouteReflectorClient: true
+              - Peer: 10.200.1.104
+                RemoteAs: 100
+                RouteReflectorClient: true
+```
+
 ### Use case 2: SOHO NFV (Network Functions Virtualization)
 
 This is the next use case I am going to work on... (as my hobby: not so practical)

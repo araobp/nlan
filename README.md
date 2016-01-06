@@ -128,11 +128,11 @@ Go stub generation
 
 ##Key technologies used for this project
 - [go](https://github.com/golang/go)
-- Open vSwitch, OVSDB and JSON-RPC(RFC7047)
-- VXLAN
+- Open vSwitch, OVSDB and JSON-RPC([RFC7047](https://tools.ietf.org/html/rfc7047)
+- [vxlan](https://tools.ietf.org/html/rfc7348)
 - [docker](https://github.com/docker/docker)
 - [etcd](https://github.com/coreos/etcd)
-- YANG/[goyang](https://github.com/openconfig/goyang)/[pyang](https://github.com/mbj4668/pyang)
+- [YANG](https://tools.ietf.org/html/rfc6020)/[goyang](https://github.com/openconfig/goyang)/[pyang](https://github.com/mbj4668/pyang)
 - JSON/YAML
 - Protocol buffers and gRPC
 - quagga

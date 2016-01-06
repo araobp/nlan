@@ -132,7 +132,7 @@ Go stub generation
 - VXLAN
 - [docker](https://github.com/docker/docker)
 - [etcd](https://github.com/coreos/etcd)
-- YANG/[goyang](https://github.com/openconfig/goyang)
+- YANG/[goyang](https://github.com/openconfig/goyang)/[pyang](https://github.com/mbj4668/pyang)
 - JSON/YAML
 - Protocol buffers and gRPC
 - quagga

@@ -5,6 +5,7 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 ##Background and motivation
 
 - As my hobby, I just want to develop a very simple DevOps framework for networking containers for several use cases.
+- I don't have a chance to write code at work...
 - I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, etcd, BGP/OSPF... Raspberry Pi is the best for such a purpose.
 - I need to migrate from Java/Python to Golang for some reasons.
 

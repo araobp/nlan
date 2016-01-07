@@ -140,6 +140,13 @@ Go stub generation
 - quagga
 - [gobgp](https://github.com/osrg/gobgp)
 
+##Interesting
+- [Cumulus Linux](https://cumulusnetworks.com/)
+- [socketplane](https://github.com/socketplane/socketplane)
+- [goplane](https://github.com/osrg/goplane)
+- [bgp sdn](https://tools.ietf.org/html/draft-lapukhov-bgp-sdn-00)
+- [nsq](https://github.com/nsqio/nsq)
+
 #NLAN installation
 
 [Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).

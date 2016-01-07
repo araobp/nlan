@@ -16,9 +16,11 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - Router: Quagga configuration
 
 To be added:
-- Links: direct linking (VXLAN or internal)
+- Links: direct linking: tun/tap
 - Bridges: non-distributed virtual switch
-- :
+- VRF: netns-based VRF
+- container-macvlan direct linking (skipping docker0)
+- [netlink](https://github.com/vishvananda/netlink) in addition to "ip" and "brctl"
 
 ##Target use cases
 

@@ -6,7 +6,7 @@ etcd is not suitable for my project:
 - tega supports an interactive CLI for data manipulation
 - tega supports plugins
 - tega is based on tornade: zero-overhead on CPU
-        :
+
 
 I consider migrating from etcd to tega.
 

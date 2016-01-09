@@ -9,16 +9,6 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, etcd, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
 - I need to migrate from Java/Python to Golang for some reasons.
 
-##Findings so far (2016/01/10)
-- [I have got that etcd (schema-less, KVS) is not suitable for this project](https://github.com/araobp/nlan/issues/12), so I am going to use [tega](https://github.com/araobp/tega) instead -- Tornado/Python is very good for a single-core 32bit CPU, and hash-table-based python dict is useful for data manipulation in some cases.
-- The combination of Docker and Golang is OK.
-- protobuf and gRPC are useful. But I am not going to use gRPC for CRUD.
-- YANG? I don't know...
-- OVSDB is just a read-only database in my project.
-- Processing overhead issues (Linux/OVS-bridges and VXLAN): I need to consider using macvlan-vepa with a smart physical switch with VLAN and SNMP support.
-- Cumulus Linux uses [netlink](https://tools.ietf.org/html/rfc3549) for controlling/managing both Linux switching/routing tables and hardware(ASIC), which seems very interesting: I have also tried out [tenus](https://github.com/milosgajdos83/tenus).
-- GoBGP is very interesting.
-
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
 - DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)

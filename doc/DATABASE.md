@@ -1,10 +1,16 @@
 ##DATABASE
 
-etcd is not suitable for my project: etcd is not light-weight.
-
-tega runs much lighter than etcd and it supports an interactive CLI for data manipulation.
+etcd is not suitable for my project:
+- etcd is not light-weight
+- tega runs much lighter than etcd
+- tega supports an interactive CLI for data manipulation
+- tega supports plugins
+- tega is based on tornade: zero-overhead on CPU
+        :
 
 I consider migrating from etcd to tega.
+
+I like ZooKeeper, but I don't like etcd...
 
 ###tega installation
 

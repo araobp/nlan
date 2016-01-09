@@ -9,6 +9,8 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, etcd, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
 - I need to migrate from Java/Python to Golang for some reasons.
 
+[Findings(2016/01/10)](./doc/FINDINGS.md)
+
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
 - DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)

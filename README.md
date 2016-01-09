@@ -1,4 +1,4 @@
-# DevOps for networking containers with VXLAN
+# DevOps for networking containers
 
 This project re-uses outputs from my other project "[neutron-lan](https://github.com/araobp/neutron-lan)".
 

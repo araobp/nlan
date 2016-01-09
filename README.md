@@ -9,7 +9,12 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, etcd, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
 - I need to migrate from Java/Python to Golang for some reasons.
 
-[Findings(2016/01/10)](./doc/FINDINGS.md)
+##Current status(2016/01/10)
+- [Findings](./doc/FINDINGS.md)
+
+####Direction from now on
+- I am not going to use etcd -- etcd is not suitable for this project.
+- I am going to use tega to simplify the architecture.
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)

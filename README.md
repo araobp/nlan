@@ -14,7 +14,7 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 
 ####Direction from now on
 - I am not going to use etcd -- etcd is not suitable for this project.
-- I am going to use tega to simplify the architecture.
+- I am going to use [tega](https://github.com/araobp/tega) to simplify the architecture.
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)

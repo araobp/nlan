@@ -9,6 +9,8 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, etcd, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
 - I need to migrate from Java/Python to Golang for some reasons.
 
+Note: [I have got that etcd (schema-less, KVS) is not suitable for this project](https://github.com/araobp/nlan/issues/12), so I am going to use [tega](https://github.com/araobp/tega) instead.
+
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
 - DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)

@@ -42,7 +42,7 @@ This is sort of micro NFV(Network Function Virtualization) on a single Rapsberry
 
 You can learn how routing protocols work on this simulated network.
 
-[Setting up the software on Raspberry Pi](./RPI.md)
+[Setting up the software on Raspberry Pi](./goc/RPI.md)
 
 Log in the virtual routers with ssh, and try "ip" or "vtysh" commands:
 - ip route
@@ -79,7 +79,7 @@ You can also launch gobgpd from NLAN agent by including "EmbeddedBgp: true" in y
                 RemoteAs: 100
                 RouteReflectorClient: true
 ```
-- [Using gobgp command](./GOBGP.md)
+- [Using gobgp command](./doc/GOBGP.md)
 
 ### Use case 2: SOHO NFV (Network Functions Virtualization)
 

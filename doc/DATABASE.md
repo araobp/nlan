@@ -33,3 +33,8 @@ Python3.4 users also require the following package:
 $ pip3 install backports_abc
 ```
 
+Test tega CLI:
+```
+$ cd ~/tega/scripts
+$ ./global
+```

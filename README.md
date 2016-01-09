@@ -20,7 +20,7 @@ To be added:
 - Bridges: non-distributed virtual switch
 - VRF: netns-based VRF
 - container-macvlan direct linking (skipping docker0)
-- [netlink](https://github.com/vishvananda/netlink) in addition to "ip" and "brctl"
+- [netlink](https://github.com/milosgajdos83/tenus) in addition to "ip" and "brctl"
 
 ##Target use cases
 

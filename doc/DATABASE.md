@@ -1,14 +1,10 @@
 ##DATABASE
 
-2016/01/09
+etcd is not suitable for my project: etcd is not light-weight.
 
-I happend to find "IPython" at a book store, and I consider using IPython as a frontend for nlan.
+tega runs much lighter than etcd and it supports an interactive CLI for data manipulation.
 
-I also developed a document-oriented database in Python last year (2015). The database also support an interactive CLI for data manipulation.
-
-What can I realize with the combinaion of nlan, IPython and tega? 
-
-Note: this README is still experimental...
+I consider migrating from etcd to tega.
 
 ###tega installation
 
@@ -37,13 +33,3 @@ Python3.4 users also require the following package:
 $ pip3 install backports_abc
 ```
 
-###IPython/Jypyter intallation
-You may install ipython and jupyter on any linux PC (on which nlan is not running)
-```
-$ pip3 install ipython
-$ pip3 install jupyter
-```
-Start jupyter notebook
-```
-$ jupyter notebook
-```

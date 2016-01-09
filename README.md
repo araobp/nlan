@@ -42,7 +42,7 @@ This is sort of micro NFV(Network Function Virtualization) on a single Rapsberry
 
 You can learn how routing protocols work on this simulated network.
 
-[Setting up the software on Raspberry Pi](./goc/RPI.md)
+[Setting up the software on Raspberry Pi](./doc/RPI.md)
 
 Log in the virtual routers with ssh, and try "ip" or "vtysh" commands:
 - ip route

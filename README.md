@@ -99,14 +99,8 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 - [Working with Docker for network simulation](https://camo.githubusercontent.com/77cf473ea9499432e57b06a951f5f5248419f9e1/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f313631426e383077384a5a4b513742586d496f306272377851346b71456442635f585a3235347a754f5253552f7075623f773d36383026683d343030)
 
 ##Architecture
-```
-     [    Master   ] --- Global DB
-        |       |
-      gRPC    gRPC ...
-        |       |
-        V       V
-    [Agent]   [Agent] --- Local DB
-```
+
+[Architecture](./doc/ARCHITECTURE.md)
 
 ##NLAN model in YANG and protobuf
 Go stub generation

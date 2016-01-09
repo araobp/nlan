@@ -36,5 +36,5 @@ $ pip3 install backports_abc
 Test tega CLI:
 ```
 $ cd ~/tega/scripts
-$ ./global
+$ ./cli
 ```

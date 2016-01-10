@@ -25,10 +25,11 @@ I am going to add "DCN with two-phase commit" feature to tega, and use tega CLI 
 ```
 
 New features to be added to tega:
+- Protobuf as a schema lang for tega for data validation
+- protobuf <-> cont conversion
 - DCN invoked from CLI
 - Ephemeral nodes to register IP addresses of each containers (as DNS): I don't use mDNS, because I want to deploy NLAN across real WAN
 - DCN with two phase commit
-
 
 [DATABASE](./DATABASE.md)
 

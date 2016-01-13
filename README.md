@@ -16,6 +16,7 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - etcd and gRPC are not suitable for this project.
 - I am going to use [tega](https://github.com/araobp/tega) to simplify the architecture, taking an event-driven/model-driven approach.
 - protobuf as a schema lang.
+- NLAN agents are written in Golang, whereas other components may be written in Python etc.
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)

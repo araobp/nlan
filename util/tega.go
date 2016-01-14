@@ -1,4 +1,4 @@
-package db
+package util
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"net"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/araobp/nlan/env"
 	"github.com/araobp/tega/driver"
@@ -61,10 +62,16 @@ func ListHosts(secondary bool) map[string]interface{} {
 	case true:
 		path = "nlan.ip"
 	}
-	var hosts map[string]interface{}
-	err := ope.Get(path, &hosts)
+	var nodes map[string]interface{}
+	err := ope.Get(path, &nodes)
 	if err != nil {
 		log.Fatal(err)
+	}
+	hosts := make(map[string]interface{})
+	for host, ipmask := range nodes {
+		log.Print(host)
+		log.Print(ipmask)
+		hosts[host] = strings.Split(ipmask.(string), "/")[0]
 	}
 	return hosts
 }

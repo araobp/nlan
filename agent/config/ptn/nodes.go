@@ -4,17 +4,18 @@ import (
 	"github.com/araobp/nlan/agent/context"
 	"github.com/araobp/nlan/model/nlan"
 	"github.com/araobp/nlan/util"
+
+	"log"
 	"strconv"
 )
 
 func AddNodes(nodes *nlan.Nodes, con *context.Context) (string, string) {
 	cmd, cmdp := con.GetCmd()
-	logger := con.Logger
 	brTun := nodes.Ptn
 	brInt := nodes.L2Sw
 	patchTun := "patch-tun_" + brTun
 	patchInt := "patch-int_" + brInt
-	logger.Printf("Adding bridges: %s and %s\n", brTun, brInt)
+	log.Printf("Adding bridges: %s and %s\n", brTun, brInt)
 	// Adds br-int and br-tun and connects them to each other
 	cmdp("ovs-vsctl", "add-br", brInt)
 	cmdp("ovs-vsctl", "add-br", brTun)
@@ -24,7 +25,7 @@ func AddNodes(nodes *nlan.Nodes, con *context.Context) (string, string) {
 	cmdp("ovs-vsctl", "set-fail-mode", brTun, "secure")
 	// Obtains ofport for 'patch-tun' port
 	patchTunNum := strconv.Itoa(util.GetOfport(patchTun))
-	logger.Printf("patchTunNum(ofport): %s\n", patchTunNum)
+	log.Printf("patchTunNum(ofport): %s\n", patchTunNum)
 	// Adds flow entries onto br-tun
 	cmd("ovs-ofctl", "add-flow", brTun, "table=0,priority=1,in_port="+patchTunNum+",actions=resubmit(,1)")
 	cmd("ovs-ofctl", "add-flow", brTun, "table=0,priority=0,actions=drop")

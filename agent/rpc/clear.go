@@ -3,11 +3,12 @@ package rpc
 import (
 	"github.com/araobp/nlan/agent/context"
 	"github.com/araobp/nlan/util"
+
+	"log"
 )
 
 func Clear(con *context.Context) {
-	logger := con.Logger
-	logger.Print("Clearing...")
+	log.Print("Clearing...")
 	cmd, _ := con.GetCmd()
 	l := util.GetBridgeNames()
 	for e := l.Front(); e != nil; e = e.Next() {

@@ -5,6 +5,7 @@ import (
 	"github.com/araobp/nlan/env"
 	"github.com/araobp/nlan/model/nlan"
 
+	"log"
 	"strconv"
 	"strings"
 )
@@ -37,8 +38,7 @@ func getIpAddress(network string) ipAddress {
 func Crud(crud int, in *nlan.Vhosts, con *context.Context) {
 
 	vhostProps := in.GetVhostProps()
-	logger := con.Logger
-	logger.Print("Vhosts called...")
+	log.Print("Vhosts called...")
 	var crudVhosts func(ipAddress, uint32, *context.Context)
 
 	switch crud {
@@ -49,25 +49,24 @@ func Crud(crud int, in *nlan.Vhosts, con *context.Context) {
 	case env.DELETE:
 		crudVhosts = deleteVhosts
 	default:
-		logger.Fatal("CRUD unidentified")
+		log.Fatal("CRUD unidentified")
 	}
 
 	for _, props := range vhostProps {
-		logger.Print(props)
+		log.Print(props)
 		network := props.Network
 		address := getIpAddress(network)
 		vhosts := props.Vhosts
 
-		logger.Printf("Address: %v, Vhosts: %d", address, vhosts)
+		log.Printf("Address: %v, Vhosts: %d", address, vhosts)
 		crudVhosts(address, vhosts, con)
-		logger.Print("crudVhosts() completed")
+		log.Print("crudVhosts() completed")
 	}
 }
 
 func addVhosts(addr ipAddress, vhosts uint32, con *context.Context) {
 
 	cmd, _ := con.GetCmd()
-	_ = con.Logger
 	br := "br_" + addr.abcd
 	br_ip := addr.abcd
 	cmd("brctl", "addbr", br)

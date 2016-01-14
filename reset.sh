@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export ETCD_ADDRESS=http://localhost:2379
+export TEGA_ADDRESS=localhost
 ./nlan -reset

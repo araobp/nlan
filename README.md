@@ -6,15 +6,14 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 
 - As my hobby, I just want to develop a very simple DevOps framework for networking containers for several use cases.
 - I don't have a chance to write code at work...
-- I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, etcd, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
+- I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
 - I need to migrate from Java/Python to Golang for some reasons.
 
 ##Current status(2016/01/10)
 - [Findings](./doc/FINDINGS.md)
 
-####Direction from now on
-- I am not going to use etcd -- etcd is not suitable for this project.
-- I am going to use [tega](https://github.com/araobp/tega) to simplify the architecture.
+##Go version
+1.5.3
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
@@ -134,7 +133,6 @@ Go stub generation
 - Open vSwitch, OVSDB/JSON-RPC([RFC7047](https://tools.ietf.org/html/rfc7047))
 - [vxlan](https://tools.ietf.org/html/rfc7348)
 - [docker](https://github.com/docker/docker)
-- [etcd](https://github.com/coreos/etcd)
 - [YANG](https://tools.ietf.org/html/rfc6020)/[goyang](https://github.com/openconfig/goyang)/[pyang](https://github.com/mbj4668/pyang)
 - JSON/YAML
 - Protocol buffers and gRPC
@@ -189,10 +187,6 @@ $ ./configure
 $ make
 $ make install
 ```
-- etcd installation: https://github.com/coreos/etcd
-```
-$ ./build
-``` 
 - Add /usr/local/lib to LD_LIBRARY_PATH
 ```
 $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
@@ -202,3 +196,4 @@ $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 ##Go plugin for vim
 
 Install [vim-go](https://github.com/fatih/vim-go) to your vim.
+

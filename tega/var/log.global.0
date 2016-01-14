@@ -1,0 +1,6 @@
+?
+{'instance': '10.0.2.15/24', 'path': 'nlan.hosts.localhost', 'ope': 'PUT', 'tega_id': 'localhost'}
+@1452780573.597996:!
+?
+{'instance': {'VhostProps': ({'Vhosts': 2, 'Network': '10.10.10.10/24'},)}, 'path': 'nlan.state.rrr.json', 'ope': 'PUT', 'tega_id': 'localhost'}
+@1452780573.7309947:!

@@ -6,4 +6,3 @@
 - OVSDB is just a read-only database in my project.
 - Processing overhead issues (Linux/OVS-bridges and VXLAN): I need to consider using macvlan-vepa with a smart physical switch with VLAN and SNMP support.
 - Cumulus Linux uses [netlink](https://tools.ietf.org/html/rfc3549) for controlling/managing both Linux switching/routing tables and hardware(ASIC), which seems very interesting: I have also tried out [tenus](https://github.com/milosgajdos83/tenus).
-- GoBGP is very interesting.

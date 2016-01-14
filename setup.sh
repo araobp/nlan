@@ -9,10 +9,12 @@ cd ..
 echo "Building NLAN master..."
 go build
 
+echo "Starting tega db..."
+./tega/tegadb >/dev/null 2>&1 &
+
 echo "Building containers with NLAN agent embedded..."
 cd docker
 go build docker_mng.go
-./etcd.sh >/dev/null 2>&1 &
 ./restart.sh
 cd ..
 

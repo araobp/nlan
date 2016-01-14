@@ -4,8 +4,8 @@
 # preinstalled.
 
 FROM router
-#ENV ETCD_ADDRESS "http://172.17.0.1:2379"
-ENV ETCD_ADDRESS "http://172.17.42.1:2379"
+#ENV TEGA_ADDRESS 172.17.0.1
+ENV TEGA_ADDRESS 172.17.42.1
 #ENV NO_PROXY 172.17.0.1,localhost
 ENV NO_PROXY 172.17.42.1,localhost
 ADD agent /root/bin/agent

@@ -157,6 +157,7 @@ Go stub generation
 [Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
 
 [Step 2] Start tega db:
+```
 $ cd tega
 $ ./tegadb &
 ```
@@ -200,6 +201,7 @@ tega CLI (q: quit, h:help)
 [Step 4] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
 ```
 $ ./setup.sh
+```
 
 [Step 5]
 Try this to deploy "PTN/Vhost/Router" services:

@@ -116,39 +116,19 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 
 [Architecture](./doc/ARCHITECTURE.md)
 
-##NLAN model in YANG and protobuf
-Go stub generation
-```
-                             ___________  
-                            /rpc model / proto3
-                            ~~~~~~~~~~~
-                                 |
-                               merge
-                                 |
-                                 V
- ___________                _______________                _____________
-/YANG model/ == goyang ==> /Protobuf model/ == protoc ==> /Go gRPC stub/
-~~~~~~~~~~~                ~~~~~~~~~~~~~~~                ~~~~~~~~~~~~~
-                               proto3
-```
-- [YANG model](./model/nlan/nlan.yang)
-- [protobuf model](./model/nlan/nlan.proto)
-- [rpc model](./model/nlan/rpc.proto)
-- [Go gRPC stub](./model/nlan/nlan.pb.go)
-
 ##Key technologies used for this project
 - [go](https://github.com/golang/go)
 - Open vSwitch, OVSDB/JSON-RPC([RFC7047](https://tools.ietf.org/html/rfc7047))
 - [vxlan](https://tools.ietf.org/html/rfc7348)
 - [docker](https://github.com/docker/docker)
-- [YANG](https://tools.ietf.org/html/rfc6020)/[goyang](https://github.com/openconfig/goyang)/[pyang](https://github.com/mbj4668/pyang)
 - JSON/YAML
-- Protocol buffers and gRPC
+- Protocol buffers
 - quagga
 - [gobgp](https://github.com/osrg/gobgp)
 
 ##Interesting
 - [Cumulus Linux](https://cumulusnetworks.com/)
+- [OpenSwitch] (http://www.openswitch.net/)
 - [socketplane](https://github.com/socketplane/socketplane)
 - [goplane](https://github.com/osrg/goplane)
 - [bgp sdn](https://tools.ietf.org/html/draft-lapukhov-bgp-sdn-00)

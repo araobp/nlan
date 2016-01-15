@@ -17,7 +17,7 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - etcd and gRPC are not suitable for this project.
 - I am going to use [tega](https://github.com/araobp/tega) to simplify the architecture, taking an event-driven/model-driven approach.
 - I use protobuf as a schema lang.
--- I don's use YANG any longer, because YANG is not compatible with Python dict (thus incompatible with my tega db). YANG is for Java developers, since Java does not natively support hash-map.
+ - I don's use YANG any longer, because YANG is not compatible with Python dict (thus incompatible with my tega db). YANG is for Java developers, since Java does not natively support hash-map.
 - NLAN agents are written in Golang, whereas other components may be written in Python etc.
 
 ##Go version

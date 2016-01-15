@@ -1,3 +1,5 @@
+#Tega
+
 ##Installation
 ```
 $ go get github.com/araobp/tega

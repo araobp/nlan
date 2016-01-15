@@ -158,12 +158,12 @@ Go stub generation
 
 [Step 2] Start tega db:
 ```
-$ cd tega
+$ cd scripts
 $ ./tegadb &
 ```
 [Step 3] Assign (secondary) IP address to each container:
 ```
-$ cd tega
+$ cd scripts
 $ ./cli
 tega CLI (q: quit, h:help)
 [tega: 0] put nlan.ip.pe1

@@ -111,7 +111,7 @@ func main() {
 	file := fmt.Sprintf("/var/volume/nlan-agent-%s.log", target)
 	f, err := os.OpenFile(file, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
-		log.Fataif("Unable to open log file: %s", file)
+		log.Fatalf("Unable to open log file: %s", file)
 	}
 	log.SetOutput(f)
 
@@ -171,7 +171,6 @@ func main() {
 					ope_ = env.DELETE
 				}
 				a.route(ope_, &request, configMode)
-				log.Print(logbuf.String())
 			}
 		}
 	default:

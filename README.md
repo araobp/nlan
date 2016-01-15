@@ -150,21 +150,62 @@ Go stub generation
 
 [Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
 
-[Step 2] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
+[Step 2] Start tega db:
+$ cd tega
+$ ./tegadb &
+```
+[Step 3] Assign (secondary) IP address to each container:
+```
+$ cd tega
+$ ./cli
+tega CLI (q: quit, h:help)
+[tega: 0] put nlan.ip.pe1
+10.10.10.1/24
+
+[tega: 1] put nlan.ip.pe2
+10.10.10.2/24
+
+[tega: 2] put nlan.ip.pe3
+10.10.10.3/24
+
+[tega: 3] put nlan.ip.pe4
+10.10.10.4/24
+
+[tega: 4] put nlan.ip.rr
+10.10.10.5/2
+
+[tega: 5] put nlan.ip.ce1
+10.10.10.6/2
+
+[tega: 6] put nlan.ip.ce2
+10.10.10.7/2
+
+[tega: 7] put nlan.ip.ce3
+10.10.10.8/2
+
+[tega: 8] put nlan.ip.ce4
+10.10.10.9/2
+
+[tega: 9] get nlan.ip
+{ce1: 10.10.10.6/2, ce2: 10.10.10.7/2, ce3: 10.10.10.8/2, ce4: 10.10.10.9/2, pe1: 10.10.10.1/24,
+  pe2: 10.10.10.2/24, pe3: 10.10.10.3/24, pe4: 10.10.10.4/24, rr: 10.10.10.5/2}
+
+```
+[Step 4] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
 ```
 $ ./setup.sh
-```
-[Step 3]
+
+[Step 5]
 Try this to deploy "PTN/Vhost/Router" services:
 ```
 $ ./master/master.sh ptn-bgp
 ```
 The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230).
 
-[Step 4]
+[Step 6]
 Open ssh session to the containers:
 ```
-$ cd docker
+$ cd scripts 
 $ ./ssh.sh pe1
        :
 $ ./ssh.sh ce1

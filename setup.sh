@@ -1,17 +1,22 @@
 #!/bin/bash
 
+HOMEDIR=$GOPATH/src/github.com/araobp/nlan 
+
 echo "Compiling NLAN model..."
+cd $HOMEDIR
 cd model
 ./yang.sh
 ./protoc.sh
-cd ..
+cd $HOMEDIR
 
 echo "Building NLAN master..."
+cd $HOMEDIR
 cd master
 go build -o master
+cd $HOMEDIR
 
-echo "Starting tega db..."
-./tega/tegadb >/dev/null 2>&1 &
+#echo "Starting tega db..."
+#./tega/tegadb >/dev/null 2>&1 &
 
 echo "Building containers with NLAN agent embedded..."
 cd docker

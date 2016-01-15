@@ -4,11 +4,12 @@ import (
 	"github.com/araobp/nlan/agent/context"
 	"github.com/araobp/nlan/env"
 	"github.com/araobp/nlan/model/nlan"
+
+	"log"
 )
 
 func Crud(crud int, in *nlan.Ptn, con *context.Context) {
 	networks := in.GetNetworks()
-	logger := con.Logger
 	var crudNodes func(*nlan.Nodes, *context.Context) (string, string)
 	var crudLinks func(*nlan.Links, *context.Context, string, string)
 	var crudL2Vpn func(*nlan.L2Vpn, *context.Context, string, string) (string, string, string)
@@ -26,31 +27,31 @@ func Crud(crud int, in *nlan.Ptn, con *context.Context) {
 		crudLinks = DeleteLinks
 		crudL2Vpn = DeleteL2Vpn
 	default:
-		logger.Fatal("CRUD unidentified")
+		log.Fatal("CRUD unidentified")
 	}
 	for _, net := range networks {
-		logger.Println(net)
+		log.Println(net)
 		nodes := net.GetNodes()
 		if nodes == nil {
-			logger.Fatal("nodes required")
+			log.Fatal("nodes required")
 		}
 		links := net.GetLinks()
 		if links == nil {
-			logger.Fatal("links required")
+			log.Fatal("links required")
 		}
 		l2vpn := net.GetL2Vpn()
 		if l2vpn == nil {
-			logger.Fatal("l2vpn required")
+			log.Fatal("l2vpn required")
 		}
 
-		logger.Printf("L2Sw: %s, Ptn: %s", nodes.L2Sw, nodes.Ptn)
+		log.Printf("L2Sw: %s, Ptn: %s", nodes.L2Sw, nodes.Ptn)
 		brTun, brInt := crudNodes(nodes, con)
-		logger.Printf("crudNodes() completed")
+		log.Printf("crudNodes() completed")
 
 		crudLinks(links, con, brTun, brInt)
 		for _, vpn := range l2vpn {
 			ip, sVid, sVni := crudL2Vpn(vpn, con, brTun, brInt)
-			logger.Printf("crudL2Vpn() completed: %s, %s, %s", ip, sVid, sVni)
+			log.Printf("crudL2Vpn() completed: %s, %s, %s", ip, sVid, sVni)
 		}
 	}
 }

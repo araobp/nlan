@@ -5,12 +5,13 @@ import (
 	"github.com/araobp/nlan/agent/context"
 	"github.com/araobp/nlan/model/nlan"
 	"github.com/araobp/nlan/util"
+
+	"log"
 	"strconv"
 )
 
 func addVpls(sVid string, sVni string, ip string, brInt string, con *context.Context) {
 	cmd, cmdp := con.GetCmd()
-	_ = con.Logger
 	intBr := "int_br" + sVni
 	cmdp("ovs-vsctl", "add-port", brInt, intBr, "tag="+sVid, "--", "set", "interface", intBr, "type=internal")
 	cmd("ip", "link", "set", "dev", intBr, "up")
@@ -27,7 +28,6 @@ func deleteVpls(vni int, vid int, ip string, brInt string, con *context.Context)
 
 func addFlowEntries(sVid string, sVni string, peers *[]string, brTun string, con *context.Context) {
 	cmd, _ := con.GetCmd()
-	_ = con.Logger
 	_ = "int_br" + sVni
 	cmd("ovs-ofctl", "add-flow", brTun, "table=2,priority=1,tun_id="+sVni+",actions=mod_vlan_vid:"+sVid+",resubmit(,10)")
 	// Broadcast tree for each vni
@@ -44,14 +44,13 @@ func addFlowEntries(sVid string, sVni string, peers *[]string, brTun string, con
 }
 
 func AddL2Vpn(l2vpn *nlan.L2Vpn, con *context.Context, brTun string, brInt string) (string, string, string) {
-	logger := con.Logger
 	ip := l2vpn.Ip
 	peers := l2vpn.Peers
 	vid := l2vpn.Vid
 	vni := l2vpn.Vni
 	sVid := strconv.FormatUint(uint64(vid), 10)
 	sVni := strconv.FormatUint(uint64(vni), 10)
-	logger.Printf("Adding vlan: %s", sVid)
+	log.Printf("Adding vlan: %s", sVid)
 	addVpls(sVid, sVni, ip, brInt, con)
 	addFlowEntries(sVid, sVni, &peers, brTun, con)
 	return ip, sVid, sVni

@@ -9,6 +9,7 @@ import (
 	"github.com/osrg/gobgp/packet"
 	gobgp "github.com/osrg/gobgp/server"
 
+	"log"
 	"strconv"
 	"strings"
 )
@@ -20,8 +21,7 @@ func Crud(crud int, in *nlan.Router, con *context.Context) {
 	ospf := in.GetOspf()
 	bgp := in.GetBgp()
 	cmd, _ := con.GetCmd()
-	logger := con.Logger
-	logger.Print("Router called...")
+	log.Print("Router called...")
 
 	var s *gobgp.BgpServer
 	var g *gobgp.Server
@@ -43,12 +43,12 @@ func Crud(crud int, in *nlan.Router, con *context.Context) {
 	case env.DELETE:
 		crudRouter = deleteRouter
 	default:
-		logger.Fatal("CRUD unidentified")
+		log.Fatal("CRUD unidentified")
 	}
 
-	logger.Printf("Loopback: %s", loopback)
+	log.Printf("Loopback: %s", loopback)
 	crudRouter(loopback, embedded, s, ospf, bgp, con)
-	logger.Print("crudRouter() completed")
+	log.Print("crudRouter() completed")
 }
 
 func routerOspfNetworks(s *[][]string, area string, networks []string) {
@@ -92,7 +92,6 @@ func routerBgpNeighbors(s *[][]string, neighs []*nlan.Neighbors) {
 }
 
 func gobgpReqModNeighbor(s *gobgp.BgpServer, neighs []*nlan.Neighbors, con *context.Context) {
-	logger := con.Logger
 	for _, n := range neighs {
 		peer := n.Peer
 		as := n.RemoteAs
@@ -114,13 +113,12 @@ func gobgpReqModNeighbor(s *gobgp.BgpServer, neighs []*nlan.Neighbors, con *cont
 		s.GrpcReqCh <- req
 		res := <-req.ResponseCh
 		if err := res.Err(); err != nil {
-			logger.Print(err)
+			log.Print(err)
 		}
 	}
 }
 
 func gobgpReqModGlobalConfig(s *gobgp.BgpServer, routerId string, as int64, con *context.Context) {
-	logger := con.Logger
 	req := gobgp.NewGrpcRequest(gobgp.REQ_MOD_GLOBAL_CONFIG, "", bgp.RouteFamily(0), &api.ModGlobalConfigArguments{
 		Operation: api.Operation_ADD,
 		Global: &api.Global{
@@ -132,14 +130,13 @@ func gobgpReqModGlobalConfig(s *gobgp.BgpServer, routerId string, as int64, con 
 	s.GrpcReqCh <- req
 	res := <-req.ResponseCh
 	if err := res.Err(); err != nil {
-		logger.Print(err)
+		log.Print(err)
 	}
 }
 
 func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
 
 	cmd, cmdp := con.GetCmd()
-	logger := con.Logger
 
 	// Loopback address
 	cmd("ip", "addr", "add", "dev", "lo", loopback)
@@ -156,7 +153,7 @@ func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.
 		for _, o := range ospf {
 			area := o.Area
 			networks := o.Networks
-			logger.Print("OSPF Networks: %v", networks)
+			log.Print("OSPF Networks: %v", networks)
 			routerOspfNetworks(&script, area, networks)
 		}
 		script = append(script, []string{"exit"})

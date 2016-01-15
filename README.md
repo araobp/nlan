@@ -6,7 +6,7 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 
 - As my hobby, I just want to develop a very simple DevOps framework for networking containers for several use cases.
 - I don't have a chance to write code at work...
-- I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, etcd, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
+- I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
 - I need to migrate from Java/Python to Golang for some reasons.
 
 ##Current status(2016/01/10)
@@ -17,6 +17,9 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - I am going to use [tega](https://github.com/araobp/tega) to simplify the architecture, taking an event-driven/model-driven approach.
 - protobuf as a schema lang.
 - NLAN agents are written in Golang, whereas other components may be written in Python etc.
+
+##Go version
+1.5.3
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
@@ -136,7 +139,6 @@ Go stub generation
 - Open vSwitch, OVSDB/JSON-RPC([RFC7047](https://tools.ietf.org/html/rfc7047))
 - [vxlan](https://tools.ietf.org/html/rfc7348)
 - [docker](https://github.com/docker/docker)
-- [etcd](https://github.com/coreos/etcd)
 - [YANG](https://tools.ietf.org/html/rfc6020)/[goyang](https://github.com/openconfig/goyang)/[pyang](https://github.com/mbj4668/pyang)
 - JSON/YAML
 - Protocol buffers and gRPC
@@ -154,21 +156,62 @@ Go stub generation
 
 [Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
 
-[Step 2] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
+[Step 2] Start tega db:
+$ cd tega
+$ ./tegadb &
+```
+[Step 3] Assign (secondary) IP address to each container:
+```
+$ cd tega
+$ ./cli
+tega CLI (q: quit, h:help)
+[tega: 0] put nlan.ip.pe1
+10.10.10.1/24
+
+[tega: 1] put nlan.ip.pe2
+10.10.10.2/24
+
+[tega: 2] put nlan.ip.pe3
+10.10.10.3/24
+
+[tega: 3] put nlan.ip.pe4
+10.10.10.4/24
+
+[tega: 4] put nlan.ip.rr
+10.10.10.5/2
+
+[tega: 5] put nlan.ip.ce1
+10.10.10.6/2
+
+[tega: 6] put nlan.ip.ce2
+10.10.10.7/2
+
+[tega: 7] put nlan.ip.ce3
+10.10.10.8/2
+
+[tega: 8] put nlan.ip.ce4
+10.10.10.9/2
+
+[tega: 9] get nlan.ip
+{ce1: 10.10.10.6/2, ce2: 10.10.10.7/2, ce3: 10.10.10.8/2, ce4: 10.10.10.9/2, pe1: 10.10.10.1/24,
+  pe2: 10.10.10.2/24, pe3: 10.10.10.3/24, pe4: 10.10.10.4/24, rr: 10.10.10.5/2}
+
+```
+[Step 4] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
 ```
 $ ./setup.sh
-```
-[Step 3]
+
+[Step 5]
 Try this to deploy "PTN/Vhost/Router" services:
 ```
-$ ./master.sh
+$ ./master/master.sh ptn-bgp
 ```
 The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230).
 
-[Step 4]
+[Step 6]
 Open ssh session to the containers:
 ```
-$ cd docker
+$ cd scripts 
 $ ./ssh.sh pe1
        :
 $ ./ssh.sh ce1
@@ -191,10 +234,6 @@ $ ./configure
 $ make
 $ make install
 ```
-- etcd installation: https://github.com/coreos/etcd
-```
-$ ./build
-``` 
 - Add /usr/local/lib to LD_LIBRARY_PATH
 ```
 $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
@@ -204,3 +243,4 @@ $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 ##Go plugin for vim
 
 Install [vim-go](https://github.com/fatih/vim-go) to your vim.
+

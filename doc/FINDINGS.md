@@ -9,4 +9,5 @@
 
 ##YANG-JSON mapping(IETF)
 
-[Reference] https://tools.ietf.org/html/draft-ietf-netmod-yang-json-06#page-8
+[Reference] https://tools.ietf.org/html/draft-ietf-netmod-yang-json
+

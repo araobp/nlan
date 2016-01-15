@@ -9,7 +9,8 @@ This project re-uses outputs from my other project "[neutron-lan](https://github
 - I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
 - I need to migrate from Java/Python to Golang for some reasons.
 
-##Current status(2016/01/10)
+##Current status(2016/01/16)
+- Still unstable...
 - [Findings](./doc/FINDINGS.md)
 
 ####Direction from now on

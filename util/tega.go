@@ -5,7 +5,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"strconv"
 	"strings"
 
 	"github.com/araobp/nlan/env"
@@ -97,8 +96,7 @@ func GetState(hostname string, state interface{}) {
 // Sets NLAN mode to tega
 func SetMode(hostname string, mode int) {
 	path := fmt.Sprintf("nlan.state.%s.mode", hostname)
-	value := strconv.Itoa(mode)
-	err := ope.Put(path, &value)
+	err := ope.Put(path, &mode)
 	if err != nil {
 		log.Fatal(err)
 	}

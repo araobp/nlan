@@ -7,7 +7,8 @@ cd model
 cd ..
 
 echo "Building NLAN master..."
-go build
+cd master
+go build -o master
 
 echo "Starting tega db..."
 ./tega/tegadb >/dev/null 2>&1 &

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"flag"
 	"fmt"
 	"log"
@@ -36,24 +35,24 @@ func (a *agent) route(crud int, in *nlan.Request, configMode int) (exit uint32) 
 	exit = 0
 	defer func() {
 		if r := recover(); r != nil {
-			logger.Println(r)
+			log.Println(r)
 			exit = 1
 		}
 	}()
 
 	if ptn != nil {
-		logger.Print("Routing to PTN module...")
+		log.Print("Routing to PTN module...")
 		config_ptn.Crud(crud, ptn, a.con)
 	}
 	if dvr != nil {
 		//
 	}
 	if vhosts != nil {
-		logger.Print("Routing to VHOSTS module...")
+		log.Print("Routing to VHOSTS module...")
 		config_vhosts.Crud(crud, vhosts, a.con)
 	}
 	if router != nil {
-		logger.Print("Routing to ROUTER module...")
+		log.Print("Routing to ROUTER module...")
 		config_router.Crud(crud, router, a.con)
 	}
 	return exit
@@ -103,7 +102,6 @@ func (a *agent) Clear(ctx context.Context, cp *nlan.ClearMode) (*nlan.Response, 
 func main() {
 
 	target := os.Getenv("HOSTNAME")
-	logPrefix := "[" + target + "] "
 	ope := flag.String("ope", "ADD", "CRUD operation")
 	filename := flag.String("state", "", "state file")
 	roster := flag.String("roster", "", "roster file")
@@ -135,10 +133,8 @@ func main() {
 		}
 	}
 
-	var logbuf bytes.Buffer
-	logger := log.New(&logbuf, logPrefix, log.LstdFlags)
-	logger.Printf("Start mode: %d", mode)
-	cmd, cmdp := util.GetCmd(logger, configMode, true)
+	log.Printf("Start mode: %d", mode)
+	cmd, cmdp := util.GetCmd(configMode, true)
 
 	//Adds a secondary IP address to eth0
 	secondary := util.GetSecondaryIp(router)
@@ -148,14 +144,10 @@ func main() {
 	c := &con.Context{Cmd: cmd, CmdP: cmdp}
 	a := agent{con: c}
 
-	defer func() {
-		log.Print(logbuf.String())
-	}()
-
 	var states *[]st.State
 	switch {
 	case *filename != "":
-		logger.Print("### Direct config mode ###")
+		log.Print("### Direct config mode ###")
 
 		switch *roster {
 		case "":
@@ -183,22 +175,22 @@ func main() {
 			}
 		}
 	default:
-		logger.Print("### gRPC server mode ###")
+		log.Print("### gRPC server mode ###")
 
 		if mode == env.RESTART {
-			logger.Print("Restarting...")
+			log.Print("Restarting...")
 			state := new(nlan.Model)
 			util.GetState(router, state)
 			request := nlan.Request{Model: state}
-			logger.Printf("State for %s: %v", router, state)
-			logger.Printf("Request: %v", request)
+			log.Printf("State for %s: %v", router, state)
+			log.Printf("Request: %v", request)
 			exit := a.route(env.ADD, &request, configMode)
-			logger.Printf("Restarted: %d", exit)
+			log.Printf("Restarted: %d", exit)
 		}
 		listen, err := net.Listen("tcp", env.PORT)
 		defer listen.Close()
 		if err != nil {
-			logger.Print(err)
+			log.Print(err)
 		}
 		s := grpc.NewServer()
 		nlan.RegisterNlanAgentServer(s, &a)

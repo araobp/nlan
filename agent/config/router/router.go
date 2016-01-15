@@ -21,7 +21,6 @@ func Crud(crud int, in *nlan.Router, con *context.Context) {
 	ospf := in.GetOspf()
 	bgp := in.GetBgp()
 	cmd, _ := con.GetCmd()
-	log := con.Logger
 	log.Print("Router called...")
 
 	var s *gobgp.BgpServer
@@ -93,7 +92,6 @@ func routerBgpNeighbors(s *[][]string, neighs []*nlan.Neighbors) {
 }
 
 func gobgpReqModNeighbor(s *gobgp.BgpServer, neighs []*nlan.Neighbors, con *context.Context) {
-	log := con.Logger
 	for _, n := range neighs {
 		peer := n.Peer
 		as := n.RemoteAs
@@ -139,7 +137,6 @@ func gobgpReqModGlobalConfig(s *gobgp.BgpServer, routerId string, as int64, con 
 func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
 
 	cmd, cmdp := con.GetCmd()
-	log := con.Logger
 
 	// Loopback address
 	cmd("ip", "addr", "add", "dev", "lo", loopback)

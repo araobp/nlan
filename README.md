@@ -143,42 +143,14 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 $ cd scripts
 $ ./tegadb &
 ```
-[Step 3] Assign (secondary) IP address to each container:
+[Step 3] Execute nlan.ipam function on tega db to generate (secondary) IP addresses of each containers:
 ```
 $ cd scripts
 $ ./cli
-tega CLI (q: quit, h:help)
-[tega: 0] put nlan.ip.pe1
-10.10.10.1/24
-
-[tega: 1] put nlan.ip.pe2
-10.10.10.2/24
-
-[tega: 2] put nlan.ip.pe3
-10.10.10.3/24
-
-[tega: 3] put nlan.ip.pe4
-10.10.10.4/24
-
-[tega: 4] put nlan.ip.rr
-10.10.10.5/2
-
-[tega: 5] put nlan.ip.ce1
-10.10.10.6/2
-
-[tega: 6] put nlan.ip.ce2
-10.10.10.7/2
-
-[tega: 7] put nlan.ip.ce3
-10.10.10.8/2
-
-[tega: 8] put nlan.ip.ce4
-10.10.10.9/2
-
-[tega: 9] get nlan.ip
+[tega: 1] nlan.ipam('10.10.10.1','pe1','pe2','pe3','pe4','rr','ce1','ce2','ce3','ce4')
+[tega: 2] get nlan.ip
 {ce1: 10.10.10.6/2, ce2: 10.10.10.7/2, ce3: 10.10.10.8/2, ce4: 10.10.10.9/2, pe1: 10.10.10.1/24,
   pe2: 10.10.10.2/24, pe3: 10.10.10.3/24, pe4: 10.10.10.4/24, rr: 10.10.10.5/2}
-
 ```
 [Step 4] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
 ```

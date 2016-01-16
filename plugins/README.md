@@ -1,11 +1,10 @@
 ##Tega plugins for NLAN
 
 ###IP Address Management
-
+```
 Function Name: nlan.ipam
 Arguments: ip, *routers
 Usage example:
-```
 [tega: 1] nlan.ipam('10.10.10.1','pe1','pe2','pe3','pe4','rr','ce1','ce2','ce3','ce4')
 [tega: 2] get nlan.ip
 {ce1: 10.10.10.6/24, ce2: 10.10.10.7/24, ce3: 10.10.10.8/24, ce4: 10.10.10.9/24, pe1: 10.10.10.1/24,

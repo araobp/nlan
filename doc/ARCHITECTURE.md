@@ -22,6 +22,10 @@ I am going to add "DCN with two-phase commit" feature to tega, and use tega CLI 
                      |      |      |
                      V      V      V
                   [Agent] [Agent] [Agent]
+
+tega plugins:
+- nlan.ipam: IP Address Management
+    :
 ```
 
 New features to be added to tega:

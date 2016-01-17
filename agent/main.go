@@ -1,29 +1,25 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
-	"net"
 	"os"
+	"time"
 
 	config_ptn "github.com/araobp/nlan/agent/config/ptn"
 	config_router "github.com/araobp/nlan/agent/config/router"
 	config_vhosts "github.com/araobp/nlan/agent/config/vhosts"
-	con "github.com/araobp/nlan/agent/context"
-	"github.com/araobp/nlan/common"
+	"github.com/araobp/nlan/agent/context"
 	"github.com/araobp/nlan/env"
 	"github.com/araobp/nlan/model/nlan"
-	st "github.com/araobp/nlan/state"
 	"github.com/araobp/nlan/util"
-	"golang.org/x/net/context"
 )
 
 type agent struct {
-	con *con.Context
+	con *context.Context
 }
 
-func (a *agent) route(crud int, in *nlan.Request, configMode int) (exit uint32) {
+func (a *agent) route(crud int, in *nlan.Request) (exit uint32) {
 	model := in.Model
 	ptn := model.GetPtn()
 	dvr := model.GetDvr()
@@ -60,9 +56,6 @@ func main() {
 
 	// Command options
 	target := os.Getenv("HOSTNAME")
-	ope := flag.String("ope", "ADD", "CRUD operation")
-	filename := flag.String("state", "", "state file")
-	flag.Parse()
 
 	// Log file setup
 	file := fmt.Sprintf("/var/volume/nlan-agent-%s.log", target)
@@ -75,8 +68,7 @@ func main() {
 	// Registers host IP address with tega db
 	router := util.RegisterHost()
 
-	// Gets start mode from teag db
-	log.Printf("Start mode: %d", mode)
+	// Gets cmd and cmdp
 	cmd, cmdp := util.GetCmd(true)
 
 	//Adds a secondary IP address to eth0
@@ -86,16 +78,20 @@ func main() {
 	}
 
 	//Agent
-	c := &con.Context{Cmd: cmd, CmdP: cmdp}
+	c := &context.Context{Cmd: cmd, CmdP: cmdp}
 	a := agent{con: c}
 
-	var states *[]st.State
 	log.Print("Restarting...")
 	state := new(nlan.Model)
 	util.GetState(router, state)
 	request := nlan.Request{Model: state}
 	log.Printf("State for %s: %v", router, state)
 	log.Printf("Request: %v", request)
-	exit := a.route(env.ADD, &request, configMode)
+	exit := a.route(env.ADD, &request)
 	log.Printf("Restarted: %d", exit)
+
+	//Infinite loop
+	for {
+		time.Sleep(1 * time.Second)
+	}
 }

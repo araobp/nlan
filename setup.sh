@@ -3,7 +3,7 @@
 HOMEDIR=$GOPATH/src/github.com/araobp/nlan 
 
 echo "Compiling tega driver..."
-go install github.com/araobp/tega/driver
+go get github.com/araobp/tega/driver
 
 echo "Compiling NLAN model..."
 MODELDIR=$HOMEDIR/model/nlan

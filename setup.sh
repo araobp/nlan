@@ -15,7 +15,7 @@ go build -o master
 cd $HOMEDIR
 
 #echo "Starting tega db..."
-#./tega/tegadb >/dev/null 2>&1 &
+./tega/tegadb >/dev/null 2>&1 &
 
 echo "Building containers with NLAN agent embedded..."
 cd docker

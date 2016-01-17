@@ -3,25 +3,12 @@
 This project re-uses outputs from my other project "[neutron-lan](https://github.com/araobp/neutron-lan)".
 
 ##Background and motivation
-
 - As my hobby, I just want to develop a very simple DevOps framework for networking containers for several use cases.
-- I don't have a chance to write code at work...
-- I want a test bed (at a very low cost, under $100) to run YANG, grpc, docker, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
-- I need to migrate from Java/Python to Golang for some reasons.
+- I want a test bed (at a very low cost, under $100) to run docker, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
 
 ##Current status(2016/01/16)
 - Still unstable...
 - [Findings](./doc/FINDINGS.md)
-
-####Direction from now on
-- etcd and gRPC are not suitable for this project.
-- I am going to use [tega](https://github.com/araobp/tega) to simplify the architecture, taking an event-driven/model-driven approach.
-- I use protobuf as a schema lang.
- - I don's use YANG any longer, because YANG is not compatible with Python dict (thus incompatible with my tega db). YANG is for Java developers, since Java does not natively support hash-map.
-- NLAN agents are written in Golang, whereas other components may be written in Python etc.
-
-##Go version
-1.5.3
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
@@ -121,7 +108,7 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 - Open vSwitch, OVSDB/JSON-RPC([RFC7047](https://tools.ietf.org/html/rfc7047))
 - [vxlan](https://tools.ietf.org/html/rfc7348)
 - [docker](https://github.com/docker/docker)
-- JSON/YAML
+- JSON
 - Protocol buffers
 - quagga
 - [gobgp](https://github.com/osrg/gobgp)
@@ -199,4 +186,3 @@ $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 ##Go plugin for vim
 
 Install [vim-go](https://github.com/fatih/vim-go) to your vim.
-

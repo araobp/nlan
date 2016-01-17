@@ -2,7 +2,7 @@
 
 ##Installation
 ```
-$ go get github.com/araobp/tega
+$ go get github.com/araobp/tega/driver
 ```
 
 ##Starting tega db

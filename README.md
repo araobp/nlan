@@ -1,4 +1,4 @@
-# DevOps for networking containers
+# Model-driven network service abstraction for networking Linux containers on small PCs
 
 This project unifies outputs from my two other projects "[neutron-lan](https://github.com/araobp/neutron-lan)" and "[tega](https://github.com/araobp/tega)".
 

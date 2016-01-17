@@ -6,8 +6,10 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 - As my hobby, I design a model-driven/event-driven architecture for networking Linux containers.
 - OpenDaylight MD-SAL is too heavy for networking Linux containers on my Raspberry Pi.
 
-##Current status(2016/01/16)
-- Still unstable...
+##Current architecture(2016/01/17)
+- [Architecture](./doc/ARCHITECTURE.md)
+
+##Current status(2016/01/17)
 - [Findings](./doc/FINDINGS.md)
 
 ##NLAN services
@@ -92,10 +94,6 @@ This is the next use case I am going to work on... (as my hobby: not so practica
 I use Linux containers as virtual routers, and this tool will set up virtual links (L0/L1) and virtual switches (L2) over the containers. Then I will run Quagga/Zebra(L3) daemons over the virtual routers to study how legacy routing protocols work.
 - [An example of such a network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230)
 - [Working with Docker for network simulation](https://camo.githubusercontent.com/77cf473ea9499432e57b06a951f5f5248419f9e1/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f313631426e383077384a5a4b513742586d496f306272377851346b71456442635f585a3235347a754f5253552f7075623f773d36383026683d343030)
-
-##Architecture
-
-[Architecture](./doc/ARCHITECTURE.md)
 
 ##Key technologies used for this project
 - [go](https://github.com/golang/go)

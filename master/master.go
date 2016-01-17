@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/araobp/nlan/common"
-	"github.com/araobp/nlan/env"
 	"github.com/araobp/nlan/util"
 )
 
@@ -29,7 +28,6 @@ func main() {
 	for _, v := range *states {
 		router := v.Router
 		state := v.Model
-		util.SetMode(router, env.INIT)
 		util.SetState(router, &state)
 	}
 }

@@ -7,7 +7,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/araobp/nlan/env"
 	"github.com/araobp/tega/driver"
 )
 
@@ -91,29 +90,6 @@ func GetState(hostname string, state interface{}) {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-// Sets NLAN mode to tega
-func SetMode(hostname string, mode int) {
-	path := fmt.Sprintf("nlan.state.%s.mode", hostname)
-	err := ope.Put(path, &mode)
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-// Gets NLAN mode from tega
-func GetMode(hostname string) int {
-	var i int
-	var mode int
-	path := fmt.Sprintf("nlan.state.%s.mode", hostname)
-	err := ope.Get(path, &mode)
-	if err != nil {
-		i = env.INIT
-	} else {
-		i = mode
-	}
-	return i
 }
 
 // Resets NLAN state on tega

@@ -2,128 +2,96 @@ syntax = "proto3";
 
 package nlan;
 
-service NlanAgent {
-  rpc Add (Request) returns (Response) {}
-  rpc Update (Request) returns (Response) {}
-  rpc Delete (Request) returns (Response) {}
-  rpc Hello (Capabilities) returns (Capabilities) {}
-  rpc Clear (ClearMode) returns (Response) {}
-}
-
-// NLAN module
-message Nlan {
-  Capabilities Capabilities = 1; // nlan/nlan.yang:197:3
-  ClearMode ClearMode = 2; // nlan/nlan.yang:203:3
-  Request Request = 3; // nlan/nlan.yang:169:3
-  Response Response = 4; // nlan/nlan.yang:187:3
-}
-
-message Capabilities {
-  repeated string Capability = 1; // nlan/nlan.yang:198:5
-}
-
-message ClearMode {
-  bool Terminate = 1; // nlan/nlan.yang:204:5
-}
-
-message Request {
-  Model Model = 1; // nlan/nlan.yang:170:5
-}
-
 message Model {
-  Dvr Dvr = 1; // nlan/nlan.yang:171:7
-  Ptn Ptn = 2; // nlan/nlan.yang:174:7
-  Router Router = 3; // nlan/nlan.yang:180:7
-  Vhosts Vhosts = 4; // nlan/nlan.yang:177:7
+  Dvr Dvr = 1;
+  Ptn Ptn = 2;
+  Router Router = 3;
+  Vhosts Vhosts = 4;
 }
 
 message Dvr {
-  bool OvsBridges = 1; // nlan/nlan.yang:14:5
-  repeated Subnets Subnets = 2; // nlan/nlan.yang:29:5
-  repeated Vxlan Vxlan = 3; // nlan/nlan.yang:19:5
+  bool OvsBridges = 1;
+  repeated Subnets Subnets = 2;
+  repeated Vxlan Vxlan = 3;
 }
 
 message Subnets {
-  repeated IpDvr IpDvr = 1; // nlan/nlan.yang:38:6
-  repeated string Peers = 2; // nlan/nlan.yang:55:7
-  repeated string Ports = 3; // nlan/nlan.yang:52:6
-  uint32 Vid = 4; // nlan/nlan.yang:31:7
-  uint32 Vni = 5; // nlan/nlan.yang:34:6
+  repeated IpDvr IpDvr = 1;
+  repeated string Peers = 2;
+  repeated string Ports = 3;
+  uint32 Vid = 4;
+  uint32 Vni = 5;
 }
 
 message IpDvr {
-  string Addr = 1; // nlan/nlan.yang:40:8
-  string Dhcp = 2; // nlan/nlan.yang:47:8
-  string Mode = 3; // nlan/nlan.yang:43:8
+  string Addr = 1;
+  string Dhcp = 2;
+  string Mode = 3;
 }
 
 message Vxlan {
-  string LocalIp = 1; // nlan/nlan.yang:21:7
-  repeated string RemoteIps = 2; // nlan/nlan.yang:24:7
+  string LocalIp = 1;
+  repeated string RemoteIps = 2;
 }
 
 message Ptn {
-  repeated Networks Networks = 1; // nlan/nlan.yang:64:5
+  repeated Networks Networks = 1;
 }
 
 message Networks {
-  string Id = 1; // nlan/nlan.yang:66:7
-  repeated L2Vpn L2Vpn = 2; // nlan/nlan.yang:91:7
-  Links Links = 3; // nlan/nlan.yang:80:7
-  Nodes Nodes = 4; // nlan/nlan.yang:70:7
+  string Id = 1;
+  repeated L2Vpn L2Vpn = 2;
+  Links Links = 3;
+  Nodes Nodes = 4;
 }
 
 message L2Vpn {
-  string Ip = 1; // nlan/nlan.yang:103:9
-  repeated string Peers = 2; // nlan/nlan.yang:100:9
-  uint32 Vid = 3; // nlan/nlan.yang:93:9
-  uint32 Vni = 4; // nlan/nlan.yang:96:9
+  string Ip = 1;
+  repeated string Peers = 2;
+  uint32 Vid = 3;
+  uint32 Vni = 4;
 }
 
 message Links {
-  string LocalIp = 1; // nlan/nlan.yang:81:9
-  repeated string RemoteIps = 2; // nlan/nlan.yang:85:9
+  string LocalIp = 1;
+  repeated string RemoteIps = 2;
 }
 
 message Nodes {
-  string L2Sw = 1; // nlan/nlan.yang:74:9
-  string Ptn = 2; // nlan/nlan.yang:71:9
+  string L2Sw = 1;
+  string Ptn = 2;
 }
 
 message Router {
-  repeated Bgp Bgp = 1; // nlan/nlan.yang:143:5
-  bool EmbeddedBgp = 2; // nlan/nlan.yang:130:5
-  string Loopback = 3; // nlan/nlan.yang:126:5
-  repeated Ospf Ospf = 4; // nlan/nlan.yang:134:5
+  repeated Bgp Bgp = 1;
+  bool EmbeddedBgp = 2;
+  string Loopback = 3;
+  repeated Ospf Ospf = 4;
 }
 
 message Bgp {
-  uint32 As = 1; // nlan/nlan.yang:145:7
-  repeated Neighbors Neighbors = 2; // nlan/nlan.yang:148:7
+  uint32 As = 1;
+  repeated Neighbors Neighbors = 2;
 }
 
 message Neighbors {
-  bool NextHopSelf = 1; // nlan/nlan.yang:160:2
-  string Peer = 2; // nlan/nlan.yang:150:9
-  uint32 RemoteAs = 3; // nlan/nlan.yang:153:9
-  bool RouteReflectorClient = 4; // nlan/nlan.yang:156:9
+  bool NextHopSelf = 1;
+  string Peer = 2;
+  uint32 RemoteAs = 3;
+  bool RouteReflectorClient = 4;
 }
 
 message Ospf {
-  string Area = 1; // nlan/nlan.yang:136:7
-  repeated string Networks = 2; // nlan/nlan.yang:139:7
+  string Area = 1;
+  repeated string Networks = 2;
 }
 
 message Vhosts {
-  repeated VhostProps VhostProps = 1; // nlan/nlan.yang:113:5
+  repeated VhostProps VhostProps = 1;
 }
 
 message VhostProps {
-  string Network = 1; // nlan/nlan.yang:115:7
-  uint32 Vhosts = 2; // nlan/nlan.yang:118:7
+  string Network = 1;
+  uint32 Vhosts = 2;
 }
 
-message Response {
-  uint32 Exit = 1; // nlan/nlan.yang:188:5
-  string LogMessage = 2; // nlan/nlan.yang:191:5
-}

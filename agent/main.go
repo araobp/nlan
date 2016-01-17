@@ -19,8 +19,7 @@ type agent struct {
 	con *context.Context
 }
 
-func (a *agent) route(crud int, in *nlan.Request) (exit uint32) {
-	model := in.Model
+func (a *agent) route(crud int, model *nlan.Model) (exit uint32) {
 	ptn := model.GetPtn()
 	dvr := model.GetDvr()
 	vhosts := model.GetVhosts()
@@ -84,10 +83,8 @@ func main() {
 	log.Print("Restarting...")
 	state := new(nlan.Model)
 	util.GetState(router, state)
-	request := nlan.Request{Model: state}
 	log.Printf("State for %s: %v", router, state)
-	log.Printf("Request: %v", request)
-	exit := a.route(env.ADD, &request)
+	exit := a.route(env.ADD, state)
 	log.Printf("Restarted: %d", exit)
 
 	//Infinite loop

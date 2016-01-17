@@ -1,6 +1,6 @@
 # DevOps for networking containers
 
-This project re-uses outputs from my other project "[neutron-lan](https://github.com/araobp/neutron-lan)" and "[tega](https://github.com/araobp/tega)".
+This project re-uses outputs from my other projects "[neutron-lan](https://github.com/araobp/neutron-lan)" and "[tega](https://github.com/araobp/tega)".
 
 ##Background and motivation
 - As my hobby, I just want to develop a very simple DevOps framework for networking containers for several use cases.

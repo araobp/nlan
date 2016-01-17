@@ -1,10 +1,15 @@
 ##Current architecture
 
-```
-Tega plugins
-[nlan.ipam] <----> [     tega(tornado)       ] <-- (HTTP/WebSocket) --> tega CLI
+```                          
+                                [Tega CLI]
+                Tega plugin          ^
+                [nlan.ipam]          |
+                     ^        (HTTP/WebSocket)
+                     |               |          <= Northbound API (Python APIs or REST/WebSocket)
+                     V               V
+                   [     tega(tornado)       ]  <= Sort of MD-SAL
                      ^          ^          ^
-                     |          |          |
+                     |          |          |    <= Southbound API (REST/WebSocket)
                          (HTTP/WebSocket)
                      |          |          |
               . . . . . . . . . . . . . . . . . . .

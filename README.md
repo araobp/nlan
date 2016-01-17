@@ -3,8 +3,8 @@
 This project unifies outputs from my two other projects "[neutron-lan](https://github.com/araobp/neutron-lan)" and "[tega](https://github.com/araobp/tega)".
 
 ##Background and motivation
-- As my hobby, I just want to develop a very simple DevOps framework for networking containers for several use cases.
-- I want a test bed (at a very low cost, under $100) to run docker, BGP/OSPF, Open vSwitch, OVSDB... Raspberry Pi is the best for such a purpose.
+- As my hobby, I design a model-driven/event-driven architecture for networking Linux containers.
+- OpenDaylight MD-SAL is too heavy for networking Linux containers on my Raspberry Pi.
 
 ##Current status(2016/01/16)
 - Still unstable...

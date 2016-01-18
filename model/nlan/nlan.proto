@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package nlan;
 
+message State {
+  map<string, Model> Router = 1;
+}
+
 message Model {
   Dvr Dvr = 1;
   Ptn Ptn = 2;

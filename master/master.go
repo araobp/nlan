@@ -22,12 +22,10 @@ func main() {
 
 	log.Println(*filename)
 
-	states, _ := common.ReadState(filename, nil)
+	state, _ := common.ReadState(filename)
 
 	// Writes state onto tega db
-	for _, v := range *states {
-		router := v.Router
-		state := v.Model
-		util.SetState(router, &state)
+	for router, model := range state.Router {
+		util.SetModel(router, model)
 	}
 }

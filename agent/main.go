@@ -80,12 +80,12 @@ func main() {
 	c := &context.Context{Cmd: cmd, CmdP: cmdp}
 	a := agent{con: c}
 
-	log.Print("Restarting...")
-	state := new(nlan.Model)
-	util.GetState(router, state)
-	log.Printf("State for %s: %v", router, state)
-	exit := a.route(env.ADD, state)
-	log.Printf("Restarted: %d", exit)
+	log.Print("Starting...")
+	model := new(nlan.Model)
+	util.GetModel(router, model)
+	log.Printf("State for %s: %v", router, model)
+	exit := a.route(env.ADD, model)
+	log.Printf("Started: %d", exit)
 
 	//Infinite loop
 	for {

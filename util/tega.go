@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/araobp/nlan/model/nlan"
 	"github.com/araobp/tega/driver"
 )
 
@@ -52,14 +53,7 @@ func RegisterHost() string {
 }
 
 // Gets a list of all host names and their addresses from tega
-func ListHosts(secondary bool) map[string]interface{} {
-	var path string
-	switch secondary {
-	case false:
-		path = "nlan.hosts"
-	case true:
-		path = "nlan.ip"
-	}
+func listHosts(path string) map[string]interface{} {
 	var nodes map[string]interface{}
 	err := ope.Get(path, &nodes)
 	if err != nil {
@@ -74,19 +68,29 @@ func ListHosts(secondary bool) map[string]interface{} {
 	return hosts
 }
 
+// Lists up all hosts on nlan.hosts
+func ListHosts() map[string]interface{} {
+	return listHosts("nlan.hosts")
+}
+
+// Lists up all hosts on nlan.ip
+func ListIps() map[string]interface{} {
+	return listHosts("nlan.ip")
+}
+
 // Sets NLAN state to tega
-func SetState(hostname string, state interface{}) {
-	path := fmt.Sprintf("nlan.state.%s.json", hostname)
-	err := ope.Put(path, &state)
+func SetModel(hostname string, model *nlan.Model) {
+	path := fmt.Sprintf("nlan.state.%s", hostname)
+	err := ope.Put(path, model)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
 // Gets NLAN state from tega
-func GetState(hostname string, state interface{}) {
-	path := fmt.Sprintf("nlan.state.%s.json", hostname)
-	err := ope.Get(path, &state)
+func GetModel(hostname string, model *nlan.Model) {
+	path := fmt.Sprintf("nlan.state.%s", hostname)
+	err := ope.Get(path, model)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -94,13 +98,9 @@ func GetState(hostname string, state interface{}) {
 
 // Resets NLAN state on tega
 func ResetState() {
-	path := "nlan.state"
-	var routers map[string]interface{}
-	err := ope.Get(path, &routers)
-	if err == nil {
-		for router, _ := range routers {
-			ope.Delete(fmt.Sprintf("nlan.state.%s", router))
-		}
+	err := ope.Delete("nlan.state")
+	if err != nil {
+		log.Print(err)
 	}
 }
 

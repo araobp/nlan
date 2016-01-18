@@ -122,6 +122,18 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 ```
 $ cd scripts
 $ ./tegadb &
+Namespace(datadir='./var', extensions='/root/work/src/github.com/araobp/nlan/plugins/ipam', mhost=None, mport=None, port=8888, sync=False, syncpath=None, tegaid='global')
+
+   __
+  / /____  ____ _____ _
+ / __/ _ \/ __ `/ __ `/
+/ /_/  __/ /_/ / /_/ /
+\__/\___/\__, /\__,_/
+        /____/
+tega_id: global, sync: server
+
+INFO:2016-01-18 15:49:27,574:Reloading log from ./var...
+INFO:2016-01-18 15:49:27,590:Reloading done
 ```
 [Step 3] Execute nlan.ipam function on tega db to generate (secondary) IP addresses of each containers:
 ```
@@ -132,17 +144,24 @@ $ ./cli
 {ce1: 10.10.10.6/2, ce2: 10.10.10.7/2, ce3: 10.10.10.8/2, ce4: 10.10.10.9/2, pe1: 10.10.10.1/24,
   pe2: 10.10.10.2/24, pe3: 10.10.10.3/24, pe4: 10.10.10.4/24, rr: 10.10.10.5/2}
 ```
-[Step 4] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
-```
-$ ./setup.sh
-```
-
-[Step 5]
+[Step 3]
 Try this to deploy "PTN/Vhost/Router" services:
 ```
 $ ./scripts/master.sh ptn-bgp
 ```
 The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230).
+
+[Step 4(option)]
+You may take a snapshop of tega db to make tega db's start-up faster:
+```
+$ ./cli
+[tega: 1] ss 
+'''
+
+[Step 5] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
+```
+$ ./setup.sh
+```
 
 [Step 6]
 Open ssh session to the containers:

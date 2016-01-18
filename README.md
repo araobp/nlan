@@ -157,7 +157,7 @@ You may take a snapshop of tega db to make tega db's start-up faster:
 ```
 $ ./cli
 [tega: 1] ss 
-'''
+```
 
 [Step 5] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
 ```

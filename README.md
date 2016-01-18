@@ -118,8 +118,9 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 
 [Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
 
-[Step 2] Start tega db:
+[Step 2] Install and start tega db:
 ```
+$ go get github.com/araobp/tega/driver
 $ cd scripts
 $ ./tegadb &
 Namespace(datadir='./var', extensions='/root/work/src/github.com/araobp/nlan/plugins/ipam', mhost=None, mport=None, port=8888, sync=False, syncpath=None, tegaid='global')
@@ -135,7 +136,7 @@ tega_id: global, sync: server
 INFO:2016-01-18 15:49:27,574:Reloading log from ./var...
 INFO:2016-01-18 15:49:27,590:Reloading done
 ```
-[Step 3] Execute nlan.ipam function on tega db to generate (secondary) IP addresses of each containers:
+[Step 3] Execute nlan.ipam (IP address management) function on tega db to generate (secondary) IP addresses of each containers:
 ```
 $ cd scripts
 $ ./cli
@@ -145,7 +146,7 @@ $ ./cli
   pe2: 10.10.10.2/24, pe3: 10.10.10.3/24, pe4: 10.10.10.4/24, rr: 10.10.10.5/2}
 ```
 [Step 3]
-Try this to deploy "PTN/Vhost/Router" services:
+Try this to put "ptn-bgp" state onto tega db: 
 ```
 $ ./scripts/master.sh ptn-bgp
 ```
@@ -162,6 +163,7 @@ $ ./cli
 ```
 $ ./setup.sh
 ```
+NLAN agent on each container connects to tega db to fetch NLAN state.
 
 [Step 6]
 Open ssh session to the containers:

@@ -160,8 +160,15 @@ $ ./cli
 ```
 
 [Step 5] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
+
+For Debian/Ubuntu Linux, 
 ```
 $ ./setup.sh
+```
+
+For hypriot on Raspberry Pi,
+```
+$ ./setup_rpi.sh
 ```
 NLAN agent on each container connects to tega db to fetch NLAN state.
 

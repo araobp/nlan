@@ -1,5 +1,5 @@
 #!/bin/bash
 
 cp `which agent` .
-docker build -t nlan/agent:ver0.1 .
+docker build -f $1 -t nlan/agent:ver0.1 .
 

@@ -10,7 +10,7 @@ In summary:
 - etcd is not easy to manage.
 - goyang does not support part of YANG spec.
 - YANG is incompatible with JSON, especially YANG's list type.
-- YANG is not for DevOps.
+- YANG is not for DevOps: most of DevOps frameworks use JSON/YAML format.
 - hard to debug gRPC messaging, since it's encoded in a binary format.
 
 So I gave up using those.

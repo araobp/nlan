@@ -136,6 +136,12 @@ tega_id: global, sync: server
 INFO:2016-01-18 15:49:27,574:Reloading log from ./var...
 INFO:2016-01-18 15:49:27,590:Reloading done
 ```
+
+In addition, nlan requires python "mako" package:
+```
+$ pip3 install mako
+```
+
 [Step 3] Execute nlan.ipam (IP address management) function on tega db to generate (secondary) IP addresses of each containers:
 ```
 $ cd scripts

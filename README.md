@@ -1,5 +1,7 @@
 # Model-driven network service abstraction for networking Linux containers on small PCs
 
+![NLAN architecture](https://docs.google.com/drawings/d/1VauRM6d2A03gIPxFbaVYdZpP8Yadre8KqL53XnntqDI/pub?w=800&h=640)
+
 This project unifies outputs from my two other projects "[neutron-lan](https://github.com/araobp/neutron-lan)" and "[tega](https://github.com/araobp/tega)".
 
 ##Background and motivation

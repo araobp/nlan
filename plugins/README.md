@@ -12,7 +12,9 @@ Usage example:
 
 ```
 ###Template
+```
 Function Name: nlan.template
 Arguments: filename
 Usage example:
 [tega: 1] nlan.template(filename='ptn-bgp.yaml')
+```

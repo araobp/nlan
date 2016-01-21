@@ -26,7 +26,7 @@ class Render(tega.subscriber.PlugIn):
 
     def _state(self, template):
         '''
-        PTN-BGP state
+        NLAN state registartion with tega db
         '''
         with open(template) as f:
             temp = f.read()
@@ -34,13 +34,12 @@ class Render(tega.subscriber.PlugIn):
 
             with self.tx() as t:
                 routers = t.get('nlan.ip')
-                state_yaml = Template(temp).render(**routers)
-                print(state_yaml)
+                r = {}
+                for k, v in routers.items():
+                    r[k] = v.split('/')[0]
+                state_yaml = Template(temp).render(**r)
                 state = yaml.load(state_yaml)
-                print(state)
-                print('-----dict2cont-----')
-                for r, s in state.items():
-                    s_cont = dict2cont(s)
-                    self.nlan.state[r] = s_cont
-                    t.put(s_cont)
+                state_dict = dict(state=yaml.load(state_yaml))
+                self.nlan.state = dict2cont(state_dict)
+                t.put(self.nlan.state)
 

@@ -154,7 +154,7 @@ $ ./cli
 [Step 3]
 Try this at the tega CLI to put "ptn-bgp" state onto tega db: 
 ```
-[tega: 3] nlan.render(template='template/ptn-bgp.yaml')
+[tega: 3] nlan.template(filename='ptn-bgp.yaml')
 ```
 The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230).
 

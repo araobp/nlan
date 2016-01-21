@@ -3,20 +3,22 @@ import tega.subscriber
 from tega.util import dict2cont
 
 from mako.template import Template
+import os
 import yaml
 
-class Render(tega.subscriber.PlugIn):
+class Template(tega.subscriber.PlugIn):
     '''
-    State renderer
+    State renderer 
     '''
     def __init__(self):
         super().__init__()
 
     def initialize(self):
+        self.etcdir = os.path.join(os.environ['GOPATH'], 'src/github.com/araobp/nlan/etc/')
         self.nlan = tega.tree.Cont('nlan')
         with self.tx() as t:
-            self.nlan.render = self.func(self._state)  # Attached to nlan.render
-            t.put(self.nlan.render)
+            self.nlan.template = self.func(self._render)  # Attached to nlan.template
+            t.put(self.nlan.template)
 
     def on_notify(self, notifications):
         pass
@@ -24,13 +26,12 @@ class Render(tega.subscriber.PlugIn):
     def on_message(self, channel, tega_id, message):
         pass
 
-    def _state(self, template):
+    def _render(self, filename):
         '''
         NLAN state registartion with tega db
         '''
-        with open(template) as f:
+        with open(os.path.join(self.etcdir, filename)) as f:
             temp = f.read()
-            print(temp)
 
             with self.tx() as t:
                 routers = t.get('nlan.ip')

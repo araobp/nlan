@@ -9,9 +9,6 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 - YANG is incompatible with Python dict, Golang map and so on: I just want JSON-centric MD-SAL.
 - As my hobby, I design a model-driven/event-driven architecture for networking Linux containers.
 
-##Current architecture(2016/01/17)
-- [Architecture](./doc/ARCHITECTURE.md)
-
 ##Current status(2016/01/17)
 - [Findings](./doc/FINDINGS.md)
 

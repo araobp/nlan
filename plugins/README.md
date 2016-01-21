@@ -11,3 +11,8 @@ Usage example:
   pe2: 10.10.10.2/24, pe3: 10.10.10.3/24, pe4: 10.10.10.4/24, rr: 10.10.10.5/24}
 
 ```
+###Template
+Function Name: nlan.template
+Arguments: filename
+Usage example:
+[tega: 1] nlan.template(filename='ptn-bgp.yaml')

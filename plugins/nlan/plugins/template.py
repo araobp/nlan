@@ -2,7 +2,7 @@ import tega.tree
 import tega.subscriber
 from tega.util import dict2cont
 
-from mako.template import Template
+import mako.template
 import os
 import yaml
 
@@ -38,7 +38,7 @@ class Template(tega.subscriber.PlugIn):
                 r = {}
                 for k, v in routers.items():
                     r[k] = v.split('/')[0]
-                state_yaml = Template(temp).render(**r)
+                state_yaml = mako.template.Template(temp).render(**r)
                 state = yaml.load(state_yaml)
                 state_dict = dict(state=yaml.load(state_yaml))
                 self.nlan.state = dict2cont(state_dict)

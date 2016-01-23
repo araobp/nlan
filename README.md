@@ -1,14 +1,13 @@
 # Model-driven network service abstraction for networking Linux containers on small PCs
 
+![NLAN architecture](https://docs.google.com/drawings/d/1VauRM6d2A03gIPxFbaVYdZpP8Yadre8KqL53XnntqDI/pub?w=600&h=400)
+
 This project unifies outputs from my two other projects "[neutron-lan](https://github.com/araobp/neutron-lan)" and "[tega](https://github.com/araobp/tega)".
 
 ##Background and motivation
 - OpenDaylight MD-SAL is too heavy for networking Linux containers on my Raspberry Pi.
 - YANG is incompatible with Python dict, Golang map and so on: I just want JSON-centric MD-SAL.
 - As my hobby, I design a model-driven/event-driven architecture for networking Linux containers.
-
-##Current architecture(2016/01/17)
-- [Architecture](./doc/ARCHITECTURE.md)
 
 ##Current status(2016/01/17)
 - [Findings](./doc/FINDINGS.md)

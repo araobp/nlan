@@ -1,6 +1,6 @@
 ## Using gobgp command
 
-Use ./gobgp.sh to issue gobgp commands to "rr" container.
+Use [gobgp.sh](../scripts/gobgp.sh) to issue gobgp commands to "rr" container.
 
 ### global rib
 ```

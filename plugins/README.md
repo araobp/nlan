@@ -16,7 +16,7 @@ Usage example:
 Function Name: nlan.template
 Arguments: filename
 Usage example:
-[tega: 1] nlan.template(filename='ptn-bgp.yaml')
+[tega: 1] nlan.template('ptn-bgp.yaml')
 ```
 
 ###Topology processing for Sigma js

@@ -19,8 +19,8 @@ Usage example:
 [tega: 1] nlan.template('ptn-bgp.yaml')
 ```
 
-###Topology processing for Sigma js
-This plugin subscribes nlan.state and converts nlan.state into vertexes/edges data for Sigma js.
+###Topo (topology processing)
+This plugin subscribes nlan.state and converts nlan.state into network graph (vertexes/edges).
 ```
 'nlan.state' data change notification --> transformation -> vertexes/edges
 ```

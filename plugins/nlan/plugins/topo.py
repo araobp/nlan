@@ -7,11 +7,9 @@ from tega.idb import OPE
 import json
 import logging
 
-class SigmaJs(tega.subscriber.PlugIn):
+class Topo(tega.subscriber.PlugIn):
     '''
-    "nlan.state to network graph" transformation for Sigma js
-
-    [Reference] http://sigmajs.org/
+    "nlan.state to network graph" transformation.
     '''
     def __init__(self):
         super().__init__()
@@ -22,7 +20,7 @@ class SigmaJs(tega.subscriber.PlugIn):
 
     def on_notify(self, notifications):
         '''
-        nlan.state --> Sigma js vertexs/edges transformation
+        nlan.state --> vertexs/edges transformation
         '''
         print(notifications)
         notification = notifications[0]

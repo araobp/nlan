@@ -70,11 +70,9 @@ Do not forget to append the following line to your .bashrc:
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 ```
 
-## [Step5] YANG
-
+## [Step5] tega db
 ```
-$ pip install pyang
-$ go get github.com/openconfig/goyang
+$ go get github.com/araobp/tega/driver
 ```
 
 ## [Step6] Networking modules
@@ -136,22 +134,13 @@ $ dpkg -i openvswitch-common_2.4.0-1_armhf.deb
 $ dpkg -i openvswitch-switch_2.4.0-1_armhf.deb
 $ dpkg -i openvswitch-datapath-dkms_2.4.0-1_all.deb
 ```
-## [Step7] etcd
-```
-$ go get github.co
-$ cd ~/work/src/github.com/coreos/etcd
-$ cp etcd ~/work/bin
-$ cd etcdctl
-$ go build -o etcdctl
-$ cp etcdctl ~/work/bin
-```
 
-## [Step8] Pulling rpi-raspbian docker image
+## [Step7] Pulling rpi-raspbian docker image
 ```
 $ docker pull resin/rpi-raspbian
 ```
 
-## [Step9] Creating "router" container
+## [Step8] Creating "router" container
 
 ### Installing required utilities
 ```
@@ -235,7 +224,7 @@ router               latest              47057103372d        6 minutes ago      
 resin/rpi-raspbian   latest              e97a8531a526        5 days ago          80.28 MB
 hypriot/rpi-swarm    latest              039c550f6208        7 weeks ago         10.92 MB
 ```
-## [Step10] nlan installation
+## [Step9] nlan installation
 ```
 $ go get github.com/araobp/nlan
 ```
@@ -250,7 +239,7 @@ NOTE: You have to modify Dockerfile (./docker/Dockerfile) to run nlan on Hypriot
   CMD service openvswitch-switch start && service quagga start && service ssh start && /root/bin/agent
 ```
 
-## [Step11] Setting up NLAN and creating router containers
+## [Step10] Setting up NLAN and creating router containers
 ```
 $ cd ~/work/src/github.com/araobp/nlan
 $ ./setup.sh
@@ -267,7 +256,7 @@ d621e51bd766        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago  
 692c49789d53        nlan/agent:ver0.1   "/bin/sh -c 'service "   8 minutes ago       Up 8 minutes                            pe1
 $ ./master.sh ptn-bgp
 ```
-## [Step12] Using the simulated WAN
+## [Step11] Using the simulated WAN
 ```
 $ cd docker
 $ ./ssh.sh ce1

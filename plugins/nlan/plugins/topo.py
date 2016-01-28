@@ -57,9 +57,8 @@ class Topo(tega.subscriber.PlugIn):
                 nodes.append(dict(id=local_ip))
 
             # Puts the transformed data on tega db
-            cont = tega.util.subtree('nlan.topo', network)
             with self.tx() as t:
-                t.put(cont)
+                t.put(path='nlan.topo', instance=network)
                 logging.info('nlan.topo put')
 
     def on_message(self, channel, tega_id, message):

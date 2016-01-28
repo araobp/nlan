@@ -11,7 +11,6 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 
 ##Current status(2016/01/17)
 - [Findings](./doc/FINDINGS.md)
-- [Integration with IPython](./doc/IPython.md)
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)

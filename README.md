@@ -119,10 +119,21 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 
 [Step 2] Install and start tega db:
 ```
+$ pip3 install mako
 $ go get github.com/araobp/tega/driver
+```
+
+For Hypriot/RaspberryPi, you need to export this environment variable:
+```
+$ export SETUP_SCRIPT=setup_rpi.sh
+```
+For Debian/Ubuntu, you do not need to export the variable above. 
+
+Then start tega db:
+```
 $ cd scripts
 $ ./tegadb &
-Namespace(datadir='./var', extensions='/root/work/src/github.com/araobp/nlan/plugins/ipam', mhost=None, mport=None, port=8888, sync=False, syncpath=None, tegaid='global')
+Namespace(datadir='./var', extensions='/root/work/src/github.com/araobp/nlan/plugins/nlan', mhost=None, mport=None, port=8888, sync=False, syncpath=None, tegaid='global')
 
    __
   / /____  ____ _____ _
@@ -132,13 +143,12 @@ Namespace(datadir='./var', extensions='/root/work/src/github.com/araobp/nlan/plu
         /____/
 tega_id: global, sync: server
 
-INFO:2016-01-18 15:49:27,574:Reloading log from ./var...
-INFO:2016-01-18 15:49:27,590:Reloading done
-```
-
-In addition, nlan requires python "mako" package:
-```
-$ pip3 install mako
+INFO:2016-01-29 14:31:21,319:Reloading log from ./var...
+INFO:2016-01-29 14:31:21,844:Reloading done
+INFO:2016-01-29 14:31:24,216:plugin attached to idb: Deployment
+INFO:2016-01-29 14:31:24,220:plugin attached to idb: Topo
+INFO:2016-01-29 14:31:24,282:plugin attached to idb: IpAddressManagement
+INFO:2016-01-29 14:31:24,342:plugin attached to idb: Template
 ```
 
 [Step 3] Execute nlan.ipam (IP address management) function on tega db to generate (secondary) IP addresses of each containers:
@@ -165,22 +175,31 @@ You may take a snapshop of tega db to make tega db's start-up faster:
 
 [Step 5] Execute the following command to build Docker image with NLAN agent embedded and to start the containers:
 
-For Debian/Ubuntu Linux, 
 ```
 [tega: 5] nlan.deploy() 
 ```
 
-For Hypriot on RaspberryPi, 
-```
-$ export SETUP_SCRIPT=setup_rpi.sh
-$ ./cli
-[tega: 1] nlan.deploy() 
-```
-
 NLAN agent on each container connects to tega db to fetch NLAN state.
 
-[Step 6]
-Open ssh session to the containers:
+[Step 6] Confirm that all the containers are running:
+```
+[tega: 6] subscribers
+Deployment: [Deployment]
+IpAddressManagement: [IpAddressManagement]
+Template: [Template]
+Topo: [Topo, nlan.state]
+ce1: [nlan.raw_request, nlan.raw_request.ce1]
+ce2: [nlan.raw_request, nlan.raw_request.ce2]
+ce3: [nlan.raw_request, nlan.raw_request.ce3]
+ce4: [nlan.raw_request, nlan.raw_request.ce4]
+pe1: [nlan.raw_request, nlan.raw_request.pe1]
+pe2: [nlan.raw_request, nlan.raw_request.pe2]
+pe3: [nlan.raw_request, nlan.raw_request.pe3]
+pe4: [nlan.raw_request, nlan.raw_request.pe4]
+rr: [nlan.raw_request, nlan.raw_request.rr]
+```
+
+[Step 7] Open ssh session to the containers:
 ```
 $ cd scripts 
 $ ./ssh.sh pe1

@@ -30,7 +30,7 @@ class Deployment(tega.subscriber.PlugIn):
     def on_message(self, channel, tega_id, message):
         pass
 
-    def _deploy(self, ip, *routers):
+    def _deploy(self):
         '''
         Deployment
         '''
@@ -38,5 +38,5 @@ class Deployment(tega.subscriber.PlugIn):
         self.process = subprocess.Popen(
                 [os.path.join(self.scriptdir, self.script),
                     self.scriptdir],
-                preexec_fn=os.setid)
+                preexec_fn=os.setsid)
 

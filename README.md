@@ -203,8 +203,6 @@ $ ./ssh.sh ce1
 ```
 The password is "root".
 
-Then you can do whatever you try.
-
 #Development environment setup
 
 ##Building Golang and protobuf for 32bit Linux

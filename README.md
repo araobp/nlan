@@ -160,21 +160,23 @@ The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2
 [Step 4(option)]
 You may take a snapshop of tega db to make tega db's start-up faster:
 ```
-$ ./cli
-[tega: 1] ss 
+[tega: 4] ss 
 ```
 
-[Step 5] Run the following shell script to build Docker image with NLAN agent embedded and to start the containers:
+[Step 5] Execute the following command to build Docker image with NLAN agent embedded and to start the containers:
 
 For Debian/Ubuntu Linux, 
 ```
-$ ./setup.sh
+[tega: 5] nlan.deploy() 
 ```
 
-For hypriot on Raspberry Pi,
+For Hypriot on RaspberryPi, 
 ```
-$ ./setup_rpi.sh
+$ export SETUP_SCRIPT=setup_rpi.sh
+$ ./cli
+[tega: 1] nlan.deploy() 
 ```
+
 NLAN agent on each container connects to tega db to fetch NLAN state.
 
 [Step 6]

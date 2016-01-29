@@ -24,3 +24,12 @@ This plugin subscribes nlan.state and converts nlan.state into network graph (ve
 ```
 'nlan.state' data change notification --> transformation -> vertexes/edges
 ```
+
+###Deploy (deployment of NLAN services)
+```
+Function Name: nlan.deploy
+Arguments: (None) 
+Usage example:
+[tega: 1] nlan.deploy()
+```
+

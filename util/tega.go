@@ -11,13 +11,33 @@ import (
 	"github.com/araobp/tega/driver"
 )
 
+const (
+	RAW_REQUEST  = "nlan.raw_request"
+	RAW_RESPONSE = "nlan.raw_response"
+)
+
 var ope *driver.Operation
 var hostname string
 
 type Self struct {
+	Channels []string
 }
 
-func (r *Self) OnNotify(v *[]driver.Notify) {
+func (r *Self) OnNotify(v *[]driver.Notification) {
+}
+
+func (r *Self) OnMessage(channel string, tegaId string, msg *driver.Message) {
+	for _, ch := range r.Channels {
+		if ch == channel {
+			// Executes a requested shell command.
+			req := msg.Msg.(map[string]interface{})
+			log.Printf("ch: %s, tegaid: %s, message: %s", ch, tegaId, req)
+			command := req["command"].(string)
+			args := strings.Split(req["args"].(string), " ")
+			result, _ := OutputCmd(command, args...)
+			ope.Publish(RAW_RESPONSE, &driver.Message{Msg: result})
+		}
+	}
 }
 
 func init() {
@@ -27,10 +47,14 @@ func init() {
 		hostname = "localhost"
 	}
 	tega := os.Getenv("TEGA_ADDRESS")
-	self := &Self{}
+	channels := []string{RAW_REQUEST, RAW_REQUEST + "." + hostname}
+	self := &Self{Channels: channels}
 	ope, err = driver.NewOperation(hostname, tega, 0, self)
 	if err != nil {
 		log.Fatal(err)
+	}
+	for _, ch := range channels {
+		ope.Subscribe(ch, driver.LOCAL)
 	}
 }
 

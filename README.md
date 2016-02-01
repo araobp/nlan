@@ -12,6 +12,10 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 ##Architecture
 ![NLAN architecture](https://docs.google.com/drawings/d/1VauRM6d2A03gIPxFbaVYdZpP8Yadre8KqL53XnntqDI/pub?w=600&h=400)
 
+##Visualization and analytics
+I am going to use Jupyter and IPython for visualization and analytics for NLAN.
+![NLAN visualization](./doc/nlan_topo.png)
+
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
 - DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)

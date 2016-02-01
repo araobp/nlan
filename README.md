@@ -217,7 +217,6 @@ I use a very old PC with a 32bit CPU at home, so I need to build 32bit binary fr
 - Go lang installation: https://golang.org/dl/
 - Protobuf build and installation: https://github.com/google/protobuf/blob/master/INSTALL.txt
 ```
-$ autoconf
 $ ./autogen.sh
 $ ./configure
 $ make

@@ -13,7 +13,7 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 ![NLAN architecture](https://docs.google.com/drawings/d/1VauRM6d2A03gIPxFbaVYdZpP8Yadre8KqL53XnntqDI/pub?w=600&h=400)
 
 ##Visualization and analytics
-I am going to use Jupyter and IPython for visualization and analytics for NLAN.
+I am going to use Jupyter and IPython for visualization and analytics of NLAN.
 ![NLAN visualization](./doc/nlan_topo.png)
 
 ##NLAN services

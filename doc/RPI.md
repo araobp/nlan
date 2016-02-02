@@ -23,6 +23,14 @@ $ ./configure
 $ make; make install
 ```
 
+###Python3.5 packages required for nlan/tega
+- https://github.com/tornadoweb/tornado  
+- pip3.5 install mako
+- pip3.5 install httplib2
+- pip3.5 install pyyaml
+- apt-get install libncurses-dev
+- pip3.5 install readline
+
 ## [Step3] Go
 ```
 $ cd $HOME
@@ -329,7 +337,3 @@ B>* 172.22.2.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
 B>* 172.22.3.0/24 [20/0] via 10.202.11.1, int_br211, 00:12:25
 ```
 
-## Dependency hell...
-I took a lot of steps to setup the software, because I needed to resolve dependency problems.
-
-I know the reason why a lot of people are migrating to Go and Docker... I have already migrated to Go.

@@ -49,7 +49,7 @@ func init() {
 	tega := os.Getenv("TEGA_ADDRESS")
 	channels := []string{RAW_REQUEST, RAW_REQUEST + "." + hostname}
 	self := &Self{Channels: channels}
-	ope, err = driver.NewOperation(hostname, tega, 0, self)
+	ope, err = driver.NewOperation(hostname, tega, 0, self, driver.GLOBAL)
 	if err != nil {
 		log.Fatal(err)
 	}

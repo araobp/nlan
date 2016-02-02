@@ -12,16 +12,16 @@ I used 8Gbytes SD memory card. zenmap is to find IP address that DHCP server (on
 - [Win32 Disk Imager](http://sourceforge.net/projects/win32diskimager/)
 - [zenmap](https://nmap.org/)
 
-## [Step2] Python
-python2.7 is required for pyang.
+## [Step2] Python3.5
+Download Python3.5, build and install it:
 ```
-$ apt-get update
-$ apt-get install python2.7
-$ apt-get install python-pip
-$ apt-get install python3.4
-$ apt-get install python3-pip
+$ wget https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tgz
+$ tar zxvf Python-3.5.1.tgz
+$ cd Python-3.5.1
+$ autoconf
+$ ./configure
+$ make; make install
 ```
-Note: python3.4 and pip3 are optional.
 
 ## [Step3] Go
 ```
@@ -225,24 +225,10 @@ resin/rpi-raspbian   latest              e97a8531a526        5 days ago         
 hypriot/rpi-swarm    latest              039c550f6208        7 weeks ago         10.92 MB
 ```
 ## [Step9] nlan installation
-```
-$ go get github.com/araobp/nlan
-```
-NOTE: You have to modify Dockerfile (./docker/Dockerfile) to run nlan on HypriotOS, as follows:
-```
-  FROM router
-+ ENV ETCD_ADDRESS "http://172.17.0.1:2379"
-- ENV ETCD_ADDRESS "http://172.17.42.1:2379"
-+ ENV NO_PROXY 172.17.0.1,localhost
-- ENV NO_PROXY 172.17.42.1,localhost
-  ADD agent /root/bin/agent
-  CMD service openvswitch-switch start && service quagga start && service ssh start && /root/bin/agent
-```
 
-## [Step10] Setting up NLAN and creating router containers
+Follow the setup instruction on [README.md](../README.md).
+
 ```
-$ cd ~/work/src/github.com/araobp/nlan
-$ ./setup.sh
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
 dad01276cbb9        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago       Up 7 minutes                            ce4
@@ -256,7 +242,7 @@ d621e51bd766        nlan/agent:ver0.1   "/bin/sh -c 'service "   7 minutes ago  
 692c49789d53        nlan/agent:ver0.1   "/bin/sh -c 'service "   8 minutes ago       Up 8 minutes                            pe1
 $ ./master.sh ptn-bgp
 ```
-## [Step11] Using the simulated WAN
+## [Step10] Using the simulated WAN
 ```
 $ cd docker
 $ ./ssh.sh ce1

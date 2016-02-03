@@ -105,7 +105,7 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 
 [Step 2] Install and start tega db:
 ```
-$ pip3 install mako
+$ pip3.5 install mako
 $ go get github.com/araobp/tega/driver
 ```
 

@@ -231,8 +231,18 @@ The password is "root".
 
 #Development environment setup
 
-##Building Golang and protobuf for 32bit Linux
-I use a very old PC with a 32bit CPU at home, so I need to build 32bit binary from source codes:
+##Python3.5
+
+- Download the source code from [here](https://www.python.org/downloads/source/).
+- Build and install it.
+
+##IPython/Jupyter
+The easiest way is to install Anaconda
+- https://www.continuum.io/downloads
+
+Note that Anaconda already includes Python3.5 and other packages used by this project as well.
+
+##Golang and protobuf
 - Go lang installation: https://golang.org/dl/
 - Protobuf build and installation: https://github.com/google/protobuf/blob/master/INSTALL.txt
 ```
@@ -246,7 +256,6 @@ $ make install
 $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 
 ```
-
-##Go plugin for vim
+###Go plugin for vim
 
 Install [vim-go](https://github.com/fatih/vim-go) to your vim.

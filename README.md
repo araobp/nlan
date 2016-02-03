@@ -99,21 +99,6 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 - [An example of such a network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230)
 - [Working with Docker for network simulation](https://camo.githubusercontent.com/77cf473ea9499432e57b06a951f5f5248419f9e1/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f313631426e383077384a5a4b513742586d496f306272377851346b71456442635f585a3235347a754f5253552f7075623f773d36383026683d343030)
 
-##Key technologies used in this project
-- Open vSwitch, OVSDB/JSON-RPC([RFC7047](https://tools.ietf.org/html/rfc7047)) and [vxlan](https://tools.ietf.org/html/rfc7348)
-- [docker](https://github.com/docker/docker)
-- JSON/YAML
-- Protocol buffers
-- quagga and [gobgp](https://github.com/osrg/gobgp)
-
-##Interesting
-- [Cumulus Linux](https://cumulusnetworks.com/)
-- [OpenSwitch] (http://www.openswitch.net/)
-- [socketplane](https://github.com/socketplane/socketplane)
-- [goplane](https://github.com/osrg/goplane)
-- [bgp sdn](https://tools.ietf.org/html/draft-lapukhov-bgp-sdn-00)
-- [nsq](https://github.com/nsqio/nsq)
-
 #NLAN installation
 
 [Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).

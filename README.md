@@ -18,11 +18,11 @@ I am going to use Jupyter and IPython for visualization and analytics of NLAN.
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
-- DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)
 - vHosts: netns-based virtual hosts
 - Router: Quagga configuration
 
 To be added:
+- DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)
 - Links: direct linking(tun/tap)
 - Bridges: non-distributed virtual switch
 - VRF: netns-based VRF
@@ -182,25 +182,56 @@ You may take a snapshop of tega db to make tega db's start-up faster:
 
 NLAN agent on each container connects to tega db to fetch NLAN state.
 
-[Step 6] Confirm that all the containers are running:
+[Step 6] Confirm that all the containers are running
+
 ```
 [tega: 6] subscribers
-Deployment: [Deployment]
-IpAddressManagement: [IpAddressManagement]
-Template: [Template]
-Topo: [Topo, nlan.state]
-ce1: [nlan.raw_request, nlan.raw_request.ce1]
-ce2: [nlan.raw_request, nlan.raw_request.ce2]
-ce3: [nlan.raw_request, nlan.raw_request.ce3]
-ce4: [nlan.raw_request, nlan.raw_request.ce4]
-pe1: [nlan.raw_request, nlan.raw_request.pe1]
-pe2: [nlan.raw_request, nlan.raw_request.pe2]
-pe3: [nlan.raw_request, nlan.raw_request.pe3]
-pe4: [nlan.raw_request, nlan.raw_request.pe4]
-rr: [nlan.raw_request, nlan.raw_request.rr]
+ce1: [ce1]
+ce2: [ce2]
+ce3: [ce3]
+ce4: [ce4]
+pe1: [pe1]
+pe2: [pe2]
+pe3: [pe3]
+pe4: [pe4]
+rr: [rr]
+
 ```
 
-[Step 7] Open ssh session to the containers:
+[Step 8] Try raw commands to check the state of each container
+
+```
+[tega: 7] nlan.raw.ce1('ip route')
+default via 172.17.0.1 dev eth0
+10.1.1.1 via 10.201.11.1 dev int_br111  proto zebra
+10.1.1.2 via 10.202.11.1 dev int_br211  proto zebra
+10.1.1.3 via 10.201.11.1 dev int_br111  proto zebra
+10.1.2.2 via 10.201.11.1 dev int_br111  proto zebra
+10.1.2.3 via 10.201.11.1 dev int_br111  proto zebra
+10.1.2.4 via 10.201.11.1 dev int_br111  proto zebra
+10.10.10.0/24 dev eth0  proto kernel  scope link  src 10.10.10.6
+10.200.1.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.200.2.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.201.11.0/24 dev int_br111  proto kernel  scope link  src 10.201.11.2
+10.201.12.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.202.11.0/24 dev int_br211  proto kernel  scope link  src 10.202.11.2
+10.202.12.0/24 via 10.202.11.1 dev int_br211  proto zebra
+10.203.13.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.203.14.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.204.13.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.204.14.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.17.0.0/16 dev eth0  proto kernel  scope link  src 172.17.0.7
+172.21.1.0/24 dev br_172.21.1.1  proto kernel  scope link  src 172.21.1.1
+172.21.2.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.21.3.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.21.4.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.22.1.0/24 dev br_172.22.1.1  proto kernel  scope link  src 172.22.1.1
+172.22.2.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.22.3.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.22.4.0/24 via 10.201.11.1 dev int_br111  proto zebra
+
+```
+You may also start a ssh session to the containers:
 ```
 $ cd scripts 
 $ ./ssh.sh pe1

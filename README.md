@@ -17,6 +17,7 @@ I am going to use Jupyter and IPython for visualization and analytics of NLAN.
 ![NLAN visualization](./doc/nlan_topo.png)
 
 ##NLAN services
+You create your own network service with a combination of NLAN services in a object-oriented manner.
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
 - vHosts: netns-based virtual hosts
 - Router: Quagga configuration

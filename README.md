@@ -215,6 +215,9 @@ default via 172.17.0.1 dev eth0
 172.22.3.0/24 via 10.201.11.1 dev int_br111  proto zebra
 172.22.4.0/24 via 10.201.11.1 dev int_br111  proto zebra
 
+[tega: 8] nlan.raw.ce2('ip route')
+               :
+               
 ```
 You may also start a ssh session to the containers:
 ```

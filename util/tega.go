@@ -1,6 +1,7 @@
 package util
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -11,33 +12,16 @@ import (
 	"github.com/araobp/tega/driver"
 )
 
-const (
-	RAW_REQUEST  = "nlan.raw_request"
-	RAW_RESPONSE = "nlan.raw_response"
-)
-
 var ope *driver.Operation
 var hostname string
 
 type Self struct {
-	Channels []string
 }
 
 func (r *Self) OnNotify(v *[]driver.Notification) {
 }
 
 func (r *Self) OnMessage(channel string, tegaId string, msg *driver.Message) {
-	for _, ch := range r.Channels {
-		if ch == channel {
-			// Executes a requested shell command.
-			req := msg.Msg.(map[string]interface{})
-			log.Printf("ch: %s, tegaid: %s, message: %s", ch, tegaId, req)
-			command := req["command"].(string)
-			args := strings.Split(req["args"].(string), " ")
-			result, _ := OutputCmd(command, args...)
-			ope.Publish(RAW_RESPONSE, &driver.Message{Msg: result})
-		}
-	}
 }
 
 func init() {
@@ -47,15 +31,12 @@ func init() {
 		hostname = "localhost"
 	}
 	tega := os.Getenv("TEGA_ADDRESS")
-	channels := []string{RAW_REQUEST, RAW_REQUEST + "." + hostname}
-	self := &Self{Channels: channels}
-	ope, err = driver.NewOperation(hostname, tega, 0, self, driver.GLOBAL)
+	self := &Self{}
+	ope, err = driver.NewOperation(hostname, tega, 0, self, driver.LOCAL)
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, ch := range channels {
-		ope.Subscribe(ch, driver.LOCAL)
-	}
+	ope.RegisterRpc("nlan.raw."+hostname, raw)
 }
 
 // Registers a host IP address with tega
@@ -137,4 +118,16 @@ func GetSecondaryIp(hostname string) string {
 		log.Fatal(err)
 	}
 	return secondary
+}
+
+// Executes a raw command (i.e., shell command)
+func raw(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
+	args := strings.Split(argsKwargs.Args[0].(string), " ")
+	cmd := args[0]
+	var cmdArgs []string
+	if len(args) > 1 {
+		cmdArgs = args[1:]
+	}
+	result, _ := OutputCmd(cmd, cmdArgs...) // Executes a raw command
+	return driver.Result{Res: result}, errors.New("OK")
 }

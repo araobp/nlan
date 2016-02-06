@@ -18,11 +18,11 @@ I am going to use Jupyter and IPython for visualization and analytics of NLAN.
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
-- DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)
 - vHosts: netns-based virtual hosts
 - Router: Quagga configuration
 
 To be added:
+- DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)
 - Links: direct linking(tun/tap)
 - Bridges: non-distributed virtual switch
 - VRF: netns-based VRF
@@ -99,28 +99,13 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 - [An example of such a network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230)
 - [Working with Docker for network simulation](https://camo.githubusercontent.com/77cf473ea9499432e57b06a951f5f5248419f9e1/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f313631426e383077384a5a4b513742586d496f306272377851346b71456442635f585a3235347a754f5253552f7075623f773d36383026683d343030)
 
-##Key technologies used in this project
-- Open vSwitch, OVSDB/JSON-RPC([RFC7047](https://tools.ietf.org/html/rfc7047)) and [vxlan](https://tools.ietf.org/html/rfc7348)
-- [docker](https://github.com/docker/docker)
-- JSON/YAML
-- Protocol buffers
-- quagga and [gobgp](https://github.com/osrg/gobgp)
-
-##Interesting
-- [Cumulus Linux](https://cumulusnetworks.com/)
-- [OpenSwitch] (http://www.openswitch.net/)
-- [socketplane](https://github.com/socketplane/socketplane)
-- [goplane](https://github.com/osrg/goplane)
-- [bgp sdn](https://tools.ietf.org/html/draft-lapukhov-bgp-sdn-00)
-- [nsq](https://github.com/nsqio/nsq)
-
 #NLAN installation
 
 [Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
 
 [Step 2] Install and start tega db:
 ```
-$ pip3 install mako
+$ pip3.5 install mako
 $ go get github.com/araobp/tega/driver
 ```
 
@@ -182,25 +167,59 @@ You may take a snapshop of tega db to make tega db's start-up faster:
 
 NLAN agent on each container connects to tega db to fetch NLAN state.
 
-[Step 6] Confirm that all the containers are running:
+[Step 6] Confirm that all the containers are running
+
 ```
 [tega: 6] subscribers
-Deployment: [Deployment]
-IpAddressManagement: [IpAddressManagement]
-Template: [Template]
-Topo: [Topo, nlan.state]
-ce1: [nlan.raw_request, nlan.raw_request.ce1]
-ce2: [nlan.raw_request, nlan.raw_request.ce2]
-ce3: [nlan.raw_request, nlan.raw_request.ce3]
-ce4: [nlan.raw_request, nlan.raw_request.ce4]
-pe1: [nlan.raw_request, nlan.raw_request.pe1]
-pe2: [nlan.raw_request, nlan.raw_request.pe2]
-pe3: [nlan.raw_request, nlan.raw_request.pe3]
-pe4: [nlan.raw_request, nlan.raw_request.pe4]
-rr: [nlan.raw_request, nlan.raw_request.rr]
+ce1: [ce1]
+ce2: [ce2]
+ce3: [ce3]
+ce4: [ce4]
+pe1: [pe1]
+pe2: [pe2]
+pe3: [pe3]
+pe4: [pe4]
+rr: [rr]
+
 ```
 
-[Step 7] Open ssh session to the containers:
+[Step 8] Try raw commands to check the state of each container
+
+```
+[tega: 7] nlan.raw.ce1('ip route')
+default via 172.17.0.1 dev eth0
+10.1.1.1 via 10.201.11.1 dev int_br111  proto zebra
+10.1.1.2 via 10.202.11.1 dev int_br211  proto zebra
+10.1.1.3 via 10.201.11.1 dev int_br111  proto zebra
+10.1.2.2 via 10.201.11.1 dev int_br111  proto zebra
+10.1.2.3 via 10.201.11.1 dev int_br111  proto zebra
+10.1.2.4 via 10.201.11.1 dev int_br111  proto zebra
+10.10.10.0/24 dev eth0  proto kernel  scope link  src 10.10.10.6
+10.200.1.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.200.2.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.201.11.0/24 dev int_br111  proto kernel  scope link  src 10.201.11.2
+10.201.12.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.202.11.0/24 dev int_br211  proto kernel  scope link  src 10.202.11.2
+10.202.12.0/24 via 10.202.11.1 dev int_br211  proto zebra
+10.203.13.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.203.14.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.204.13.0/24 via 10.201.11.1 dev int_br111  proto zebra
+10.204.14.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.17.0.0/16 dev eth0  proto kernel  scope link  src 172.17.0.7
+172.21.1.0/24 dev br_172.21.1.1  proto kernel  scope link  src 172.21.1.1
+172.21.2.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.21.3.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.21.4.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.22.1.0/24 dev br_172.22.1.1  proto kernel  scope link  src 172.22.1.1
+172.22.2.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.22.3.0/24 via 10.201.11.1 dev int_br111  proto zebra
+172.22.4.0/24 via 10.201.11.1 dev int_br111  proto zebra
+
+[tega: 8] nlan.raw.ce2('ip route')
+               :
+               
+```
+You may also start a ssh session to the containers:
 ```
 $ cd scripts 
 $ ./ssh.sh pe1
@@ -212,8 +231,18 @@ The password is "root".
 
 #Development environment setup
 
-##Building Golang and protobuf for 32bit Linux
-I use a very old PC with a 32bit CPU at home, so I need to build 32bit binary from source codes:
+##Python3.5
+
+- Download the source code from [here](https://www.python.org/downloads/source/).
+- Build and install it.
+
+##IPython/Jupyter
+The easiest way is to install Anaconda
+- https://www.continuum.io/downloads
+
+Note that Anaconda already includes Python3.5 and other packages used by this project as well.
+
+##Golang and protobuf
 - Go lang installation: https://golang.org/dl/
 - Protobuf build and installation: https://github.com/google/protobuf/blob/master/INSTALL.txt
 ```
@@ -227,7 +256,6 @@ $ make install
 $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 
 ```
-
-##Go plugin for vim
+###Go plugin for vim
 
 Install [vim-go](https://github.com/fatih/vim-go) to your vim.

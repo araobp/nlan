@@ -18,7 +18,7 @@ class Template(tega.subscriber.PlugIn):
         self.nlan = tega.tree.Cont('nlan')
         with self.tx() as t:
             self.nlan.template = self.func(self._render)  # Attached to nlan.template
-            t.put(self.nlan.template)
+            t.put(self.nlan.template, ephemeral=True)
 
     def on_notify(self, notifications):
         pass

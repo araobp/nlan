@@ -13,7 +13,7 @@ class IpAddressManagement(tega.subscriber.PlugIn):
         nlan = tega.tree.Cont('nlan')
         with self.tx() as t:
             nlan.ipam = self.func(self._gen)  # Attached to nlan.ipam
-            t.put(nlan.ipam)
+            t.put(nlan.ipam, ephemeral=True)
 
     def on_notify(self, notifications):
         pass

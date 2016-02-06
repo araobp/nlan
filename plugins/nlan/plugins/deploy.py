@@ -22,7 +22,7 @@ class Deployment(tega.subscriber.PlugIn):
         nlan = tega.tree.Cont('nlan')
         with self.tx() as t:
             nlan.deploy = self.func(self._deploy)  # Attached to nlan.deploy
-            t.put(nlan.deploy)
+            t.put(nlan.deploy, ephemeral=True)
 
     def on_notify(self, notifications):
         pass

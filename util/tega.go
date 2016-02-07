@@ -15,6 +15,11 @@ import (
 var ope *driver.Operation
 var hostname string
 
+const(
+	HOSTS_PATH = "nlan.hosts"
+	RAW_PATH = "nlan.raw"
+)
+
 type Self struct {
 }
 
@@ -36,12 +41,20 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ope.RegisterRpc("nlan.raw."+hostname, raw)
+	err = ope.Ephemeral(RAW_PATH)
+	if err != nil {
+		log.Fatal(err)
+	}
+	ope.RegisterRpc(fmt.Sprintf("%s.%s", RAW_PATH, hostname), raw)
 }
 
 // Registers a host IP address with tega
 func RegisterHost() string {
-	path := "nlan.hosts." + hostname
+	err := ope.Ephemeral(HOSTS_PATH)
+	if err != nil {
+		log.Fatal(err)
+	}
+	path := fmt.Sprintf("%s.%s", HOSTS_PATH, hostname)
 	interfaces, _ := net.Interfaces()
 	var addrs []net.Addr
 	for _, inter := range interfaces {
@@ -50,7 +63,7 @@ func RegisterHost() string {
 		}
 	}
 	value := addrs[0].String()
-	err := ope.Put(path, value)
+	err = ope.Put(path, value)
 	if err != nil {
 		log.Fatal(err)
 	}

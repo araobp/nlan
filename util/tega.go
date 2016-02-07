@@ -7,6 +7,7 @@ import (
 	"net"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/araobp/nlan/model/nlan"
 	"github.com/araobp/tega/driver"
@@ -15,9 +16,9 @@ import (
 var ope *driver.Operation
 var hostname string
 
-const(
+const (
 	HOSTS_PATH = "nlan.hosts"
-	RAW_PATH = "nlan.raw"
+	RAW_PATH   = "nlan.raw"
 )
 
 type Self struct {
@@ -41,19 +42,26 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = ope.Ephemeral(RAW_PATH)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// TODO: synchronization between SESSION and PATCH
+	time.Sleep(1 * time.Second)
+	/*
+		err = ope.Ephemeral(RAW_PATH)
+		if err != nil {
+			log.Fatal(err)
+		}
+	*/
 	ope.RegisterRpc(fmt.Sprintf("%s.%s", RAW_PATH, hostname), raw)
 }
 
 // Registers a host IP address with tega
 func RegisterHost() string {
-	err := ope.Ephemeral(HOSTS_PATH)
-	if err != nil {
-		log.Fatal(err)
-	}
+	var err error
+	/*
+		err := ope.Ephemeral(HOSTS_PATH)
+		if err != nil {
+			log.Fatal(err)
+		}
+	*/
 	path := fmt.Sprintf("%s.%s", HOSTS_PATH, hostname)
 	interfaces, _ := net.Interfaces()
 	var addrs []net.Addr
@@ -63,7 +71,7 @@ func RegisterHost() string {
 		}
 	}
 	value := addrs[0].String()
-	err = ope.Put(path, value)
+	err = ope.PutE(path, value)
 	if err != nil {
 		log.Fatal(err)
 	}

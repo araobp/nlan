@@ -7,7 +7,6 @@ import (
 	"net"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/araobp/nlan/model/nlan"
 	"github.com/araobp/tega/driver"
@@ -22,6 +21,11 @@ const (
 )
 
 type Self struct {
+}
+
+func (r *Self) OnInit() {
+	ope.RegisterRpc(fmt.Sprintf("%s.%s", RAW_PATH, hostname), raw)
+	registerHost()
 }
 
 func (r *Self) OnNotify(v *[]driver.Notification) {
@@ -42,26 +46,19 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// TODO: synchronization between SESSION and PATCH
-	time.Sleep(1 * time.Second)
-	/*
-		err = ope.Ephemeral(RAW_PATH)
-		if err != nil {
-			log.Fatal(err)
-		}
-	*/
-	ope.RegisterRpc(fmt.Sprintf("%s.%s", RAW_PATH, hostname), raw)
+}
+
+// Returns os.Getenv("HOSTNAME")
+func GetHostname() string {
+	return hostname
 }
 
 // Registers a host IP address with tega
-func RegisterHost() string {
+func registerHost() {
 	var err error
-	/*
-		err := ope.Ephemeral(HOSTS_PATH)
 		if err != nil {
 			log.Fatal(err)
 		}
-	*/
 	path := fmt.Sprintf("%s.%s", HOSTS_PATH, hostname)
 	interfaces, _ := net.Interfaces()
 	var addrs []net.Addr
@@ -75,7 +72,6 @@ func RegisterHost() string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return hostname
 }
 
 // Gets a list of all host names and their addresses from tega

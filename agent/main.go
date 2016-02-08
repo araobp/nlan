@@ -64,13 +64,11 @@ func main() {
 	}
 	log.SetOutput(f)
 
-	// Registers host IP address with tega db
-	router := util.RegisterHost()
-
 	// Gets cmd and cmdp
 	cmd, cmdp := util.GetCmd(true)
 
 	//Adds a secondary IP address to eth0
+	router := util.GetHostname()
 	secondary := util.GetSecondaryIp(router)
 	if secondary != "" {
 		cmd("ip", "address", "add", secondary, "dev", "eth0")

@@ -14,7 +14,7 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 
 ##Visualization and analytics
 I am going to use Jupyter and IPython for visualization and analytics of NLAN.
-![NLAN visualization](./doc/jupyter/output_5_0.png)
+![NLAN visualization](./doc/jupyter/output_1_0.png)
 )
 
 ##NLAN services

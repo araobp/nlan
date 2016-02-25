@@ -14,6 +14,16 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 
 ##Visualization and analytics
 I am going to use Jupyter and IPython for visualization and analytics of NLAN.
+```
+import networkx as nx
+%matplotlib inline
+
+import tega.driver
+d = tega.driver.Driver()
+edges = d.get('topo.edges')
+g = nx.Graph([[edge['source'], edge['target']] for edge in edges])
+nx.draw(g, node_size=700, with_labels=True)
+```
 ![NLAN visualization](./doc/jupyter/output_1_0.png)
 
 - [Jupyter notebook example](./doc/jupyter/topo.md)

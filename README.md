@@ -14,7 +14,8 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 
 ##Visualization and analytics
 I am going to use Jupyter and IPython for visualization and analytics of NLAN.
-![NLAN visualization](./doc/nlan_topo.png)
+![NLAN visualization](./doc/jupyter/output_5_0.png)
+)
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)

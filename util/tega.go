@@ -16,8 +16,10 @@ var ope *driver.Operation
 var hostname string
 
 const (
-	HOSTS_PATH = "nlan.hosts"
-	RAW_PATH   = "nlan.raw"
+	IP_PATH = "ip"
+	HOSTS_PATH = "hosts"
+	RAW_PATH = "raw"
+	CONFIG_PATH = "config"
 )
 
 type Self struct {
@@ -56,9 +58,9 @@ func GetHostname() string {
 // Registers a host IP address with tega
 func registerHost() {
 	var err error
-		if err != nil {
-			log.Fatal(err)
-		}
+	if err != nil {
+		log.Fatal(err)
+	}
 	path := fmt.Sprintf("%s.%s", HOSTS_PATH, hostname)
 	interfaces, _ := net.Interfaces()
 	var addrs []net.Addr
@@ -90,19 +92,19 @@ func listHosts(path string) map[string]interface{} {
 	return hosts
 }
 
-// Lists up all hosts on nlan.hosts
+// Lists up all hosts on HOSTS_PATH 
 func ListHosts() map[string]interface{} {
-	return listHosts("nlan.hosts")
+	return listHosts(HOSTS_PATH)
 }
 
-// Lists up all hosts on nlan.ip
+// Lists up all hosts on IP_PATH 
 func ListIps() map[string]interface{} {
-	return listHosts("nlan.ip")
+	return listHosts(IP_PATH)
 }
 
-// Sets NLAN state to tega
+// Sets NLAN config to tega
 func SetModel(hostname string, model *nlan.Model) {
-	path := fmt.Sprintf("nlan.state.%s", hostname)
+	path := fmt.Sprintf("%s-%s", CONFIG_PATH, hostname)
 	err := ope.Put(path, model)
 	if err != nil {
 		log.Fatal(err)
@@ -111,7 +113,7 @@ func SetModel(hostname string, model *nlan.Model) {
 
 // Gets NLAN state from tega
 func GetModel(hostname string, model *nlan.Model) {
-	path := fmt.Sprintf("nlan.state.%s", hostname)
+	path := fmt.Sprintf("%s-%s", CONFIG_PATH, hostname)
 	err := ope.Get(path, model)
 	if err != nil {
 		log.Fatal(err)
@@ -120,15 +122,18 @@ func GetModel(hostname string, model *nlan.Model) {
 
 // Resets NLAN state on tega
 func ResetState() {
+	// TODO: implementation
+	/*
 	err := ope.Delete("nlan.state")
 	if err != nil {
 		log.Print(err)
 	}
+	*/
 }
 
 // Gets a secondary IP address from tega
 func GetSecondaryIp(hostname string) string {
-	path := "nlan.ip." + hostname
+	path := fmt.Sprintf("%s.%s", IP_PATH, hostname)
 	var secondary string
 	err := ope.Get(path, &secondary)
 	if err != nil {

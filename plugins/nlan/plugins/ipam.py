@@ -10,10 +10,10 @@ class IpAddressManagement(tega.subscriber.PlugIn):
         super().__init__()
 
     def initialize(self):
-        nlan = tega.tree.Cont('nlan')
+        plugins = tega.tree.Cont('plugins')
         with self.tx() as t:
-            nlan.ipam = self.func(self._gen)  # Attached to nlan.ipam
-            t.put(nlan.ipam, ephemeral=True)
+            plugins.ipam = self.func(self._gen)  # Attached to plugins.ipam
+            t.put(plugins.ipam, ephemeral=True)
 
     def on_notify(self, notifications):
         pass
@@ -23,19 +23,19 @@ class IpAddressManagement(tega.subscriber.PlugIn):
 
     MASK = '24'
 
-    def _gen(self, ip, *routers):
+    def _gen(self, addr, *routers):
         '''
         IP address generation
         '''
-        nlan = tega.tree.Cont('nlan')
+        ip = tega.tree.Cont('ip')
         with self.tx() as t:
-            abcd = ip.split('.')
+            abcd = addr.split('.')
             d = abcd[3]
             abc = abcd[:2]
             for r in routers:
                 nextip = abcd[:3]
                 nextip.append(d)
-                nlan.ip[r] = '{}/{}'.format('.'.join(nextip), self.MASK)
-                t.put(nlan.ip[r])
+                ip[r] = '{}/{}'.format('.'.join(nextip), self.MASK)
                 d = str(int(d) + 1)
+            t.put(ip)
 

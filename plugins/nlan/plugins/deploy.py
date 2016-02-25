@@ -19,10 +19,10 @@ class Deployment(tega.subscriber.PlugIn):
         except:
             self.script = 'setup.sh'
         self.scriptdir = os.path.join(os.environ['GOPATH'], 'src/github.com/araobp/nlan/')
-        nlan = tega.tree.Cont('nlan')
+        plugins = tega.tree.Cont('plugins')
         with self.tx() as t:
-            nlan.deploy = self.func(self._deploy)  # Attached to nlan.deploy
-            t.put(nlan.deploy, ephemeral=True)
+            plugins.deploy = self.func(self._deploy)  # Attached to plugins.deploy
+            t.put(plugins.deploy, ephemeral=True)
 
     def on_notify(self, notifications):
         pass

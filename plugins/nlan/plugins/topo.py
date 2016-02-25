@@ -7,6 +7,8 @@ from tega.idb import OPE
 import json
 import logging
 
+CONFIG_PATH = r'config-.*'
+
 class Topo(tega.subscriber.PlugIn):
     '''
     "nlan.state to network graph" transformation.
@@ -15,51 +17,47 @@ class Topo(tega.subscriber.PlugIn):
         super().__init__()
 
     def initialize(self):
-        self.nlan = tega.tree.Cont('nlan')
-        self.subscribe('nlan.state', SCOPE.GLOBAL)
+        self.plugins = tega.tree.Cont('plugins')
+        self.subscribe(CONFIG_PATH, SCOPE.GLOBAL, regex_flag=True)
 
     def on_notify(self, notifications):
         '''
         nlan.state --> vertexs/edges transformation
         '''
-        print(notifications)
-        notification = notifications[0]
-        state = notification['instance']
-        ope = notification['ope']
-        path = notification['path']
+        n_put = []
+        n_delete = []
+        logging.debug(notifications)
+        for n in notifications:
+            state = notification['instance']
+            ope = notification['ope']
+            path = notification['path']
+            if ope == 'PUT':
+                n_put.append([path, state])
+            elif ope == 'DELETE':
+                # TODO: implementation
+                pass
 
-        print(ope)
-        print(path)
-        if ope == OPE.DELETE.name and path == 'nlan.state': 
-            with self.tx() as t:
-                t.delete('nlan.topo')
-                logging.info('nlan.topo deleted')
-        else: 
-            if path != 'nlan.state':
-                state = idb.get(path='nlan.state')
-                logging.info('nlan.state got')
-            nodes = [] 
-            edges = [] 
-            network = {'nodes': nodes, 'edges': edges}
+        nodes = [] 
+        edges = [] 
 
-            for router, model in state.items():
-                m = model['Ptn']['Networks']
-                seq = 0
-                local_ip=''
-                for n in m:
-                    id_ = n['Id']
-                    links = n['Links']
-                    local_ip = links['LocalIp']
-                    remote_ips = links['RemoteIps']
-                    for remote_ip in remote_ips:
-                        edges.append(dict(id='n'+str(seq), source=local_ip, target=remote_ip))
-                        seq += 1
-                nodes.append(dict(id=local_ip))
+        for router, model in n_put:
+            m = model['Ptn']['Networks']
+            seq = 0
+            local_ip=''
+            for n in m:
+                id_ = n['Id']
+                links = n['Links']
+                local_ip = links['LocalIp']
+                remote_ips = links['RemoteIps']
+                for remote_ip in remote_ips:
+                    edges.append(dict(id='n'+str(seq), source=local_ip, target=remote_ip))
+                    seq += 1
+            nodes.append(dict(id=local_ip))
 
-            # Puts the transformed data on tega db
-            with self.tx() as t:
-                t.put(path='nlan.topo', instance=network)
-                logging.info('nlan.topo put')
+        # Puts the transformed data on tega db
+        with self.tx() as t:
+            t.put(path='topo', instance=dict(nodes=nodes, edges=edges))
+            logging.info('topo put')
 
     def on_message(self, channel, tega_id, message):
         pass

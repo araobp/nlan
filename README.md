@@ -148,7 +148,7 @@ INFO:2016-02-25 15:24:58,119:plugin attached to idb: Deployment
 INFO:2016-02-25 15:24:58,124:plugin attached to idb: Topo
 INFO:2016-02-25 15:24:58,158:plugin attached to idb: IpAddressManagement
 INFO:2016-02-25 15:24:58,181:plugin attached to idb: Template
-'''
+```
 
 [Step 3] Execute plugins.ipam (IP address management) function on tega db to generate (secondary) IP addresses of each containers:
 ```

@@ -119,7 +119,6 @@ Then start tega db:
 ```
 $ cd scripts
 $ ./tegadb &
-Namespace(datadir='./var', extensions='/root/work/src/github.com/araobp/nlan/plugins/nlan', mhost=None, mport=None, port=8888, sync=False, syncpath=None, tegaid='global')
 
    __
   / /____  ____ _____ _
@@ -127,29 +126,31 @@ Namespace(datadir='./var', extensions='/root/work/src/github.com/araobp/nlan/plu
 / /_/  __/ /_/ / /_/ /
 \__/\___/\__, /\__,_/
         /____/
-tega_id: global, sync: server
 
-INFO:2016-01-29 14:31:21,319:Reloading log from ./var...
-INFO:2016-01-29 14:31:21,844:Reloading done
-INFO:2016-01-29 14:31:24,216:plugin attached to idb: Deployment
-INFO:2016-01-29 14:31:24,220:plugin attached to idb: Topo
-INFO:2016-01-29 14:31:24,282:plugin attached to idb: IpAddressManagement
-INFO:2016-01-29 14:31:24,342:plugin attached to idb: Template
-```
+tega_id: global, config: None, operational: None
 
-[Step 3] Execute nlan.ipam (IP address management) function on tega db to generate (secondary) IP addresses of each containers:
+Namespace(config=None, datadir='./var', extensions='/root/work/src/github.com/araobp/nlan/plugins/nlan', loglevel='INFO', maxlen=10, mhost=None, mport=None, operational=None, port=8888, tegaid='global')
+INFO:2016-02-25 15:24:57,628:Reloading log from ./var...
+INFO:2016-02-25 15:24:57,633:Reloading done
+INFO:2016-02-25 15:24:58,119:plugin attached to idb: Deployment
+INFO:2016-02-25 15:24:58,124:plugin attached to idb: Topo
+INFO:2016-02-25 15:24:58,158:plugin attached to idb: IpAddressManagement
+INFO:2016-02-25 15:24:58,181:plugin attached to idb: Template
+'''
+
+[Step 3] Execute plugins.ipam (IP address management) function on tega db to generate (secondary) IP addresses of each containers:
 ```
 $ cd scripts
 $ ./cli
-[tega: 1] nlan.ipam('10.10.10.1','pe1','pe2','pe3','pe4','rr','ce1','ce2','ce3','ce4')
-[tega: 2] get nlan.ip
+[tega: 1] plugins.ipam('10.10.10.1','pe1','pe2','pe3','pe4','rr','ce1','ce2','ce3','ce4')
+[tega: 2] get ip
 {ce1: 10.10.10.6/2, ce2: 10.10.10.7/2, ce3: 10.10.10.8/2, ce4: 10.10.10.9/2, pe1: 10.10.10.1/24,
   pe2: 10.10.10.2/24, pe3: 10.10.10.3/24, pe4: 10.10.10.4/24, rr: 10.10.10.5/2}
 ```
 [Step 3]
 Try this at the tega CLI to put "ptn-bgp" state onto tega db: 
 ```
-[tega: 3] nlan.template(filename='ptn-bgp.yaml')
+[tega: 3] plugins.template('ptn-bgp.yaml')
 ```
 The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230).
 
@@ -162,17 +163,21 @@ You may take a snapshop of tega db to make tega db's start-up faster:
 [Step 5] Execute the following command to build Docker image with NLAN agent embedded and to start the containers:
 
 ```
-[tega: 5] nlan.deploy() 
+[tega: 5] plugins.deploy() 
 ```
 
 NLAN agent on each container connects to tega db to fetch NLAN state.
 
-If you want to monitor the activities of each agents, subscribe "nlan.hosts" on the CLI ([example](./doc/monitoring-activities.md)).
+If you want to monitor the activities of each agents, subscribe(path="hosts") on the CLI ([example](./doc/monitoring-activities.md)).
 
 [Step 6] Confirm that all the containers are running
 
 ```
 [tega: 6] subscribers
+Deployment: [Deployment]
+IpAddressManagement: [IpAddressManagement]
+Template: [Template]
+Topo: [Topo, config-.*]
 ce1: [ce1]
 ce2: [ce2]
 ce3: [ce3]
@@ -188,7 +193,7 @@ rr: [rr]
 [Step 8] Try raw commands to check the state of each container
 
 ```
-[tega: 7] nlan.raw.ce1('ip route')
+[tega: 7] raw.ce1('ip route')
 default via 172.17.0.1 dev eth0
 10.1.1.1 via 10.201.11.1 dev int_br111  proto zebra
 10.1.1.2 via 10.202.11.1 dev int_br211  proto zebra
@@ -217,7 +222,7 @@ default via 172.17.0.1 dev eth0
 172.22.3.0/24 via 10.201.11.1 dev int_br111  proto zebra
 172.22.4.0/24 via 10.201.11.1 dev int_br111  proto zebra
 
-[tega: 8] nlan.raw.ce2('ip route')
+[tega: 8] raw.ce2('ip route')
                :
                
 ```

@@ -28,9 +28,9 @@ class Topo(tega.subscriber.PlugIn):
         n_delete = []
         logging.debug(notifications)
         for n in notifications:
-            state = notification['instance']
-            ope = notification['ope']
-            path = notification['path']
+            state = n['instance']
+            ope = n['ope']
+            path = n['path']
             if ope == 'PUT':
                 n_put.append([path, state])
             elif ope == 'DELETE':

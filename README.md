@@ -167,6 +167,8 @@ You may take a snapshop of tega db to make tega db's start-up faster:
 
 NLAN agent on each container connects to tega db to fetch NLAN state.
 
+If you want to monitor the activities of each agents, subscribe "nlan.hosts" on the CLI ([example](./doc/monitoring-activities.md)).
+
 [Step 6] Confirm that all the containers are running
 
 ```

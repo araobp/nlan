@@ -11,6 +11,7 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 
 ##Architecture
 Sort of "immutable infrastructure" for networking...
+
 ![NLAN architecture](https://docs.google.com/drawings/d/1VauRM6d2A03gIPxFbaVYdZpP8Yadre8KqL53XnntqDI/pub?w=600&h=400)
 
 ##Visualization and analytics

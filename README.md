@@ -118,11 +118,15 @@ I use Linux containers as virtual routers, and this tool will set up virtual lin
 [Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
 
 [Step 2] Install and start tega db:
-```
-$ pip3.5 install mako
-$ go get github.com/araobp/tega/driver
-```
 
+You need to have Python3.5 installed on your Ubuntu/Debian.
+
+```
+$ go get github.com/araobp/tega/driver
+$ cd $GOPATH/src/github.com/araobp/tega
+$ python setup.py install
+$ pip install mako
+```
 For Hypriot/RaspberryPi, you need to export this environment variable:
 ```
 $ export SETUP_SCRIPT=setup_rpi.sh
@@ -154,8 +158,7 @@ INFO:2016-02-25 15:24:58,181:plugin attached to idb: Template
 
 [Step 3] Execute plugins.ipam (IP address management) function on tega db to generate (secondary) IP addresses of each containers:
 ```
-$ cd scripts
-$ ./cli
+$ tega-cli
 [tega: 1] plugins.ipam('10.10.10.1','pe1','pe2','pe3','pe4','rr','ce1','ce2','ce3','ce4')
 [tega: 2] get ip
 {ce1: 10.10.10.6/2, ce2: 10.10.10.7/2, ce3: 10.10.10.8/2, ce4: 10.10.10.9/2, pe1: 10.10.10.1/24,

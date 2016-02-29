@@ -38,7 +38,7 @@ class Template(tega.subscriber.PlugIn):
             temp = f.read()
 
             with self.tx() as t:
-                routers = t.get(IP_PATH)
+                routers = self.get(IP_PATH)
                 r = {k: v.split('/')[0] for k, v in routers.items()}
                 state_yaml = mako.template.Template(temp).render(**r)
                 state = yaml.load(state_yaml)

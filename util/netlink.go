@@ -1,4 +1,4 @@
-package util 
+package util
 
 import (
 	"github.com/vishvananda/netlink"
@@ -26,6 +26,7 @@ func AddrMap() (*map[string][]string, *map[string]string) {
 		} else {
 			devMap[dev] = []string{addr}
 		}
+		addrMap[addr] = dev
 	}
 	return &devMap, &addrMap
 }
@@ -60,4 +61,3 @@ func RouteMap() *map[string]Route {
 	}
 	return &routes
 }
-		

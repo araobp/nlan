@@ -15,10 +15,10 @@ var ope *driver.Operation
 var hostname string
 
 const (
-	IP_PATH = "ip"
-	HOSTS_PATH = "hosts"
-	RAW_PATH = "raw"
-	CONFIG_PATH = "config"
+	IP_PATH          = "ip"
+	HOSTS_PATH       = "hosts"
+	RAW_PATH         = "raw"
+	CONFIG_PATH      = "config"
 	OPERATIONAL_PATH = "operational"
 )
 
@@ -95,12 +95,12 @@ func listHosts(path string) map[string]interface{} {
 	return hosts
 }
 
-// Lists up all hosts on HOSTS_PATH 
+// Lists up all hosts on HOSTS_PATH
 func ListHosts() map[string]interface{} {
 	return listHosts(HOSTS_PATH)
 }
 
-// Lists up all hosts on IP_PATH 
+// Lists up all hosts on IP_PATH
 func ListIps() map[string]interface{} {
 	return listHosts(IP_PATH)
 }
@@ -127,10 +127,10 @@ func GetModel(hostname string, model *nlan.Model) {
 func ResetState() {
 	// TODO: implementation
 	/*
-	err := ope.Delete("nlan.state")
-	if err != nil {
-		log.Print(err)
-	}
+		err := ope.Delete("nlan.state")
+		if err != nil {
+			log.Print(err)
+		}
 	*/
 }
 
@@ -154,14 +154,14 @@ func raw(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
 		cmdArgs = args[1:]
 	}
 	result, _ := OutputCmd(cmd, cmdArgs...) // Executes a raw command
-	return driver.Result{Res: result}, nil 
+	return driver.Result{Res: result}, nil
 }
 
 func ipRoute(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
 	value := driver.Result{Res: RouteMap()}
 	path := fmt.Sprintf("%s-%s.ip.route", OPERATIONAL_PATH, hostname)
 	ope.PutE(path, value.Res)
-	return value, nil 
+	return value, nil
 }
 
 func ipAddr(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
@@ -172,6 +172,5 @@ func ipAddr(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
 	ope.PutE(addrPath, addrMap)
 	res := []interface{}{devMap, addrMap}
 	value := driver.Result{Res: res}
-	return value, nil 
+	return value, nil
 }
-

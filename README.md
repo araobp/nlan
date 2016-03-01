@@ -57,7 +57,7 @@ This use case makes use of NLAN's PTN, vHosts and Router services.
 - [ptn-ospf.yaml](./etc/ptn-ospf.yaml)
 
 ####Data trees on tega db
-![NLAN data trees](https://docs.google.com/drawings/d/1JjByqUw7wvc9dKWcpEQF9F0_iQFdgl6X3o6rTb--12I/pub?w=640&h=480)
+![NLAN data trees](https://docs.google.com/drawings/d/1JjByqUw7wvc9dKWcpEQF9F0_iQFdgl6X3o6rTb--12I/pub?w=480&h=300)
 
 ####Running the simulated network on Raspberry Pi
 This is sort of micro NFV(Network Function Virtualization) on a single Rapsberry Pi.

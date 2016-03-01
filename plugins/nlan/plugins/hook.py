@@ -2,8 +2,8 @@ import tega.tree
 import tega.subscriber
 
 HOOK_PATH_REGEX = r'operational-(\w*)\.ip\.hook'
-HOOK_ROUTE_PATH = 'operational-{}.ip.route'
-HOOK_ADDR_PATH = 'operational-{}.ip.addr'
+HOOK_ROUTE_PATH = 'operational-{}.ip.hook.route'
+HOOK_ADDR_PATH = 'operational-{}.ip.hook.addr'
 
 class Hook(tega.subscriber.PlugIn):
     '''
@@ -25,7 +25,7 @@ class Hook(tega.subscriber.PlugIn):
     def on_message(self, channel, tega_id, message):
         pass
 
-    def _hook(self, addr):
+    def _hook(self):
         '''
         Kicks off hook functions in a batch
         '''

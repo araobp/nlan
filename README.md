@@ -14,6 +14,8 @@ Sort of "immutable infrastructure" for networking...
 
 ![NLAN architecture](https://docs.google.com/drawings/d/1VauRM6d2A03gIPxFbaVYdZpP8Yadre8KqL53XnntqDI/pub?w=600&h=400)
 
+![NLAN archiecture internal](https://docs.google.com/drawings/d/1y2YXolq8bpm8E2xTgcDPfNzRtJKjc19cBVYKYm9prFE/pub?w=600&h=400)
+
 ##Visualization and analytics
 I am going to use Jupyter and IPython for visualization and analytics of NLAN.
 ```

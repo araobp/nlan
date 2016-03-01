@@ -1,7 +1,6 @@
 package util
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -20,6 +19,7 @@ const (
 	HOSTS_PATH = "hosts"
 	RAW_PATH = "raw"
 	CONFIG_PATH = "config"
+	OPERATIONAL_PATH = "operational"
 )
 
 type Self struct {
@@ -27,6 +27,9 @@ type Self struct {
 
 func (r *Self) OnInit() {
 	ope.RegisterRpc(fmt.Sprintf("%s.%s", RAW_PATH, hostname), raw)
+	ope.RegisterRpc(fmt.Sprintf("%s-%s.ip.hook.route", OPERATIONAL_PATH, hostname), ipRoute)
+	ope.RegisterRpc(fmt.Sprintf("%s-%s.ip.hook.addr", OPERATIONAL_PATH, hostname), ipAddr)
+
 	registerHost()
 }
 
@@ -151,5 +154,24 @@ func raw(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
 		cmdArgs = args[1:]
 	}
 	result, _ := OutputCmd(cmd, cmdArgs...) // Executes a raw command
-	return driver.Result{Res: result}, errors.New("OK")
+	return driver.Result{Res: result}, nil 
 }
+
+func ipRoute(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
+	value := driver.Result{Res: RouteMap()}
+	path := fmt.Sprintf("%s-%s.ip.route", OPERATIONAL_PATH, hostname)
+	ope.PutE(path, value.Res)
+	return value, nil 
+}
+
+func ipAddr(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
+	devMap, addrMap := AddrMap()
+	devPath := fmt.Sprintf("%s-%s.ip.dev", OPERATIONAL_PATH, hostname)
+	addrPath := fmt.Sprintf("%s-%s.ip.addr", OPERATIONAL_PATH, hostname)
+	ope.PutE(devPath, devMap)
+	ope.PutE(addrPath, addrMap)
+	res := []interface{}{devMap, addrMap}
+	value := driver.Result{Res: res}
+	return value, nil 
+}
+

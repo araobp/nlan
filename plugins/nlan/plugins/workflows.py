@@ -1,7 +1,7 @@
 import tega.tree
 import tega.subscriber
 
-class Workflows(tega.subscriber.PlugIn):
+class Workflow(tega.subscriber.PlugIn):
     '''
     Manages IP addresses of Linux containers
     '''

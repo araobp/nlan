@@ -261,7 +261,6 @@ The password is "root".
 [Step 9] Check the operational trees
 ```
 [tega: 10] getr operational-(\w*)\.ip
-[tega: 10] getr operational-(\w*)\.ip
 operational-ce1.ip:
   groups:
   - [ce1]

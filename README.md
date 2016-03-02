@@ -20,13 +20,14 @@ Sort of "immutable infrastructure" for networking...
 I am going to use Jupyter and IPython for visualization and analytics of NLAN.
 ```
 import networkx as nx
-%matplotlib inline
+get_ipython().magic('matplotlib inline')
 
 import tega.driver
-d = tega.driver.Driver()
-edges = d.get('topo.edges')
-g = nx.Graph([[edge['source'], edge['target']] for edge in edges])
-nx.draw(g, node_size=700, with_labels=True)
+d = tega.driver.Driver(host='192.168.57.133')
+subnets = d.get(path='graph.subnets')
+
+g = nx.DiGraph(subnets['172.21.1.0/24'])
+nx.draw_spring(g, node_size=1000, with_labels=True, arrows=True, alpha=0.8)
 ```
 ![NLAN visualization](./doc/jupyter/output_2_0.png)
 

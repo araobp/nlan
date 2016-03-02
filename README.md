@@ -28,9 +28,11 @@ edges = d.get('topo.edges')
 g = nx.Graph([[edge['source'], edge['target']] for edge in edges])
 nx.draw(g, node_size=700, with_labels=True)
 ```
-![NLAN visualization](./doc/jupyter/output_1_0.png)
+![NLAN visualization](./doc/jupyter/output_2_0.png)
 
-- [Jupyter notebook example](./doc/jupyter/topo.md)
+####Jupyter notebook example
+- [PTN topology](./doc/jupyter/topo.md)
+- [A subnet graph set up by BGP at each router](./BGP_route_graph.md)
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)

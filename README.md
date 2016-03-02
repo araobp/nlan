@@ -17,7 +17,7 @@ Sort of "immutable infrastructure" for networking...
 ![NLAN archiecture internal](https://docs.google.com/drawings/d/1y2YXolq8bpm8E2xTgcDPfNzRtJKjc19cBVYKYm9prFE/pub?w=600&h=400)
 
 ##Visualization and analytics
-I am going to use Jupyter and IPython for visualization and analytics of NLAN.
+I use Jupyter and IPython for visualization and analytics of NLAN.
 ```
 import networkx as nx
 get_ipython().magic('matplotlib inline')
@@ -31,7 +31,7 @@ nx.draw_spring(g, node_size=1000, with_labels=True, arrows=True, alpha=0.8)
 ```
 ![NLAN visualization](./doc/jupyter/output_2_0.png)
 
-####Jupyter notebook example
+###Jupyter notebook examples
 - [PTN topology](./doc/jupyter/topo.md)
 - [A subnet graph set up by BGP at each router](./BGP_route_graph.md)
 

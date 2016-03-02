@@ -33,7 +33,7 @@ nx.draw_spring(g, node_size=1000, with_labels=True, arrows=True, alpha=0.8)
 
 ###Jupyter notebook examples
 - [PTN topology](./doc/jupyter/topo.md)
-- [A subnet graph set up by BGP at each router](./BGP_route_graph.md)
+- [A subnet graph set up by BGP at each router](./doc/jupyter/BGP_route_graph.md)
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)

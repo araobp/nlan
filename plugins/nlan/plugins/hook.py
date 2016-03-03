@@ -38,7 +38,7 @@ class Hook(tega.subscriber.PlugIn):
             self.rpc(path=HOOK_ROUTE_PATH.format(router))
             self.rpc(path=HOOK_ADDR_PATH.format(router))
 
-        hooks = self.get(path=STATS_PATH_REGEX, regex_flag=True)
+        hooks = self.get(path=HOOK_STATS_REGEX, regex_flag=True)
         for l in hooks:
             router = l[2][0][0]
             self.rpc(path=HOOK_NETSTAT_PATH.format(router))

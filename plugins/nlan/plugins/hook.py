@@ -5,6 +5,9 @@ HOOK_PATH_REGEX = r'operational-(\w*)\.ip\.hook'
 HOOK_ROUTE_PATH = 'operational-{}.ip.hook.route'
 HOOK_ADDR_PATH = 'operational-{}.ip.hook.addr'
 
+HOOK_STATS_REGEX = r'stats-(\w*)\.hook'
+HOOK_NETSTAT_PATH = 'stats-{}.hook.netstat'
+
 class Hook(tega.subscriber.PlugIn):
     '''
     Calls hook functions to reflesh operational trees 
@@ -34,3 +37,8 @@ class Hook(tega.subscriber.PlugIn):
             router = l[2][0][0]
             self.rpc(path=HOOK_ROUTE_PATH.format(router))
             self.rpc(path=HOOK_ADDR_PATH.format(router))
+
+        hooks = self.get(path=STATS_PATH_REGEX, regex_flag=True)
+        for l in hooks:
+            router = l[2][0][0]
+            self.rpc(path=HOOK_NETSTAT_PATH.format(router))

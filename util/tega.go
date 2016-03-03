@@ -9,6 +9,8 @@ import (
 
 	"github.com/araobp/nlan/model/nlan"
 	"github.com/araobp/tega/driver"
+
+	netstat "github.com/drael/GOnetstat"
 )
 
 var ope *driver.Operation
@@ -20,6 +22,7 @@ const (
 	RAW_PATH         = "raw"
 	CONFIG_PATH      = "config"
 	OPERATIONAL_PATH = "operational"
+	STATS_PATH       = "stats"
 )
 
 type Self struct {
@@ -29,6 +32,7 @@ func (r *Self) OnInit() {
 	ope.RegisterRpc(fmt.Sprintf("%s.%s", RAW_PATH, hostname), raw)
 	ope.RegisterRpc(fmt.Sprintf("%s-%s.ip.hook.route", OPERATIONAL_PATH, hostname), ipRoute)
 	ope.RegisterRpc(fmt.Sprintf("%s-%s.ip.hook.addr", OPERATIONAL_PATH, hostname), ipAddr)
+	ope.RegisterRpc(fmt.Sprintf("%s-%s.hook.netstat", STATS_PATH, hostname), netstat_)
 
 	registerHost()
 }
@@ -172,5 +176,17 @@ func ipAddr(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
 	ope.PutE(addrPath, addrMap)
 	res := []interface{}{devMap, addrMap}
 	value := driver.Result{Res: res}
+	return value, nil
+}
+
+func netstat_(argsKwargs driver.ArgsKwargs) (driver.Result, error) {
+	tcpstat := Netstat(TCP)
+	udpstat := Netstat(UDP)
+	data := make(map[string]*[]netstat.Process)
+	data["tcp"] = tcpstat
+	data["udp"] = udpstat
+	netstatPath := fmt.Sprintf("%s-%s.netstat", STATS_PATH, hostname)
+	ope.PutE(netstatPath, data)
+	value := driver.Result{Res: data}
 	return value, nil
 }

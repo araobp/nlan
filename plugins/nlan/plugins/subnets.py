@@ -35,17 +35,17 @@ class Subnets(tega.subscriber.PlugIn):
 
         for v in data:
             router = v[2][0][0]
-            ip = v[1].serialize_()
-            for addr in ip['addr']:
+            ip = v[1]
+            for addr in ip.addr:
                 addrs[addr] = router
 
         for v in data:
             router = v[2][0][0]
-            ip = v[1].serialize_()
-            for subnet, route in ip['route'].items():
+            ip = v[1]
+            for subnet, route in ip.route.items():
                 if subnet == 'default':
                     continue
-                next_hop = route['Via']
+                next_hop = route.Via
                 if not next_hop:
                     continue
                 edge = (router, addrs[next_hop])
@@ -54,7 +54,6 @@ class Subnets(tega.subscriber.PlugIn):
                 else:
                     subnets[subnet].append(edge)
 
-        #print(subnets)
         with self.tx() as t:
             t.put(path=GRAPH_SUBNETS_PATH, instance=subnets)
 

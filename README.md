@@ -1,4 +1,4 @@
-# Model-driven network service abstraction for networking Linux containers on small PCs
+# Interactive SDN/IOT with tega db and Jupyter/IPython
 
 ![All in one](https://docs.google.com/drawings/d/1Q4Et0x4pe4XPdw8pGaFjUrOnA9Un6XUIJAvUs4DqsaI/pub?w=600&h=400)
 

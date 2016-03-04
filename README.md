@@ -8,6 +8,7 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 - OpenDaylight MD-SAL is too heavy for networking Linux containers on my Raspberry Pi.
 - YANG is incompatible with Python dict, Golang map and so on: I just want JSON-centric MD-SAL.
 - As my hobby, I design a model-driven/event-driven architecture for networking Linux containers.
+- I think Jupyter/IPython is a wonderful IDE for SDN/IOT.
 
 ##Architecture
 Sort of "immutable infrastructure" for networking...

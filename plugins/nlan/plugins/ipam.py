@@ -8,8 +8,6 @@ class IpAddressManagement(tega.subscriber.PlugIn):
 
     def __init__(self):
         super().__init__()
-
-    def initialize(self):
         plugins = tega.tree.Cont('plugins')
         with self.tx() as t:
             plugins.ipam = self.func(self._gen)  # Attached to plugins.ipam

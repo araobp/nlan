@@ -11,8 +11,6 @@ class Subnets(tega.subscriber.PlugIn):
 
     def __init__(self):
         super().__init__()
-
-    def initialize(self):
         plugins = tega.tree.Cont('plugins')
         with self.tx() as t:
             plugins.subnets = self.func(self._subnets) 

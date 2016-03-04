@@ -15,8 +15,6 @@ class Hook(tega.subscriber.PlugIn):
 
     def __init__(self):
         super().__init__()
-
-    def initialize(self):
         plugins = tega.tree.Cont('plugins')
         with self.tx() as t:
             plugins.hook = self.func(self._hook)  # Attached to plugins.hook

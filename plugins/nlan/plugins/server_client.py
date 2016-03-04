@@ -11,8 +11,6 @@ class ServerClient(tega.subscriber.PlugIn):
 
     def __init__(self):
         super().__init__()
-
-    def initialize(self):
         plugins = tega.tree.Cont('plugins')
         with self.tx() as t:
             plugins.server_client = self.func(self._server_client) 

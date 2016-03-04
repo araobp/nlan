@@ -15,8 +15,6 @@ class Topo(tega.subscriber.PlugIn):
     '''
     def __init__(self):
         super().__init__()
-
-    def initialize(self):
         self.plugins = tega.tree.Cont('plugins')
         self.subscribe(CONFIG_PATH, SCOPE.GLOBAL, regex_flag=True)
 

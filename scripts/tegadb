@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-tega-server -p 8888 -d ./var -t global -e $GOPATH/src/github.com/araobp/nlan/plugins/nlan
+tega-server -d ./var -t global -e $GOPATH/src/github.com/araobp/nlan/plugins/nlan

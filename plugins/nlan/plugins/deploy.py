@@ -12,8 +12,6 @@ class Deployment(tega.subscriber.PlugIn):
 
     def __init__(self):
         super().__init__()
-
-    def initialize(self):
         try:
             self.script = os.environ['SETUP_SCRIPT']
         except:

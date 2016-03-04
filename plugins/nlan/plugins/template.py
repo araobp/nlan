@@ -16,8 +16,6 @@ class Template(tega.subscriber.PlugIn):
     '''
     def __init__(self):
         super().__init__()
-
-    def initialize(self):
         self.etcdir = os.path.join(os.environ['GOPATH'], 'src/github.com/araobp/nlan/etc/')
         plugins = tega.tree.Cont('plugins')
         with self.tx() as t:

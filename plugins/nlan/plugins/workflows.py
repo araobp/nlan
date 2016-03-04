@@ -8,8 +8,6 @@ class Workflow(tega.subscriber.PlugIn):
 
     def __init__(self):
         super().__init__()
-
-    def initialize(self):
         workflows = tega.tree.Cont('workflows')
         with self.tx() as t:
             workflows.ptnbgp = self.func(self._ptnbgp)

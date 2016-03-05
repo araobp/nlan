@@ -1,6 +1,9 @@
 #!/bin/bash
 
+HOST=localhost
+PORT=8739
 ROUTER=rr
-ip=`$GOPATH/src/github.com/araobp/tega/scripts/tegactl get /nlan/hosts/$ROUTER | tr -d \" | cut -d '/' -f1`
+
+ip=`curl http://$HOST:$PORT/hosts/$ROUTER?tega_id=gobgp.sh | tr -d \" | cut -d '/' -f1`
 gobgp -u $ip $@
 

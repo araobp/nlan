@@ -1,4 +1,4 @@
-# Model-driven network service abstraction for networking Linux containers on small PCs
+# Interactive SDN/IOT with tega db and Jupyter/IPython
 
 ![All in one](https://docs.google.com/drawings/d/1Q4Et0x4pe4XPdw8pGaFjUrOnA9Un6XUIJAvUs4DqsaI/pub?w=600&h=400)
 
@@ -8,6 +8,7 @@ This project unifies outputs from my two other projects "[neutron-lan](https://g
 - OpenDaylight MD-SAL is too heavy for networking Linux containers on my Raspberry Pi.
 - YANG is incompatible with Python dict, Golang map and so on: I just want JSON-centric MD-SAL.
 - As my hobby, I design a model-driven/event-driven architecture for networking Linux containers.
+- I think Jupyter/IPython is a wonderful IDE for SDN/IOT.
 
 ##Architecture
 Sort of "immutable infrastructure" for networking...

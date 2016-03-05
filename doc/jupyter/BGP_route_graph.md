@@ -33,5 +33,5 @@ dw.on_trait_change(on_value_change, 'value')
 ```
 
 
-![png](output_3_0.png)
+![png](output_2_0.png)
 

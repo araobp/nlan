@@ -1,5 +1,8 @@
 #!/bin/bash
 
-ip=`$GOPATH/src/github.com/araobp/tega/scripts/tegactl get hosts.$1 | tr -d \" | cut -d '/' -f1`
+HOST="localhost"
+PORT="8739"
+
+ip=`curl http://$HOST:$PORT/hosts/$1?tega_id=ssh.sh | tr -d \" | cut -d '/' -f1`
 ssh root@$ip
 

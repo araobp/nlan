@@ -33,7 +33,7 @@ func Crud(crud int, in *nlan.Router, con *context.Context) {
 		go g.Serve()
 	}
 
-	var crudRouter func(string, bool, *gobgp.BgpServer, []*nlan.Ospf, []*nlan.Bgp, *context.Context)
+	var crudRouter func(string, bool, *gobgp.BgpServer, []*nlan.Ospf, map[string]*nlan.Attrs, *context.Context)
 
 	switch crud {
 	case env.ADD:
@@ -62,8 +62,8 @@ func routerOspfNetworks(s *[][]string, area string, networks []string) {
 	}
 }
 
-func routerBgpNeighbors(s *[][]string, neighs []*nlan.Neighbors) {
-	for _, n := range neighs {
+func routerBgpNeighbors(s *[][]string, attrs *nlan.Attrs) {
+	for _, n := range attrs.Neighbors {
 		peer := n.Peer
 		as := n.RemoteAs
 		client := n.RouteReflectorClient
@@ -91,8 +91,8 @@ func routerBgpNeighbors(s *[][]string, neighs []*nlan.Neighbors) {
 	}
 }
 
-func gobgpReqModNeighbor(s *gobgp.BgpServer, neighs []*nlan.Neighbors, con *context.Context) {
-	for _, n := range neighs {
+func gobgpReqModNeighbor(s *gobgp.BgpServer, attrs *nlan.Attrs, con *context.Context) {
+	for _, n := range attrs.Neighbors {
 		peer := n.Peer
 		as := n.RemoteAs
 		client := n.RouteReflectorClient
@@ -134,7 +134,7 @@ func gobgpReqModGlobalConfig(s *gobgp.BgpServer, routerId string, as int64, con 
 	}
 }
 
-func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
+func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp map[string]*nlan.Attrs, con *context.Context) {
 
 	cmd, cmdp := con.GetCmd()
 
@@ -159,20 +159,20 @@ func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.
 		script = append(script, []string{"exit"})
 	}
 	if bgp != nil {
-		for _, b := range bgp {
+		for as, neighs := range bgp {
 			if embedded {
 				routerId := strings.Split(loopback, "/")[0]
-				gobgpReqModGlobalConfig(s, routerId, int64(b.As), con)
+				asInt, _ := strconv.ParseInt(as, 10, 64)
+				gobgpReqModGlobalConfig(s, routerId, asInt, con)
 			} else {
-				script = append(script, []string{"router", "bgp", strconv.FormatUint(uint64(b.As), 10)})
+				script = append(script, []string{"router", "bgp", as})
 				script = append(script, []string{"redistribute", "connected"})
 			}
-			neigh := b.GetNeighbors()
-			if neigh != nil {
+			if neighs != nil {
 				if embedded {
-					gobgpReqModNeighbor(s, neigh, con)
+					gobgpReqModNeighbor(s, neighs, con)
 				} else {
-					routerBgpNeighbors(&script, neigh)
+					routerBgpNeighbors(&script, neighs)
 				}
 			}
 		}
@@ -184,10 +184,10 @@ func addRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.
 	}
 }
 
-func updateRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
+func updateRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp map[string]*nlan.Attrs, con *context.Context) {
 	//
 }
 
-func deleteRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp []*nlan.Bgp, con *context.Context) {
+func deleteRouter(loopback string, embedded bool, s *gobgp.BgpServer, ospf []*nlan.Ospf, bgp map[string]*nlan.Attrs, con *context.Context) {
 	//
 }

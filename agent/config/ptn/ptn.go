@@ -8,8 +8,7 @@ import (
 	"log"
 )
 
-func Crud(crud int, in *nlan.Ptn, con *context.Context) {
-	networks := in.GetNetworks()
+func Crud(crud int, in map[string]*nlan.Network, con *context.Context) {
 	var crudNodes func(*nlan.Nodes, *context.Context) (string, string)
 	var crudLinks func(*nlan.Links, *context.Context, string, string)
 	var crudL2Vpn func(*nlan.L2Vpn, *context.Context, string, string) (string, string, string)
@@ -29,7 +28,7 @@ func Crud(crud int, in *nlan.Ptn, con *context.Context) {
 	default:
 		log.Fatal("CRUD unidentified")
 	}
-	for _, net := range networks {
+	for _, net := range in { // map key is not used.
 		log.Println(net)
 		nodes := net.GetNodes()
 		if nodes == nil {

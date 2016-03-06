@@ -8,7 +8,7 @@ message State {
 
 message Model {
   Dvr Dvr = 1;
-  Ptn Ptn = 2;
+  map<string, Network> Ptn = 2;
   Router Router = 3;
   Vhosts Vhosts = 4;
 }
@@ -38,12 +38,7 @@ message Vxlan {
   repeated string RemoteIps = 2;
 }
 
-message Ptn {
-  repeated Networks Networks = 1;
-}
-
-message Networks {
-  string Id = 1;
+message Network {
   repeated L2Vpn L2Vpn = 2;
   Links Links = 3;
   Nodes Nodes = 4;
@@ -67,18 +62,17 @@ message Nodes {
 }
 
 message Router {
-  repeated Bgp Bgp = 1;
+  map<string, Attrs> Bgp = 1;
   bool EmbeddedBgp = 2;
   string Loopback = 3;
   repeated Ospf Ospf = 4;
 }
 
-message Bgp {
-  uint32 As = 1;
-  repeated Neighbors Neighbors = 2;
+message Attrs {
+  repeated Neighbor Neighbors = 1;
 }
 
-message Neighbors {
+message Neighbor {
   bool NextHopSelf = 1;
   string Peer = 2;
   uint32 RemoteAs = 3;

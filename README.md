@@ -33,7 +33,7 @@ nx.draw_spring(g, node_size=1000, with_labels=True, arrows=True, alpha=0.8)
 ```
 ![NLAN visualization](./doc/jupyter/output_2_0.png)
 
-Directional graph of IP routing that Quagga and GoBGP has setup on the network
+Directional graph of IP routing that Quagga and GoBGP have setup on the network
 
 ###Jupyter notebook examples
 - [PTN topology](./doc/jupyter/topo.md)

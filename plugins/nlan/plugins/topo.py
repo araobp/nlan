@@ -39,12 +39,11 @@ class Topo(tega.subscriber.PlugIn):
         edges = [] 
 
         for router, model in n_put:
-            m = model['Ptn']['Networks']
+            ptn = model['Ptn']
             seq = 0
             local_ip=''
-            for n in m:
-                id_ = n['Id']
-                links = n['Links']
+            for id_, net in ptn.items():
+                links = net['Links']
                 local_ip = links['LocalIp']
                 remote_ips = links['RemoteIps']
                 for remote_ip in remote_ips:

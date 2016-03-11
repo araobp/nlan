@@ -35,6 +35,12 @@ nx.draw_spring(g, node_size=1000, with_labels=True, arrows=True, alpha=0.8)
 
 Directional graph of IP routing that Quagga and GoBGP have setup on the network
 
+Note: in case of OpenFlow Controller, the directional graph is calculated by the controller.
+```
+OpenFlow-based SDN: calculate directional graph and write the edges(flow entries) to the switches/routers.
+SDN with BGP/OSPF: write config/policy to the switches/routers, then each of the switches/routers calculates directional graph.
+```
+
 ###Jupyter notebook examples
 - [PTN topology](./doc/jupyter/topo.md)
 - [Subnet graph set up by BGP at each router](./doc/jupyter/BGP_route_graph.md)

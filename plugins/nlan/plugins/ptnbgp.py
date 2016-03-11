@@ -158,8 +158,8 @@ class PtnBgp(tega.subscriber.PlugIn):
         _ce4.Router.Bgp['1004'].Neighbors = [n203, n204]
 
         # Vhosts 
-        def _vhosts(networks):
-            return [dict(Network=n, Vhosts=2) for n in *networks]
+        def _vhosts(*args):
+            return [dict(Network=n, Vhosts=2) for n in args]
         _ce1.Vhosts.VhostProps = _vhosts('172.21.1.1/24', '172.22.1.1/24')
         _ce2.Vhosts.VhostProps = _vhosts('172.21.2.1/24', '172.22.2.1/24')
         _ce3.Vhosts.VhostProps = _vhosts('172.21.3.1/24', '172.22.3.1/24') 

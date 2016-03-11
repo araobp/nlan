@@ -2,13 +2,14 @@
 
 ![All in one](https://docs.google.com/drawings/d/1Q4Et0x4pe4XPdw8pGaFjUrOnA9Un6XUIJAvUs4DqsaI/pub?w=600&h=400)
 
-This project unifies outputs from my two other projects "[neutron-lan](https://github.com/araobp/neutron-lan)" and "[tega](https://github.com/araobp/tega)".
+This project nlan (meaning "new LAN") unifies outputs from my two other projects "[neutron-lan](https://github.com/araobp/neutron-lan)" and "[tega](https://github.com/araobp/tega)".
 
 ##Background and motivation
 - OpenDaylight MD-SAL is too heavy for networking Linux containers on my Raspberry Pi.
 - YANG is incompatible with Python dict, Golang map and so on: I just want JSON-centric MD-SAL.
 - As my hobby, I design a model-driven/event-driven architecture for networking Linux containers.
 - I think Jupyter/IPython is a wonderful IDE for SDN/IOT.
+- If the computing power moves to the network edge, what you need is not VLAN but application-level logical seperation of network (SSL/TLS, WebSocket, RTP/RTCP, ...), that is, what you need is "session".
 
 ##Architecture
 Sort of "immutable infrastructure" for networking...
@@ -31,6 +32,8 @@ g = nx.DiGraph(subnets['172.21.1.0/24'])
 nx.draw_spring(g, node_size=1000, with_labels=True, arrows=True, alpha=0.8)
 ```
 ![NLAN visualization](./doc/jupyter/output_2_0.png)
+
+Directional graph of IP routing that Quagga and GoBGP have setup on the network
 
 ###Jupyter notebook examples
 - [PTN topology](./doc/jupyter/topo.md)

@@ -122,39 +122,46 @@ class PtnBgp(tega.subscriber.PlugIn):
         _ce4.Ptn.access.L2Vpn = [vpn314, vpn414]
 
         # BGP
-        n100 = dict(Peer='10.200.1.105', RemoteAs=100, NextHopSelf=True)
-        n1001 = dict(Peer='10.201.11.2', RemoteAs=1001)
-        n1002 = dict(Peer='10.201.12.2', RemoteAs=1002)
+        def _neigh(peer, remoteAs, *, nextHopSelf=False, routeReflectorClient=False):
+            if nextHopSelf:
+                return dict(Peer=peer, RemoteAs=remoteAs, NextHopSelf=True)
+            elif routeReflectorClient is True:
+                return dict(Peer=peer, RemoteAs=remoteAs, RouteReflectorClient=True)
+            else:
+                return dict(Peer=peer, RemoteAs=remoteAs)
+        n100 =  _neigh('10.200.1.105', 100, nextHopSelf=True)
+        n1001 = _neigh('10.201.11.2', 1001)
+        n1002 = _neigh('10.201.12.2', 1002)
         _pe1.Router.Bgp['100'].Neighbors = [n100, n1001, n1002]
-        n100 = dict(Peer='10.200.1.105', RemoteAs=100, NextHopSelf=True)
-        n1001 = dict(Peer='10.202.11.2', RemoteAs=1001)
-        n1002 = dict(Peer='10.202.12.2', RemoteAs=1002)
+        n100 =  _neigh('10.200.1.105', 100, nextHopSelf=True)
+        n1001 = _neigh('10.202.11.2', 1001)
+        n1002 = _neigh('10.202.12.2', 1002)
         _pe2.Router.Bgp['100'].Neighbors = [n100, n1001, n1002]
-        n100 = dict(Peer='10.200.1.105', RemoteAs=100, NextHopSelf=True)
-        n1003 = dict(Peer='10.203.13.2', RemoteAs=1003)
-        n1004 = dict(Peer='10.203.14.2', RemoteAs=1004)
+        n100 =  _neigh('10.200.1.105', 100, nextHopSelf=True)
+        n1003 = _neigh('10.203.13.2', 1003)
+        n1004 = _neigh('10.203.14.2', 1004)
         _pe3.Router.Bgp['100'].Neighbors = [n100, n1003, n1004]
-        n100 = dict(Peer='10.200.1.105', RemoteAs=100, NextHopSelf=True)
-        n1003 = dict(Peer='10.204.13.2', RemoteAs=1003)
-        n1004 = dict(Peer='10.204.14.2', RemoteAs=1004)
+        n100 =  _neigh('10.200.1.105', 100, nextHopSelf=True)
+        n1003 = _neigh('10.204.13.2', 1003)
+        n1004 = _neigh('10.204.14.2', 1004)
         _pe4.Router.Bgp['100'].Neighbors = [n100, n1003, n1004]
-        n100_101 = dict(Peer='10.200.1.101', RemoteAs=100, RouteReflectorClient=True)
-        n100_102 = dict(Peer='10.200.1.102', RemoteAs=100, RouteReflectorClient=True)
-        n100_103 = dict(Peer='10.200.1.103', RemoteAs=100, RouteReflectorClient=True)
-        n100_104 = dict(Peer='10.200.1.104', RemoteAs=100, RouteReflectorClient=True)
-        _rr.Router.Bgp['100'].Neighbors = [n100_101, n100_102, n100_103, n100_103]
+        n100_101 = _neigh('10.200.1.101', 100, routeReflectorClient=True)
+        n100_102 = _neigh('10.200.1.102', 100, routeReflectorClient=True)
+        n100_103 = _neigh('10.200.1.103', 100, routeReflectorClient=True)
+        n100_104 = _neigh('10.200.1.104', 100, routeReflectorClient=True)
+        _rr.Router.Bgp['100'].Neighbors = [n100_101, n100_102, n100_103, n100_104]
         _rr.Router.EmbeddedBgp = True 
-        n201 = dict(Peer='10.201.11.1', RemoteAs=100)
-        n202 = dict(Peer='10.202.11.1', RemoteAs=100)
+        n201 = _neigh('10.201.11.1', 100)
+        n202 = _neigh('10.202.11.1', 100)
         _ce1.Router.Bgp['1001'].Neighbors = [n201, n202]
-        n201 = dict(Peer='10.201.12.1', RemoteAs=100)
-        n202 = dict(Peer='10.202.12.1', RemoteAs=100)
+        n201 = _neigh('10.201.12.1', 100)
+        n202 = _neigh('10.202.12.1', 100)
         _ce2.Router.Bgp['1002'].Neighbors = [n201, n202]
-        n203 = dict(Peer='10.203.13.1', RemoteAs=100)
-        n204 = dict(Peer='10.204.13.1', RemoteAs=100)
+        n203 = _neigh('10.203.13.1', 100)
+        n204 = _neigh('10.204.13.1', 100)
         _ce3.Router.Bgp['1003'].Neighbors = [n203, n204]
-        n203 = dict(Peer='10.203.14.1', RemoteAs=100)
-        n204 = dict(Peer='10.204.14.1', RemoteAs=100)
+        n203 = _neigh('10.203.14.1', 100)
+        n204 = _neigh('10.204.14.1', 100)
         _ce4.Router.Bgp['1004'].Neighbors = [n203, n204]
 
         # Vhosts 

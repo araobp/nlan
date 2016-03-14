@@ -46,6 +46,8 @@ SDN with BGP/OSPF: write config/policy to the switches/routers, then each of the
 - [Subnet graph set up by BGP at each router](./doc/jupyter/BGP_route_graph.md)
 - [Server-client graph from netstat at each router](./doc/jupyter/server_client.md)
 
+You can find the notebooks [here](./ipynb).
+
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
 - vHosts: netns-based virtual hosts

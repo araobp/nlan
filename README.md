@@ -8,7 +8,7 @@ This project nlan (meaning "new LAN") unifies outputs from my two other projects
 - OpenDaylight MD-SAL is too heavy for networking Linux containers on my Raspberry Pi.
 - YANG is incompatible with Python dict, Golang map and so on: I just want JSON-centric MD-SAL.
 - As my hobby, I design a model-driven/event-driven architecture for networking Linux containers.
-- I think Jupyter/IPython is a wonderful IDE for SDN/IOT.
+- I think Jupyter/IPython is a wonderful IDE for SDN/IOT (and also for Deep Learning...).
 - [OCP networking](http://www.opencompute.org/wiki/Networking) is a wonderland!
 - If the computing power moves to the network edge, what you need is not VLAN but application-level logical seperation of network (SSL/TLS, WebSocket, RTP/RTCP, ...), that is, what you need is "session".
 

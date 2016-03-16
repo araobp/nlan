@@ -33,8 +33,7 @@ class Deployment(tega.subscriber.PlugIn):
         Deployment
         '''
         os.chdir(self.scriptdir)
-        self.process = subprocess.Popen(
-                [os.path.join(self.scriptdir, self.script),
-                    self.scriptdir],
-                preexec_fn=os.setsid)
-
+        routers = self.get("ip").keys()
+        args = [os.path.join(self.scriptdir, self.script)]
+        args.extend(routers)
+        self.process = subprocess.Popen(args, preexec_fn=os.setsid)

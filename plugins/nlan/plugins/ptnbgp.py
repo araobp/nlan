@@ -2,17 +2,14 @@ import tega.tree
 import tega.subscriber
 
 class PtnBgp(tega.subscriber.PlugIn):
+
     def __init__(self):
         super().__init__()
 
-        routers = self.get('ip')
-        g = globals()
-        for router, ip in routers.items():
-            g[router] = ip.split('/')[0]
-            plugins = tega.tree.Cont('plugins')
-            with self.tx() as t:
-                plugins.ptnbgp = self.func(self._state)
-                t.put(plugins.ptnbgp, ephemeral=True)
+        plugins = tega.tree.Cont('plugins')
+        with self.tx() as t:
+            plugins.ptnbgp = self.func(self._state)
+            t.put(plugins.ptnbgp, ephemeral=True)
 
     def on_notify(self, notifications):
         pass
@@ -21,6 +18,15 @@ class PtnBgp(tega.subscriber.PlugIn):
         pass
 
     def _state(self):
+
+        _routers = ['10.10.1.1', 'pe1', 'pe2', 'pe3', 'pe4', 'rr', 'ce1', 'ce2', 'ce3', 'ce4']
+
+        self.rpc('plugins.ipam', *_routers)
+        routers = self.get('ip')
+        g = globals()
+        for router, ip in routers.items():
+            g[router] = ip.split('/')[0]
+            plugins = tega.tree.Cont('plugins')
         
         # Roots 
         _pe1 = tega.tree.Cont('config-pe1')

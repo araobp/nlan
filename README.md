@@ -157,7 +157,7 @@ For Debian/Ubuntu, you do not need to export the variable above.
 Then start tega db:
 ```
 $ cd scripts
-$ ./tegadb &
+$ ./tegadb
 
    __
   / /____  ____ _____ _
@@ -168,55 +168,51 @@ $ ./tegadb &
 
 tega_id: global, config: None, operational: None
 
-Namespace(config=None, datadir='./var', extensions='/root/work/src/github.com/araobp/nlan/plugins/nlan', loglevel='INFO', maxlen=10, mhost=None, mport=None, operational=None, port=8888, tegaid='global')
-INFO:2016-02-25 15:24:57,628:Reloading log from ./var...
-INFO:2016-02-25 15:24:57,633:Reloading done
-INFO:2016-02-25 15:24:58,119:plugin attached to idb: Deployment
-INFO:2016-02-25 15:24:58,124:plugin attached to idb: Topo
-INFO:2016-02-25 15:24:58,158:plugin attached to idb: IpAddressManagement
-INFO:2016-02-25 15:24:58,181:plugin attached to idb: Template
+Namespace(config=None, extensions='/root/work/src/github.com/araobp/nlan/plugins/nlan', ghost=None, gport=None, logdir='./var', loglevel='INFO', maxlen=10, operational=None, port=8739, tegaid='global')
+
+INFO:2016-03-16 15:14:51,966:Reloading log from ./var...
+INFO:2016-03-16 15:14:51,972:Reloading done
+INFO:2016-03-16 15:14:52,675:plugin attached to idb: Hook
+INFO:2016-03-16 15:14:52,692:plugin attached to idb: Deployment
+INFO:2016-03-16 15:14:52,707:plugin attached to idb: Subnets
+INFO:2016-03-16 15:14:52,712:plugin attached to idb: Topo
+INFO:2016-03-16 15:14:52,739:plugin attached to idb: PtnBgp
+INFO:2016-03-16 15:14:52,765:plugin attached to idb: Workflow
+INFO:2016-03-16 15:14:52,782:plugin attached to idb: Fabric
+INFO:2016-03-16 15:14:52,800:plugin attached to idb: ServerClient
+INFO:2016-03-16 15:14:52,823:plugin attached to idb: IpAddressManagement
+INFO:2016-03-16 15:14:52,842:plugin attached to idb: Template
 ```
 
-[Step 3] Execute plugins.ipam (IP address management) function on tega db to generate (secondary) IP addresses of each containers:
-```
-$ tega-cli
-[tega: 1] plugins.ipam('10.10.10.1','pe1','pe2','pe3','pe4','rr','ce1','ce2','ce3','ce4')
-[tega: 2] get ip
-{ce1: 10.10.10.6/2, ce2: 10.10.10.7/2, ce3: 10.10.10.8/2, ce4: 10.10.10.9/2, pe1: 10.10.10.1/24,
-  pe2: 10.10.10.2/24, pe3: 10.10.10.3/24, pe4: 10.10.10.4/24, rr: 10.10.10.5/2}
-```
-[Step 3]
+[Step 2]
 Try this at the tega CLI to put "ptn-bgp" state onto tega db: 
 ```
-[tega: 3] plugins.template('ptn-bgp.yaml')
+[tega: 2] plugins.ptnbgp()
 ```
 The script sets up [this network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230).
 
-Or you may try this ([same config written in Python](./plugins/nlan/plugins/ptnbgp.py)) instead of using the template:
-```
-[tega: 3] plugins.ptnbgp()
-```
+You may also try "plugins.fabric()" instead. It will setup L3 fabric simulating a data center network.
 
-[Step 4(option)]
+[Step 3(option)]
 You may take a snapshop of tega db to make tega db's start-up faster:
 ```
-[tega: 4] ss 
+[tega: 3] ss 
 ```
 
-[Step 5] Execute the following command to build Docker image with NLAN agent embedded and to start the containers:
+[Step 4] Execute the following command to build Docker image with NLAN agent embedded and to start the containers:
 
 ```
-[tega: 5] plugins.deploy() 
+[tega: 4] plugins.deploy() 
 ```
 
 NLAN agent on each container connects to tega db to fetch NLAN state.
 
 If you want to monitor the activities of each agents, subscribe(path="hosts") on the CLI ([example](./doc/monitoring-activities.md)).
 
-[Step 6] Confirm that all the containers are running
+[Step 5] Confirm that all the containers are running
 
 ```
-[tega: 6] subscribers
+[tega: 5] subscribers
 Deployment: [Deployment]
 IpAddressManagement: [IpAddressManagement]
 Template: [Template]
@@ -233,10 +229,10 @@ rr: [rr]
 
 ```
 
-[Step 7] Try raw commands to check the state of each container
+[Step 6] Try raw commands to check the state of each container
 
 ```
-[tega: 7] raw.ce1('ip route')
+[tega: 6] raw.ce1('ip route')
 default via 172.17.0.1 dev eth0
 10.1.1.1 via 10.201.11.1 dev int_br111  proto zebra
 10.1.1.2 via 10.202.11.1 dev int_br211  proto zebra
@@ -265,7 +261,7 @@ default via 172.17.0.1 dev eth0
 172.22.3.0/24 via 10.201.11.1 dev int_br111  proto zebra
 172.22.4.0/24 via 10.201.11.1 dev int_br111  proto zebra
 
-[tega: 8] raw.ce2('ip route')
+[tega: 7] raw.ce2('ip route')
                :
                
 ```
@@ -281,12 +277,12 @@ The password is "root".
 
 [Step 8] Call hook functions to reflesh operational data trees
 ```
-[tega: 9] plugins.hook() 
+[tega: 8] plugins.hook() 
 ```
 
 [Step 9] Check the operational trees
 ```
-[tega: 10] getr operational-(\w*)\.ip
+[tega: 9] getr operational-(\w*)\.ip
 operational-ce1.ip:
   groups:
   - [ce1]
@@ -341,317 +337,14 @@ operational-ce2.ip:
       br_172.22.2.1: [172.22.2.1]
       eth0: [172.17.0.8, 10.10.10.7]
       int_br112: [10.201.12.2]
-      int_br212: [10.202.12.2]
-      lo: [127.0.0.1, 10.1.2.2]
-    hook: {addr: '%ce2.ipAddr', route: '%ce2.ipRoute'}
-    route:
-      10.1.1.1/32: {Dev: int_br112, Src: '', Via: 10.201.12.1}
-      10.1.1.2/32: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.1.1.3/32: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.1.1.4/32: {Dev: int_br112, Src: '', Via: 10.201.12.1}
-      10.1.2.1/32: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.1.2.3/32: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.1.2.4/32: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.10.10.0/24: {Dev: eth0, Src: 10.10.10.7, Via: ''}
-      10.200.1.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.200.2.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.201.11.0/24: {Dev: int_br112, Src: '', Via: 10.201.12.1}
-      10.201.12.0/24: {Dev: int_br112, Src: 10.201.12.2, Via: ''}
-      10.202.11.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.202.12.0/24: {Dev: int_br212, Src: 10.202.12.2, Via: ''}
-      10.203.13.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.203.14.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      10.204.13.0/24: {Dev: int_br112, Src: '', Via: 10.201.12.1}
-      10.204.14.0/24: {Dev: int_br112, Src: '', Via: 10.201.12.1}
-      172.17.0.0/16: {Dev: eth0, Src: 172.17.0.8, Via: ''}
-      172.21.1.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      172.21.2.0/24: {Dev: br_172.21.2.1, Src: 172.21.2.1, Via: ''}
-      172.21.3.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      172.21.4.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      172.22.1.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      172.22.2.0/24: {Dev: br_172.22.2.1, Src: 172.22.2.1, Via: ''}
-      172.22.3.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      172.22.4.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.1}
-      default: {Dev: eth0, Src: '', Via: 172.17.0.1}
-operational-ce3.ip:
-  groups:
-  - [ce3]
-  instance:
-    addr: {10.1.2.3: lo, 10.10.10.8: eth0, 10.203.13.2: int_br313, 10.204.13.2: int_br413,
-      127.0.0.1: lo, 172.17.0.9: eth0, 172.21.3.1: br_172.21.3.1, 172.22.3.1: br_172.22.3.1}
-    dev:
-      br_172.21.3.1: [172.21.3.1]
-      br_172.22.3.1: [172.22.3.1]
-      eth0: [172.17.0.9, 10.10.10.8]
-      int_br313: [10.203.13.2]
-      int_br413: [10.204.13.2]
-      lo: [127.0.0.1, 10.1.2.3]
-    hook: {addr: '%ce3.ipAddr', route: '%ce3.ipRoute'}
-    route:
-      10.1.1.1/32: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.1.1.2/32: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.1.1.3/32: {Dev: int_br313, Src: '', Via: 10.203.13.1}
-      10.1.1.4/32: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.1.2.1/32: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.1.2.2/32: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.1.2.4/32: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.10.10.0/24: {Dev: eth0, Src: 10.10.10.8, Via: ''}
-      10.200.1.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.200.2.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.201.11.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.201.12.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.202.11.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.202.12.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      10.203.13.0/24: {Dev: int_br313, Src: 10.203.13.2, Via: ''}
-      10.203.14.0/24: {Dev: int_br313, Src: '', Via: 10.203.13.1}
-      10.204.13.0/24: {Dev: int_br413, Src: 10.204.13.2, Via: ''}
-      10.204.14.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      172.17.0.0/16: {Dev: eth0, Src: 172.17.0.9, Via: ''}
-      172.21.1.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      172.21.2.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      172.21.3.0/24: {Dev: br_172.21.3.1, Src: 172.21.3.1, Via: ''}
-      172.21.4.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      172.22.1.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      172.22.2.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      172.22.3.0/24: {Dev: br_172.22.3.1, Src: 172.22.3.1, Via: ''}
-      172.22.4.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.1}
-      default: {Dev: eth0, Src: '', Via: 172.17.0.1}
-operational-ce4.ip:
-  groups:
-  - [ce4]
-  instance:
-    addr: {10.1.2.4: lo, 10.10.10.9: eth0, 10.203.14.2: int_br314, 10.204.14.2: int_br414,
-      127.0.0.1: lo, 172.17.0.10: eth0, 172.21.4.1: br_172.21.4.1, 172.22.4.1: br_172.22.4.1}
-    dev:
-      br_172.21.4.1: [172.21.4.1]
-      br_172.22.4.1: [172.22.4.1]
-      eth0: [172.17.0.10, 10.10.10.9]
-      int_br314: [10.203.14.2]
-      int_br414: [10.204.14.2]
-      lo: [127.0.0.1, 10.1.2.4]
-    hook: {addr: '%ce4.ipAddr', route: '%ce4.ipRoute'}
-    route:
-      10.1.1.1/32: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.1.1.2/32: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.1.1.3/32: {Dev: int_br314, Src: '', Via: 10.203.14.1}
-      10.1.1.4/32: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.1.2.1/32: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.1.2.2/32: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.1.2.3/32: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.10.10.0/24: {Dev: eth0, Src: 10.10.10.9, Via: ''}
-      10.200.1.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.200.2.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.201.11.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.201.12.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.202.11.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.202.12.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.203.13.0/24: {Dev: int_br314, Src: '', Via: 10.203.14.1}
-      10.203.14.0/24: {Dev: int_br314, Src: 10.203.14.2, Via: ''}
-      10.204.13.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      10.204.14.0/24: {Dev: int_br414, Src: 10.204.14.2, Via: ''}
-      172.17.0.0/16: {Dev: eth0, Src: 172.17.0.10, Via: ''}
-      172.21.1.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      172.21.2.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      172.21.3.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      172.21.4.0/24: {Dev: br_172.21.4.1, Src: 172.21.4.1, Via: ''}
-      172.22.1.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      172.22.2.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      172.22.3.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.1}
-      172.22.4.0/24: {Dev: br_172.22.4.1, Src: 172.22.4.1, Via: ''}
-      default: {Dev: eth0, Src: '', Via: 172.17.0.1}
-operational-pe1.ip:
-  groups:
-  - [pe1]
-  instance:
-    addr: {10.1.1.1: lo, 10.10.10.1: eth0, 10.200.1.101: int_br1, 10.200.2.101: int_br2,
-      10.201.11.1: int_br111, 10.201.12.1: int_br112, 127.0.0.1: lo, 172.17.0.2: eth0}
-    dev:
-      eth0: [172.17.0.2, 10.10.10.1]
-      int_br1: [10.200.1.101]
-      int_br111: [10.201.11.1]
-      int_br112: [10.201.12.1]
-      int_br2: [10.200.2.101]
-      lo: [127.0.0.1, 10.1.1.1]
-    hook: {addr: '%pe1.ipAddr', route: '%pe1.ipRoute'}
-    route:
-      10.1.1.2/32: {Dev: int_br1, Src: '', Via: 10.200.1.102}
-      10.1.1.3/32: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.1.1.4/32: {Dev: int_br1, Src: '', Via: 10.200.1.104}
-      10.1.2.1/32: {Dev: int_br111, Src: '', Via: 10.201.11.2}
-      10.1.2.2/32: {Dev: int_br112, Src: '', Via: 10.201.12.2}
-      10.1.2.3/32: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.1.2.4/32: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.10.10.0/24: {Dev: eth0, Src: 10.10.10.1, Via: ''}
-      10.200.1.0/24: {Dev: int_br1, Src: 10.200.1.101, Via: ''}
-      10.200.2.0/24: {Dev: int_br2, Src: 10.200.2.101, Via: ''}
-      10.201.11.0/24: {Dev: int_br111, Src: 10.201.11.1, Via: ''}
-      10.201.12.0/24: {Dev: int_br112, Src: 10.201.12.1, Via: ''}
-      10.202.11.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.102}
-      10.202.12.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.102}
-      10.203.13.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.203.14.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.204.13.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.104}
-      10.204.14.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.104}
-      172.17.0.0/16: {Dev: eth0, Src: 172.17.0.2, Via: ''}
-      172.21.1.0/24: {Dev: int_br111, Src: '', Via: 10.201.11.2}
-      172.21.2.0/24: {Dev: int_br112, Src: '', Via: 10.201.12.2}
-      172.21.3.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      172.21.4.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      172.22.1.0/24: {Dev: int_br111, Src: '', Via: 10.201.11.2}
-      172.22.2.0/24: {Dev: int_br112, Src: '', Via: 10.201.12.2}
-      172.22.3.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      172.22.4.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      default: {Dev: eth0, Src: '', Via: 172.17.0.1}
-operational-pe2.ip:
-  groups:
-  - [pe2]
-  instance:
-    addr: {10.1.1.2: lo, 10.10.10.2: eth0, 10.200.1.102: int_br1, 10.200.2.102: int_br2,
-      10.202.11.1: int_br211, 10.202.12.1: int_br212, 127.0.0.1: lo, 172.17.0.3: eth0}
-    dev:
-      eth0: [172.17.0.3, 10.10.10.2]
-      int_br1: [10.200.1.102]
-      int_br2: [10.200.2.102]
-      int_br211: [10.202.11.1]
-      int_br212: [10.202.12.1]
-      lo: [127.0.0.1, 10.1.1.2]
-    hook: {addr: '%pe2.ipAddr', route: '%pe2.ipRoute'}
-    route:
-      10.1.1.1/32: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.1.1.3/32: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.1.1.4/32: {Dev: int_br1, Src: '', Via: 10.200.1.104}
-      10.1.2.1/32: {Dev: int_br211, Src: '', Via: 10.202.11.2}
-      10.1.2.2/32: {Dev: int_br212, Src: '', Via: 10.202.12.2}
-      10.1.2.3/32: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.1.2.4/32: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.10.10.0/24: {Dev: eth0, Src: 10.10.10.2, Via: ''}
-      10.200.1.0/24: {Dev: int_br1, Src: 10.200.1.102, Via: ''}
-      10.200.2.0/24: {Dev: int_br2, Src: 10.200.2.102, Via: ''}
-      10.201.11.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.201.12.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.202.11.0/24: {Dev: int_br211, Src: 10.202.11.1, Via: ''}
-      10.202.12.0/24: {Dev: int_br212, Src: 10.202.12.1, Via: ''}
-      10.203.13.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.203.14.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.204.13.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.104}
-      10.204.14.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.104}
-      172.17.0.0/16: {Dev: eth0, Src: 172.17.0.3, Via: ''}
-      172.21.1.0/24: {Dev: int_br211, Src: '', Via: 10.202.11.2}
-      172.21.2.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.2}
-      172.21.3.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      172.21.4.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      172.22.1.0/24: {Dev: int_br211, Src: '', Via: 10.202.11.2}
-      172.22.2.0/24: {Dev: int_br212, Src: '', Via: 10.202.12.2}
-      172.22.3.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      172.22.4.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      default: {Dev: eth0, Src: '', Via: 172.17.0.1}
-operational-pe3.ip:
-  groups:
-  - [pe3]
-  instance:
-    addr: {10.1.1.3: lo, 10.10.10.3: eth0, 10.200.1.103: int_br1, 10.200.2.103: int_br2,
-      10.203.13.1: int_br313, 10.203.14.1: int_br314, 127.0.0.1: lo, 172.17.0.4: eth0}
-    dev:
-      eth0: [172.17.0.4, 10.10.10.3]
-      int_br1: [10.200.1.103]
-      int_br2: [10.200.2.103]
-      int_br313: [10.203.13.1]
-      int_br314: [10.203.14.1]
-      lo: [127.0.0.1, 10.1.1.3]
-    hook: {addr: '%pe3.ipAddr', route: '%pe3.ipRoute'}
-    route:
-      10.1.1.1/32: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.1.1.2/32: {Dev: int_br1, Src: '', Via: 10.200.1.102}
-      10.1.1.4/32: {Dev: int_br1, Src: '', Via: 10.200.1.104}
-      10.1.2.1/32: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.1.2.2/32: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.1.2.3/32: {Dev: int_br313, Src: '', Via: 10.203.13.2}
-      10.1.2.4/32: {Dev: int_br314, Src: '', Via: 10.203.14.2}
-      10.10.10.0/24: {Dev: eth0, Src: 10.10.10.3, Via: ''}
-      10.200.1.0/24: {Dev: int_br1, Src: 10.200.1.103, Via: ''}
-      10.200.2.0/24: {Dev: int_br2, Src: 10.200.2.103, Via: ''}
-      10.201.11.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.201.12.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.202.11.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.102}
-      10.202.12.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.102}
-      10.203.13.0/24: {Dev: int_br313, Src: 10.203.13.1, Via: ''}
-      10.203.14.0/24: {Dev: int_br314, Src: 10.203.14.1, Via: ''}
-      10.204.13.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.104}
-      10.204.14.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.104}
-      172.17.0.0/16: {Dev: eth0, Src: 172.17.0.4, Via: ''}
-      172.21.1.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      172.21.2.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      172.21.3.0/24: {Dev: int_br313, Src: '', Via: 10.203.13.2}
-      172.21.4.0/24: {Dev: int_br314, Src: '', Via: 10.203.14.2}
-      172.22.1.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      172.22.2.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      172.22.3.0/24: {Dev: int_br313, Src: '', Via: 10.203.13.2}
-      172.22.4.0/24: {Dev: int_br314, Src: '', Via: 10.203.14.2}
-      default: {Dev: eth0, Src: '', Via: 172.17.0.1}
-operational-pe4.ip:
-  groups:
-  - [pe4]
-  instance:
-    addr: {10.1.1.4: lo, 10.10.10.4: eth0, 10.200.1.104: int_br1, 10.200.2.104: int_br2,
-      10.204.13.1: int_br413, 10.204.14.1: int_br414, 127.0.0.1: lo, 172.17.0.5: eth0}
-    dev:
-      eth0: [172.17.0.5, 10.10.10.4]
-      int_br1: [10.200.1.104]
-      int_br2: [10.200.2.104]
-      int_br413: [10.204.13.1]
-      int_br414: [10.204.14.1]
-      lo: [127.0.0.1, 10.1.1.4]
-    hook: {addr: '%pe4.ipAddr', route: '%pe4.ipRoute'}
-    route:
-      10.1.1.1/32: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.1.1.2/32: {Dev: int_br1, Src: '', Via: 10.200.1.102}
-      10.1.1.3/32: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.1.2.1/32: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.1.2.2/32: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.1.2.3/32: {Dev: int_br413, Src: '', Via: 10.204.13.2}
-      10.1.2.4/32: {Dev: int_br414, Src: '', Via: 10.204.14.2}
-      10.10.10.0/24: {Dev: eth0, Src: 10.10.10.4, Via: ''}
-      10.200.1.0/24: {Dev: int_br1, Src: 10.200.1.104, Via: ''}
-      10.200.2.0/24: {Dev: int_br2, Src: 10.200.2.104, Via: ''}
-      10.201.11.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.201.12.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      10.202.11.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.102}
-      10.202.12.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.102}
-      10.203.13.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.203.14.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.103}
-      10.204.13.0/24: {Dev: int_br413, Src: 10.204.13.1, Via: ''}
-      10.204.14.0/24: {Dev: int_br414, Src: 10.204.14.1, Via: ''}
-      172.17.0.0/16: {Dev: eth0, Src: 172.17.0.5, Via: ''}
-      172.21.1.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      172.21.2.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      172.21.3.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.2}
-      172.21.4.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.2}
-      172.22.1.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      172.22.2.0/24: {Dev: int_br1, Src: '', Via: 10.200.1.101}
-      172.22.3.0/24: {Dev: int_br413, Src: '', Via: 10.204.13.2}
-      172.22.4.0/24: {Dev: int_br414, Src: '', Via: 10.204.14.2}
-      default: {Dev: eth0, Src: '', Via: 172.17.0.1}
-operational-rr.ip:
-  groups:
-  - [rr]
-  instance:
-    addr: {10.1.1.5: lo, 10.10.10.5: eth0, 10.200.1.105: int_br1, 10.200.2.105: int_br2,
-      127.0.0.1: lo, 172.17.0.6: eth0}
-    dev:
-      eth0: [172.17.0.6, 10.10.10.5]
-      int_br1: [10.200.1.105]
-      int_br2: [10.200.2.105]
-      lo: [127.0.0.1, 10.1.1.5]
-    hook: {addr: '%rr.ipAddr', route: '%rr.ipRoute'}
-    route:
-      10.10.10.0/24: {Dev: eth0, Src: 10.10.10.5, Via: ''}
-      10.200.1.0/24: {Dev: int_br1, Src: 10.200.1.105, Via: ''}
-      10.200.2.0/24: {Dev: int_br2, Src: 10.200.2.105, Via: ''}
-      172.17.0.0/16: {Dev: eth0, Src: 172.17.0.6, Via: ''}
-      default: {Dev: eth0, Src: '', Via: 172.17.0.1}
-
+                 :
 ```
-
+[Step 10] Start jupyter notebook and open the notebooks [here](./ipynb/).
+```
+cd to the project root directory, then:
+$ cd ipynb
+$ jupyter notebook
+```
 #Development environment setup
 
 ##Python3.5

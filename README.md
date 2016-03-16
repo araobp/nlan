@@ -345,6 +345,13 @@ cd to the project root directory, then:
 $ cd ipynb
 $ jupyter notebook
 ```
+
+You need to change the IP address to the one that tega db binds:
+```
+import tega.driver
+d = tega.driver.Driver(host='192.168.57.133')  <== MODIFY THIS!
+```
+
 #Development environment setup
 
 ##Python3.5

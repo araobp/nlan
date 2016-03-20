@@ -51,16 +51,13 @@ You can find the notebooks [here](./ipynb).
 
 ##NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
-- vHosts: netns-based virtual hosts
+- Vhosts: netns-based virtual hosts
 - Router: Quagga configuration
 
 To be added:
+- Links: direct linking(veth/macvlan/tun/tap)
+- Bridges: non-distributed virtual switch(linux bridge per vlan)
 - DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)
-- Links: direct linking(tun/tap)
-- Bridges: non-distributed virtual switch
-- VRF: netns-based VRF
-- container-macvlan direct linking (skipping docker0)
-- [netlink](https://github.com/vishvananda/netlink) in addition to "ip" and "brctl"
 
 ##Target use cases
 

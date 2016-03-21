@@ -14,7 +14,7 @@ plugin.deploy    tega                                CLL or Jupyter notebook
   |---- put ----->|(LAUNCHED)     
   |  state.c1     |
   |               |                       
-launch containers |                   container
+launch containers |                   container w/ NLAN agent
   |               |                       |
 netns symbolic    |                       |
 link              |                       |

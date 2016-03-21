@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	config_interfaces "github.com/araobp/nlan/agent/config/interfaces"
 	config_ptn "github.com/araobp/nlan/agent/config/ptn"
 	config_router "github.com/araobp/nlan/agent/config/router"
 	config_vhosts "github.com/araobp/nlan/agent/config/vhosts"
@@ -24,6 +25,7 @@ func (a *agent) route(crud int, model *nlan.Model) (exit uint32) {
 	dvr := model.GetDvr()
 	vhosts := model.GetVhosts()
 	router := model.GetRouter()
+	interfaces := model.GetInterfaces()
 
 	exit = 0
 	defer func() {
@@ -34,18 +36,22 @@ func (a *agent) route(crud int, model *nlan.Model) (exit uint32) {
 	}()
 
 	if ptn != nil {
-		log.Print("Routing to PTN module...")
+		log.Print("Routing to ptn module...")
 		config_ptn.Crud(crud, ptn, a.con)
+	}
+	if interfaces != nil {
+		log.Print("Routing to interfaces module...")
+		config_interfaces.Crud(crud, interfaces, a.con)
 	}
 	if dvr != nil {
 		//
 	}
 	if vhosts != nil {
-		log.Print("Routing to VHOSTS module...")
+		log.Print("Routing to vhosts module...")
 		config_vhosts.Crud(crud, vhosts, a.con)
 	}
 	if router != nil {
-		log.Print("Routing to ROUTER module...")
+		log.Print("Routing to router module...")
 		config_router.Crud(crud, router, a.con)
 	}
 	return exit

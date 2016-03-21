@@ -4,6 +4,8 @@ Issue#16: https://github.com/araobp/nlan/issues/16
 
 This sequence is to set up tunnels among containers via macvlan interfaces.
 
+This uses Tega's pubsub feature for coordination among plugin.deploy and NLAN agents.
+
 ```
                  
 plugin.deploy    tega                                CLL or Jupyter notebook

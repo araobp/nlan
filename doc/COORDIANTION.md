@@ -1,5 +1,7 @@
 # Tunnel setup sequence diagram
 
+Issue#16: https://github.com/araobp/nlan/issues/16
+
 This sequence is to set up tunnels among containers via macvlan interfaces.
 
 ```

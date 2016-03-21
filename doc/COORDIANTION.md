@@ -7,7 +7,7 @@ This sequence is to set up tunnels among containers via macvlan interfaces.
 plugin.deploy    tega                                CLL or Jupyter notebook
   |               |                                     |
   |<- REQ RPC ----|<-- REQ RPC -------------------------|
-  |------------------ RES RPC ------------------------->|
+  |-------------->|-- RES RPC ------------------------->|
   |               |                       
   |---- put ----->|(LAUNCHED)             
   |               |                       

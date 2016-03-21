@@ -9,7 +9,8 @@ plugin.deploy    tega                                CLL or Jupyter notebook
   |<- REQ RPC ----|<-- REQ RPC -------------------------|
   |-------------->|-- RES RPC ------------------------->|
   |               |                       
-  |---- put ----->|(LAUNCHED)             
+  |---- put ----->|(LAUNCHED)     
+  |  state.c1     |
   |               |                       
 launch containers |                   container
   |               |                       |

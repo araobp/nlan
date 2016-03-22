@@ -273,6 +273,11 @@ $ ./ssh.sh ce1
 ```
 The password is "root".
 
+Or you may also use "ip netns" command to the containers:
+```
+$ ip netns exec pe1 ip route
+```
+
 [Step 8] Call hook functions to reflesh operational data trees
 ```
 [tega: 8] plugins.hook() 

@@ -4,7 +4,7 @@
 
 This project nlan (meaning "new LAN") unifies outputs from my two other projects "[neutron-lan](https://github.com/araobp/neutron-lan)" and "[tega](https://github.com/araobp/tega)".
 
-##Background and motivation
+## Background and motivation
 - OpenDaylight MD-SAL is too heavy for networking Linux containers on my Raspberry Pi.
 - YANG is incompatible with Python dict, Golang map and so on: I just want JSON-centric MD-SAL.
 - As my hobby, I design a model-driven/event-driven architecture for networking Linux containers.
@@ -12,14 +12,14 @@ This project nlan (meaning "new LAN") unifies outputs from my two other projects
 - [OCP networking](http://www.opencompute.org/wiki/Networking) is a wonderland!
 - If the computing power moves to the network edge, what you need is not VLAN but application-level logical seperation of network (SSL/TLS, WebSocket, RTP/RTCP, ...), that is, what you need is "session".
 
-##Architecture
+## Architecture
 Sort of "immutable infrastructure" for networking...
 
 ![NLAN architecture](https://docs.google.com/drawings/d/1VauRM6d2A03gIPxFbaVYdZpP8Yadre8KqL53XnntqDI/pub?w=600&h=400)
 
 ![NLAN archiecture internal](https://docs.google.com/drawings/d/1y2YXolq8bpm8E2xTgcDPfNzRtJKjc19cBVYKYm9prFE/pub?w=600&h=400)
 
-##Visualization and analytics
+## Visualization and analytics
 I use Jupyter and IPython for visualization and analytics of NLAN.
 ```
 import networkx as nx
@@ -42,14 +42,14 @@ OpenFlow-based SDN: calculate directional graph and write the edges(flow entries
 SDN with BGP/OSPF: write config/policy to the switches/routers, then each of the switches/routers calculates directional graph.
 ```
 
-###Jupyter notebook examples
+### Jupyter notebook examples
 - [PTN topology](./doc/jupyter/topo.md)
 - [Subnet graph set up by BGP at each router](./doc/jupyter/BGP_route_graph.md)
 - [Server-client graph from netstat at each router](./doc/jupyter/server_client.md)
 
 You can find the notebooks [here](./ipynb).
 
-##NLAN services
+## NLAN services
 - PTN: Packet Transport Network (Layer 1 and Layer 2)
 - Vhosts: netns-based virtual hosts
 - Router: Quagga configuration
@@ -59,7 +59,7 @@ To be added:
 - Bridges: non-distributed virtual switch(linux bridge per vlan)
 - DVR: Distributed Virtual Switch and Distributed Virtual Router (Layer 2 and Layer 3)
 
-##Target use cases
+## Target use cases
 
 Use case 1 has already been implemented, and use case 2 is being planned at the moment.
 
@@ -68,14 +68,14 @@ Use case 1 has already been implemented, and use case 2 is being planned at the 
 This use case makes use of NLAN's PTN, vHosts and Router services.
 ![WAN simulation](https://docs.google.com/drawings/d/1VKfKlwnzWQ2-ImfXeB5uNegGBK0BnaGU_4lS8h4Qpcw/pub?w=640&h=480)
 
-####Declarative state representations:
+#### Declarative state representations:
 - [ptn-bgp.yaml](./etc/ptn-bgp.yaml)
 - [ptn-ospf.yaml](./etc/ptn-ospf.yaml)
 
-####Data trees on tega db
+#### Data trees on tega db
 ![NLAN data trees](https://docs.google.com/drawings/d/1JjByqUw7wvc9dKWcpEQF9F0_iQFdgl6X3o6rTb--12I/pub?w=480&h=300)
 
-####Running the simulated network on Raspberry Pi
+#### Running the simulated network on Raspberry Pi
 This is sort of micro NFV(Network Function Virtualization) on a single Rapsberry Pi.
 - Nine virtual routers (Linux containers)
 - Sixteen virutal hosts (netns)
@@ -94,7 +94,7 @@ Log in the virtual routers with ssh, and try "ip" or "vtysh" commands:
 - vtysh: show ip bgp
      :
 
-####Quagga and GoBGP:
+#### Quagga and GoBGP:
 This use case makes use of Quagga, but [gobgp](https://github.com/osrg/gobgp) may optionally be used as Route Reflector or Route Server on "RR" container in the fig above.
 - [gobgpd.conf](./etc/gobgpd.conf)
 
@@ -127,12 +127,12 @@ This is the next use case I am going to work on... (as my hobby: not so practica
 
 ![SONO-NFV](https://docs.google.com/drawings/d/11fJUimZVrGxqAdq-hJK4abDu0ZThkfHGtbl_94zW0rQ/pub?w=640&h=480)
 
-##Network simulation with Linux containers
+## Network simulation with Linux containers
 I use Linux containers as virtual routers, and this tool will set up virtual links (L0/L1) and virtual switches (L2) over the containers. Then I will run Quagga/Zebra(L3) daemons over the virtual routers to study how legacy routing protocols work.
 - [An example of such a network](https://camo.githubusercontent.com/3f15c9634b2491185ec680fa5bb7d19f6f01146b/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f31564b664b6c776e7a5751322d496d6658654235754e656747424b30426e6147555f346c53386834517063772f7075623f773d39363026683d373230)
 - [Working with Docker for network simulation](https://camo.githubusercontent.com/77cf473ea9499432e57b06a951f5f5248419f9e1/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f313631426e383077384a5a4b513742586d496f306272377851346b71456442635f585a3235347a754f5253552f7075623f773d36383026683d343030)
 
-#NLAN installation
+# NLAN installation
 
 [Step 1] Make a Docker image named "router" following the instruction [here](./docker/SETUP.md).
 
@@ -355,20 +355,20 @@ import tega.driver
 d = tega.driver.Driver(host='192.168.57.133')  <== MODIFY THIS!
 ```
 
-#Development environment setup
+# Development environment setup
 
-##Python3.5
+## Python3.5
 
 - Download the source code from [here](https://www.python.org/downloads/source/).
 - Build and install it.
 
-##IPython/Jupyter
+## IPython/Jupyter
 The easiest way is to install Anaconda
 - https://www.continuum.io/downloads
 
 Note that Anaconda already includes Python3.5 and other packages used by this project as well.
 
-##Golang and protobuf
+## Golang and protobuf
 - Go lang installation: https://golang.org/dl/
 - Protobuf build and installation: https://github.com/google/protobuf/blob/master/INSTALL.txt
 ```
@@ -382,6 +382,6 @@ $ make install
 $ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARLY_PATH
 
 ```
-###Go plugin for vim
+### Go plugin for vim
 
 Install [vim-go](https://github.com/fatih/vim-go) to your vim.

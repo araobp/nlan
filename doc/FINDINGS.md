@@ -1,4 +1,4 @@
-##Findings so far (2016/01/10)
+## Findings so far (2016/01/10)
 
 In this project, I originally used etcd, goyang and gRPC, but they have some issues.
 
@@ -23,7 +23,7 @@ Other findings:
 - Processing overhead issues (Linux/OVS-bridges and VXLAN): I need to consider using macvlan-vepa with a smart physical switch with VLAN and SNMP support.
 - Cumulus Linux uses [netlink](https://tools.ietf.org/html/rfc3549) for controlling/managing both Linux switching/routing tables and hardware(ASIC), which seems very interesting: I have also tried out [tenus](https://github.com/milosgajdos83/tenus).
 
-##YANG-JSON mapping(IETF)
+## YANG-JSON mapping(IETF)
 
 [Reference] https://tools.ietf.org/html/draft-ietf-netmod-yang-json
 

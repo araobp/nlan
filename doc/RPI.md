@@ -1,4 +1,4 @@
-#Setting up the software on Raspberry Pi
+# Setting up the software on Raspberry Pi
 
 2015/12/27-2015/12/30
 
